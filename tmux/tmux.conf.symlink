@@ -1,0 +1,9 @@
+set -g default-terminal "screen-256color"
+
+# color theme, file created by vim-airline
+source-file ~/.tmuxlinesnapshot
+
+# unbind default prefix and set it to Ctrl+a
+unbind C-b
+set -g prefix C-a
+bind C-a send-prefix
