@@ -34,6 +34,7 @@ bind -t vi-copy 'y' copy-selection
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
 bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
 bind C-v run "tmux set-buffer $(reattach-to-user-namespace pbpaste); tmux paste-buffer"
+set -g default-command "reattach-to-user-namespace -l bash"  # yank/paste vim
 
 # vi keybindings for selecting panes
 bind h select-pane -L
