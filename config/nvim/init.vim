@@ -28,9 +28,23 @@ autocmd BufWritePre *.py :%s/\s\+$//e  " auto remove trailing whitespaces
 set clipboard=unnamed  " allow copy/paste from vim to other app
 set title  " change the terminal's title
 
+autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
-" Use deoplete.
+" deoplete.
 let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#mappings#close_popup() . "\<CR>"
+endfunction
+" C-g undo, tab completion, close popup by space
+inoremap <expr><C-g>   deoplete#mappings#undo_completion()
+inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><Space> deoplete#mappings#undo_completion()."\<Space>"
 
 
 " airline
@@ -39,7 +53,7 @@ set guifont=Source\ Code\ Pro\ for\ Powerline " make sure to escape the spaces i
 let g:airline_powerline_fonts = 1
 "let g:airline#extensions#tmuxline#enabled = 0
 "let g:tmuxline_theme = 'airline'
-
+let g:airline#extensions#tabline#enabled = 1
 
 " ocp-indent for indenting ocaml files
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2

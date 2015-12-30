@@ -11,7 +11,7 @@ Plug 'morhetz/gruvbox'
 " utilities
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
 Plug 'tpope/vim-fugitive'
 Plug 'Shougo/deoplete.nvim'
