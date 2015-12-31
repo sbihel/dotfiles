@@ -1,5 +1,11 @@
+set nocompatible  " not compatible with vi
+
 " load plugins from vundle
 source ~/.config/nvim/plugins.vim
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" GENERAL
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 syntax enable
 
@@ -13,24 +19,41 @@ endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
 
+" TAB control, indentation
+set expandtab  " insert spaces instead of tabs for <Tab>
+set smarttab   " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
 set tabstop=4
 set shiftwidth=4
-set expandtab  " insert spaces instead of tabs for <Tab>
-" set backspace=indent, start  " allow backspacing over everything in insert mode
 set autoindent
 set copyindent  " copy the previous indentation on autoindenting
-set number  " show lines' number
-set showmatch  " show matching parenthesis
+set smartindent
+
+" search
 set smartcase  " ignore case if search pattern is all lowercase
 set hlsearch  " highlight search terms
 set incsearch  " show search matches as you type
-autocmd BufWritePre *.py :%s/\s\+$//e  " auto remove trailing whitespaces
+
+" show tabs
+set list
+set listchars=tab:!·
+
+set number  " show lines' number
+set showmatch  " show matching parenthesis
 set clipboard=unnamed  " allow copy/paste from vim to other app
 set title  " change the terminal's title
+set encoding=utf8
+" set backspace=indent,eol,start  " allow backspacing over everything in insert mode
+set hidden  " current buffer can be put into background
 
+autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
 autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
-" deoplete.
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" PLUGINS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" deoplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 " <C-h>, <BS>: close popup and delete backword char.
@@ -63,7 +86,7 @@ autocmd FileType ocaml setlocal ts=2 sts=2 sw=2
 
 
 " tagbar go
-let g:tagbar_type_go = {  
+let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
         \ 'kinds'     : [
         \ 'p:package',
@@ -91,39 +114,3 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
-" let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#enable_smart_case = 1
-" " Plugin key-mappings.
-" inoremap <expr><C-g>     neocomplete#undo_completion()
-" " Recommended key-mappings.
-" " <CR>: close popup and save indent.
-" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-" function! s:my_cr_function()
-"   return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-"   " For no inserting <CR> key.
-"   "return pumvisible() ? "\<C-y>" : "\<CR>"
-" endfunction
-" " <TAB>: completion.
-" inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" " <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-" " Close popup by <Space>.
-" "inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>""
-" 
-" set completeopt-=preview  " remove scratch preview window for completion
-"
-" " syntastic
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" 
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-" let g:syntastic_python_flake8_args='--ignore=E501,E225'
-" merlin for syntastic ocaml checker
-" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-" execute "set rtp+=" . g:opamshare . "/merlin/vim"
-" let g:syntastic_ocaml_checkers = ['merlin']
