@@ -1,4 +1,4 @@
-if "[[ -n `$(command -v reattach-to-user-namespace)` ]]" \
+if "[[ `$OSTYPE` != `linux-gnu` ]]" \
      'set -g default-command "reattach-to-user-namespace -l zsh"'
 set -g default-terminal "screen-256color"
 
@@ -34,7 +34,7 @@ bind -t vi-copy 'v' begin-selection
 bind -t vi-copy 'y' copy-selection
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
-if-shell "[[ -n `$(command -v reattach-to-user-namespace)` ]]" \
+if-shell "[[ `$OSTYPE` != `linux-gnu` ]]" \
     'bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"; bind C-v run "tmux set-buffer $(reattach-to-user-namespace pbpaste); tmux paste-buffer"'
 # set -g default-command "reattach-to-user-namespace -l bash"  # yank/paste vim
 
