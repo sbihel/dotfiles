@@ -1,4 +1,6 @@
-set -g default-command "reattach-to-user-namespace -l zsh"
+if [ -n "$(command -v reattach-to-user-namespace)" ]; then
+    set -g default-command "reattach-to-user-namespace -l zsh"
+fi
 set -g default-terminal "screen-256color"
 
 # color theme, file created by vim-airline
@@ -33,8 +35,10 @@ bind -t vi-copy 'v' begin-selection
 bind -t vi-copy 'y' copy-selection
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
-bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
-bind C-v run "tmux set-buffer $(reattach-to-user-namespace pbpaste); tmux paste-buffer"
+if [ -n "$(command -v reattach-to-user-namespace)" ]; then
+    bind C-c run "tmux save-buffer - | reattach-to-user-namespace pbcopy"
+    bind C-v run "tmux set-buffer $(reattach-to-user-namespace pbpaste); tmux paste-buffer"
+fi
 # set -g default-command "reattach-to-user-namespace -l bash"  # yank/paste vim
 
 # vi keybindings for selecting panes
