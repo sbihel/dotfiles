@@ -84,3 +84,6 @@ fi
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+
+alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"

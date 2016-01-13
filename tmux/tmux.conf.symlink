@@ -46,3 +46,6 @@ bind l select-pane -R
 
 bind -r C-h select-window -t :-
 bind -r C-l select-window -t :+
+
+# make delay shorter
+set -sg escape-time 0

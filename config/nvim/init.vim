@@ -114,3 +114,5 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }
 
+nmap <leader>l :bnext<CR>
+nmap <leader>h :bprevious<CR>
