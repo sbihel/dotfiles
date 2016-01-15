@@ -29,6 +29,7 @@ Plug 'majutsushi/tagbar', { 'on': 'TagbarOpen' }
 Plug 'edkolev/tmuxline.vim'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-speeddating'
 
 
 " language-specific plugins
