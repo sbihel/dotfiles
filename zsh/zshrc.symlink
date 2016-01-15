@@ -85,9 +85,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-case `uname` in
-  Darwin)
-    alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
-    export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
-    ;;
-esac
+if [[ `uname` == 'Darwin' ]]; then
+  alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
+  export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
+fi
