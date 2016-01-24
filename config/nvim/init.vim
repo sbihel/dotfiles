@@ -37,7 +37,8 @@ set incsearch  " show search matches as you type
 set list
 set listchars=tab:!·
 
-set number  " show lines' number
+set relativenumber  " show relative lines number
+set number  " show lines number
 set showmatch  " show matching parenthesis
 set clipboard=unnamed  " allow copy/paste from vim to other app
 set title  " change the terminal's title
