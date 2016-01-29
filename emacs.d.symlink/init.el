@@ -61,3 +61,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (global-set-key [escape] 'evil-exit-emacs-state)
 
 (setq-default tab-width 4 indent-tabs-mode nil)
+
+(autoload 'octave-mode "octave-mod" nil t)
+(setq auto-mode-alist
+(cons '("\\.m$" . octave-mode) auto-mode-alist))

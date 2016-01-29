@@ -3,26 +3,33 @@ set from = 'simon.bihel@ens-rennes.fr'
 set imap_user = 'sbihe682'
 set folder = 'imap://imap.ens-rennes.fr:143'
 set spoolfile = +INBOX
-# mailboxes =INBOX
+mailboxes =INBOX
 set imap_check_subscribed
+set imap_keepalive
 set mbox = "archive"
 set postponed = "drafts"
-set smtp_url = 'smtp://smtp.sendgrid.net:465'
-set smtp_authenticators = 'sbihel'
+set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
+# set smtp_authenticators = 'sbihel'
 set ssl_starttls = yes
 set record = +Sent
 unset record
 
-set editor = "nvim"
+set imap_delim_chars='/'
 
-source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-256.muttrc
+set editor = 'nvim + -c "set textwidth=79" -c "set formatoptions+=w"'
+
+source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
 set signature = ~/.mutt/sig
+
+set timeout = 10
+set mail_check = 5
+set beep_new
 
 set sidebar_delim   = '|'
 set sidebar_visible = yes
 set sidebar_width   = 24
 color sidebar_new color221 color233
-set statues_chars   = " *%A"
+set status_chars   = " *%A"
 set status_format   = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
 
 # Header Options -------------------------------------
@@ -48,14 +55,19 @@ bind index R        group-reply
 bind index <tab>    sync-mailbox
 bind index <space>  collapse-thread
 
-# # Ctrl-R to mark all as read
-# macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
-# # Sync email
+# Ctrl-R to mark all as read
+macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "mark all messages as read"
+# Sync email
 # macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
 # macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
-# # Saner copy/move dialogs
-# macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
-# macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+# Saner copy/move dialogs
+macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
+macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+
+# Sidebar Navigation ---------------------------------
+bind index,pager <down>   sidebar-next
+bind index,pager <up>     sidebar-prev
+bind index,pager <right>  sidebar-open
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -79,7 +91,7 @@ bind pager R  group-reply
 # View attachments properly.
 bind attach <return> view-mailcap
 
- Compose View Options -------------------------------
+# Compose View Options -------------------------------
 set envelope_from                    # which from?
 set sig_dashes                       # dashes before sig
 set edit_headers                     # show headers when composing
