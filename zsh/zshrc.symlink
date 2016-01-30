@@ -85,7 +85,13 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+# go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
 if [[ `uname` == 'Darwin' ]]; then
   alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
   export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
+
+  export GOROOT=/usr/local/opt/go/libexec
+  export PATH=$PATH:$GOROOT/bin
 fi
