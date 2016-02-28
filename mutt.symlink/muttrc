@@ -19,7 +19,12 @@ set imap_delim_chars='/'
 set editor = 'nvim + -c "set textwidth=79" -c "set formatoptions+=w"'
 
 source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
-set signature = ~/.mutt/sig
+set signature  = ~/.mutt/sig
+set alias_file = ~/.mutt/aliases
+set sort_alias = alias
+set reverse_alias = yes
+source $alias_file
+set display_filter = "~/.mutt/save_alias.sh"  # automatically saves aliases
 
 set timeout = 10
 set mail_check = 5

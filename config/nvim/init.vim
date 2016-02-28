@@ -49,6 +49,14 @@ set hidden  " current buffer can be put into background
 autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
 autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
+" cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FILETYPE SPECIFICS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+autocmd FileType c setlocal tw=80 cc=80
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS

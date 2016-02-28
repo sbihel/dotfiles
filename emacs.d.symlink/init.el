@@ -48,7 +48,7 @@ In Delete Selection mode, if the mark is active, just deactivate it;
 then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (interactive)
     (if (and delete-selection-mode transient-mark-mode mark-active)
-	(setq deactivate-mark  t)
+        (setq deactivate-mark  t)
       (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
       (abort-recursive-edit)))
 (define-key evil-normal-state-map [escape] 'keyboard-quit)
@@ -65,3 +65,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (autoload 'octave-mode "octave-mod" nil t)
 (setq auto-mode-alist
 (cons '("\\.m$" . octave-mode) auto-mode-alist))
+
+;; (add-hook 'org-mode-hook
+;;   '(lambda()
+;;     (setq fill-column 80)))
+(setq fill-column 80)
+(setq text-mode-hook 'turn-on-auto-fill)
+(setq org-mode 'text-mode)
