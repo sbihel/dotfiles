@@ -38,7 +38,9 @@ Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'dag/vim2hs', { 'for': 'haskell' }
 Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 Plug 'klen/python-mode', { 'for': 'python' }
-Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
+" Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
+Plug 'lervag/vimtex', { 'for': 'latex' }
+Plug 'vim-scripts/LanguageTool', { 'for': 'latex' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'elzr/vim-json', { 'for': 'json' }
 
