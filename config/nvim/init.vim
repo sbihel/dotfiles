@@ -51,11 +51,15 @@ autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
 " cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
 
+set undofile  " persistent undo
+set undodir=~/.config/nvim/undodir
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 autocmd FileType c setlocal tw=80 cc=80
+autocmd FileType cpp setlocal tw=80 cc=80
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -125,3 +129,9 @@ let g:tagbar_type_go = {
 
 nmap <leader>l :bnext<CR>
 nmap <leader>h :bprevious<CR>
+
+" Gundo tree
+nnoremap <F5> :GundoToggle<CR>
+
+" Startify
+autocmd User Startified setlocal buftype=

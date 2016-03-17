@@ -4,7 +4,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 
 " colorschemes
-Plug 'altercation/vim-colors-solarized'
+" Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
 
 
@@ -30,6 +30,9 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'bling/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-speeddating'
+Plug 'wellle/targets.vim'  " Additional text objects
+Plug 'sjl/gundo.vim'  " undo tree
+Plug 'mhinz/vim-startify'  " pretty starting screen
 
 
 " language-specific plugins
