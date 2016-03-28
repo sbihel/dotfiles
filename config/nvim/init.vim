@@ -137,3 +137,6 @@ nnoremap <F5> :GundoToggle<CR>
 
 " Startify
 autocmd User Startified setlocal buftype=
+
+" Bclose
+nnoremap <silent> <Leader>bd :Bclose<CR>
