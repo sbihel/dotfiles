@@ -9,6 +9,9 @@ source ~/.config/nvim/plugins.vim
 
 syntax enable
 
+set encoding=utf8
+let base16colorspace=256  " Access colors present in 256 colorspace
+set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
 colorscheme gruvbox
 let g:gruvbox_contrast_dark='hard'
 if has('gui_running')
@@ -18,6 +21,8 @@ else
 endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
+
+set autoread " detect when a file is changed
 
 " TAB control, indentation
 set expandtab  " insert spaces instead of tabs for <Tab>
@@ -35,16 +40,19 @@ set incsearch  " show search matches as you type
 nnoremap <silent><Esc> :nohlsearch<Bar>:echo<CR>
   " cancel search with escape
 
-" show tabs
-set list
-set listchars=tab:!·
+" code folding settings
+"set foldmethod=syntax " fold based on indent
+"set foldnestmax=10 " deepest fold is 10 levels
+"set nofoldenable " don't fold by default
+"set foldlevel=1
+
+set scrolloff=3 " lines of text around cursor
 
 set relativenumber  " show relative lines number
 set number  " show lines number
 set showmatch  " show matching parenthesis
 set clipboard=unnamed  " allow copy/paste from vim to other app
 set title  " change the terminal's title
-set encoding=utf8
 " set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hidden  " current buffer can be put into background
 
@@ -54,7 +62,25 @@ autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 " cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
 
 set undofile  " persistent undo
-set undodir=~/.config/nvim/undodir
+set undodir=~/.config/nvim/undodir,~/.tmp,~/tmp,/var/tmp,/tmp
+
+" activate spell-checking alternatives
+nmap ;s :set invspell spelllang=en<cr>
+
+set textwidth=120
+set colorcolumn=120
+set wrap "turn on line wrapping
+set linebreak " set soft wrapping
+set showbreak=… " show ellipsis at breaking
+
+" show tabs
+"set list
+"set listchars=tab:!·
+" toggle invisible characters
+set invlist
+set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,eol:¬
+"highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
+set showbreak=↪
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
