@@ -24,6 +24,9 @@ endif
 
 set autoread " detect when a file is changed
 
+" faster redrawing
+set ttyfast
+
 " TAB control, indentation
 set expandtab  " insert spaces instead of tabs for <Tab>
 set smarttab   " tab respects 'tabstop', 'shiftwidth', and 'softtabstop'
