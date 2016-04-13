@@ -94,4 +94,10 @@ if [[ `uname` == 'Darwin' ]]; then
 
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$PATH:$GOROOT/bin
+
+  export PATH=$PATH:/opt/local/bin
+  export PYTHONPATH=$PYTHONPATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
 fi
+
+# homebrew github token
+export HOMEBREW_GITHUB_API_TOKEN=cc002fb7e9fc4e9b8f52add9253af7f7a6fb5e23

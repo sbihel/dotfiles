@@ -46,7 +46,7 @@ nnoremap <silent><Esc> :nohlsearch<Bar>:echo<CR>
 " code folding settings
 "set foldmethod=syntax " fold based on indent
 "set foldnestmax=10 " deepest fold is 10 levels
-"set nofoldenable " don't fold by default
+""set nofoldenable " don't fold by default
 "set foldlevel=1
 
 set scrolloff=3 " lines of text around cursor
@@ -60,7 +60,6 @@ set title  " change the terminal's title
 set hidden  " current buffer can be put into background
 
 autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
-autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
 " cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
 
@@ -91,11 +90,15 @@ set showbreak=↪
 
 autocmd FileType c setlocal tw=80 cc=80
 autocmd FileType cpp setlocal tw=80 cc=80
+autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" neomake
+autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -123,7 +126,6 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 
 " ocp-indent for indenting ocaml files
-autocmd FileType ocaml setlocal ts=2 sts=2 sw=2
 " autocmd FileType ocaml source /Users/simonbihel/.vim/bundle/ocp-indent-vim/indent/
 " set rtp^="/Users/simonbihel/.opam/system/share/ocp-indent/vim"
 " set rtp+=</Users/simonbihel/.vim/bundle/ocp-indent-vim>
