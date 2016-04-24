@@ -22,6 +22,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'xuyuanp/nerdtree-git-plugin'
 " Plug 'scrooloose/syntastic'
 Plug 'benekastah/neomake'
 Plug 'janko-m/vim-test'
