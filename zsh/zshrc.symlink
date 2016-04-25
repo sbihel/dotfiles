@@ -97,6 +97,9 @@ if [[ `uname` == 'Darwin' ]]; then
 
   export PATH=$PATH:/opt/local/bin
   export PYTHONPATH=$PYTHONPATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+
+  export PATH=/usr/local/Cellar/bison/3.0.4/bin:$PATH
+  export PATH=/usr/local/Cellar/flex/2.6.0/bin:$PATH
 fi
 
 # homebrew github token
