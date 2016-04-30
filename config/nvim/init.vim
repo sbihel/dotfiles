@@ -84,6 +84,31 @@ set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,eol:¬
 "highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
 set showbreak=↪
 
+" error bells
+set noerrorbells
+set visualbell
+set t_vb=
+set tm=500
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MAPPINGS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set paste toggle
+set pastetoggle=<F6>
+
+nnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
+
+map <silent> <C-h> :call WinMove('h')<cr>
+map <silent> <C-j> :call WinMove('j')<cr>
+map <silent> <C-k> :call WinMove('k')<cr>
+map <silent> <C-l> :call WinMove('l')<cr>
+
+" toggle cursor line
+nnoremap <leader>i :set cursorline!<cr>
+
+" switch between current and last buffer
+nmap <leader>. <c-^>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -129,6 +154,7 @@ let g:airline#extensions#tabline#enabled = 1
 " autocmd FileType ocaml source /Users/simonbihel/.vim/bundle/ocp-indent-vim/indent/
 " set rtp^="/Users/simonbihel/.opam/system/share/ocp-indent/vim"
 " set rtp+=</Users/simonbihel/.vim/bundle/ocp-indent-vim>
+" set rtp+=</home/simon/dotfiles/config/nvim/plugged/ocp-indent-vim>
 
 
 " tagbar go
@@ -171,3 +197,37 @@ autocmd User Startified setlocal buftype=
 
 " Bclose
 nnoremap <silent> <Leader>bd :Bclose<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" FUNCTIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! ToggleMovement(firstOp, thenOp)
+  let pos = getpos('.')
+  execute "normal! " . a:firstOp
+  if pos == getpos('.')
+    execute "normal! " . a:thenOp
+  endif
+endfunction
+
+" Window movement shortcuts
+" move to the window in the direction shown, or create a new window
+function! WinMove(key)
+    let t:curwin = winnr()
+    exec "wincmd ".a:key
+    if (t:curwin == winnr())
+        if (match(a:key,'[jk]'))
+            wincmd v
+        else
+            wincmd s
+        endif
+        exec "wincmd ".a:key
+    endif
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" ABBREVIATIONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+abbr funciton function
+abbr teh the
+abbr tempalte template
+abbr fitler filter

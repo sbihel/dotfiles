@@ -41,7 +41,7 @@ Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
 Plug 'fatih/vim-go', { 'for': 'go' }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'dag/vim2hs', { 'for': 'haskell' }
-Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
+" Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 Plug 'klen/python-mode', { 'for': 'python' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex', { 'for': 'latex' }
