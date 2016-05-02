@@ -35,6 +35,7 @@ Plug 'wellle/targets.vim'  " Additional text objects
 Plug 'sjl/gundo.vim'  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
 Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
+Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 
 
 " language-specific plugins

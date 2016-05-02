@@ -59,7 +59,7 @@ set title  " change the terminal's title
 " set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hidden  " current buffer can be put into background
 
-autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
+"autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
 
 " cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
 
@@ -222,6 +222,10 @@ function! WinMove(key)
         endif
         exec "wincmd ".a:key
     endif
+endfunction
+
+function! StripWS()  " remove trailing whitespaces
+  execute '%s/\s\+$//e'
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
