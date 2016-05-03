@@ -109,6 +109,10 @@ nnoremap <leader>i :set cursorline!<cr>
 " switch between current and last buffer
 nmap <leader>. <c-^>
 
+" remove extra whitespace
+nmap <leader><space> :'<,'>s/\s\+$//e<cr>
+nmap <leader><space> :s/\s\+$//e<cr>
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
