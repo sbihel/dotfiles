@@ -48,6 +48,8 @@ Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'vim-scripts/LanguageTool', { 'for': 'latex' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
+Plug 'mattn/calendar-vim', { 'for': 'org' }
+Plug 'tpope/vim-speeddating', { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
 

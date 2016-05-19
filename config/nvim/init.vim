@@ -102,11 +102,6 @@ map <silent> <C-h> :call WinMove('h')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
 map <silent> <C-k> :call WinMove('k')<cr>
 map <silent> <C-l> :call WinMove('l')<cr>
-if has('nvim')
-  " Hack to get C-h working in NeoVim
-  imap <BS> <C-W>h
-  nmap <BS> <C-W>h
-endif
 
 " toggle cursor line
 nnoremap <leader>i :set cursorline!<cr>
@@ -126,6 +121,7 @@ autocmd FileType c setlocal tw=80 cc=80
 autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80
+autocmd FileType calendar setlocal tw=0 cc=0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -156,8 +152,8 @@ inoremap <expr><Space> deoplete#mappings#undo_completion()."\<Space>"
 set laststatus=2
 set guifont=Source\ Code\ Pro\ for\ Powerline " make sure to escape the spaces in the name properly
 let g:airline_powerline_fonts = 1
-"let g:airline#extensions#tmuxline#enabled = 0
-"let g:tmuxline_theme = 'airline'
+let g:airline#extensions#tmuxline#enabled = 0
+let g:tmuxline_theme = 'airline'
 let g:airline#extensions#tabline#enabled = 1
 
 " ocp-indent for indenting ocaml files
