@@ -102,6 +102,11 @@ map <silent> <C-h> :call WinMove('h')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
 map <silent> <C-k> :call WinMove('k')<cr>
 map <silent> <C-l> :call WinMove('l')<cr>
+if has('nvim')
+  " Hack to get C-h working in NeoVim
+  imap <BS> <C-W>h
+  nmap <BS> <C-W>h
+endif
 
 " toggle cursor line
 nnoremap <leader>i :set cursorline!<cr>

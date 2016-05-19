@@ -49,6 +49,7 @@ Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'vim-scripts/LanguageTool', { 'for': 'latex' }
 Plug 'jceb/vim-orgmode', { 'for': 'org' }
 Plug 'elzr/vim-json', { 'for': 'json' }
+Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
 
 
 call plug#end()
