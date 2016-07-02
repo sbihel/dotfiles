@@ -9,8 +9,6 @@ set -g @plugin 'tmux-plugins/tmux-yank'
 if "[[ `$OSTYPE` != `linux-gnu` ]]" \
      'set -g default-command "reattach-to-user-namespace -l zsh"'
 set -g default-terminal "screen-256color"
-set -g utf8 on
-set -g status-utf8 on
 
 # color theme, file created by vim-airline
 source-file ~/.tmuxlinesnapshot

@@ -25,7 +25,7 @@ endif
 set autoread " detect when a file is changed
 
 " faster redrawing
-set ttyfast
+"set ttyfast
 
 " TAB control, indentation
 set expandtab  " insert spaces instead of tabs for <Tab>
@@ -118,10 +118,12 @@ nmap <leader><space> :s/\s\+$//e<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 autocmd FileType c setlocal tw=80 cc=80
-autocmd FileType cpp setlocal tw=80 cc=80
+"autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
-autocmd FileType org setlocal tw=80 cc=80
+autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
+autocmd FileType latex setlocal tw=80 cc=80
+autocmd FileType tex setlocal tw=80 cc=80
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
