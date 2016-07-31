@@ -22,6 +22,7 @@ Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'xuyuanp/nerdtree-git-plugin'
 " Plug 'scrooloose/syntastic'
 Plug 'benekastah/neomake'
@@ -52,6 +53,12 @@ Plug 'mattn/calendar-vim', { 'for': 'org' }
 Plug 'tpope/vim-speeddating', { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'elzr/vim-json', { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
+Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
+Plug 'othree/html5.vim', { 'for': 'html' } " html5 support
+Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " JavaScript indent support
+Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
+
+Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 
 
 call plug#end()

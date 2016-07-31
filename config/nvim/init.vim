@@ -113,6 +113,9 @@ nmap <leader>. <c-^>
 nmap <leader><space> :'<,'>s/\s\+$//e<cr>
 nmap <leader><space> :s/\s\+$//e<cr>
 
+" write read-only files
+cmap w!! w !sudo tee % >/dev/null
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
