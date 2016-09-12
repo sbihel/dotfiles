@@ -65,6 +65,7 @@ set hidden  " current buffer can be put into background
 
 set undofile  " persistent undo
 set undodir=~/.config/nvim/undodir,~/.tmp,~/tmp,/var/tmp,/tmp
+set undolevels=5000  " How many undos
 
 " activate spell-checking alternatives
 nmap ;s :set invspell spelllang=en<cr>
@@ -223,20 +224,34 @@ endfunction
 " Window movement shortcuts
 " move to the window in the direction shown, or create a new window
 function! WinMove(key)
-    let t:curwin = winnr()
-    exec "wincmd ".a:key
-    if (t:curwin == winnr())
-        if (match(a:key,'[jk]'))
-            wincmd v
-        else
-            wincmd s
-        endif
-        exec "wincmd ".a:key
+  let t:curwin = winnr()
+  exec "wincmd ".a:key
+  if (t:curwin == winnr())
+    if (match(a:key,'[jk]'))
+      wincmd v
+    else
+      wincmd s
     endif
+    exec "wincmd ".a:key
+  endif
 endfunction
 
 function! StripWS()  " remove trailing whitespaces
   execute '%s/\s\+$//e'
+endfunction
+
+" remove undo files which have not been modified for n days
+function Tmpwatch(path, days)
+  let l:path = expand(a:path)
+  if isdirectory(l:path)
+    for file in split(globpath(l:path, "*"), "\n")
+      if localtime() > getftime(file) + 86400 * a:days && delete(file) != 0
+        echo "Tmpwatch(): Error deleting '" . file . "'"
+      endif
+    endfor
+  else
+    echo "Tmpwatch(): Directory '" . l:path . "' not found"
+  endif
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

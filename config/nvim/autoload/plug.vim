@@ -508,14 +508,17 @@ function! s:lod_map(map, names, prefix)
     endif
     let extra .= nr2char(c)
   endwhile
-  if v:count
-    call feedkeys(v:count, 'n')
-  endif
-  call feedkeys('"'.v:register, 'n')
+
+  let prefix = v:count ? v:count : ''
+  let prefix .= '"'.v:register.a:prefix
   if mode(1) == 'no'
-    call feedkeys(v:operator)
+    if v:operator == 'c'
+      let prefix = "\<esc>" . prefix
+    endif
+    let prefix .= v:operator
   endif
-  call feedkeys(a:prefix . substitute(a:map, '^<Plug>', "\<Plug>", '') . extra)
+  call feedkeys(prefix, 'n')
+  call feedkeys(substitute(a:map, '^<Plug>', "\<Plug>", '') . extra)
 endfunction
 
 function! plug#(repo, ...)
@@ -1044,18 +1047,18 @@ function! s:update_finish()
         call s:log4(name, 'Updating submodules. This may take a while.')
         let out .= s:bang('git submodule update --init --recursive 2>&1', spec.dir)
       endif
-      let msg = printf('%s %s: %s', v:shell_error ? 'x': '-', name, s:lastline(out))
+      let msg = s:format_message(v:shell_error ? 'x': '-', name, out)
       if v:shell_error
         call add(s:update.errors, name)
         call s:regress_bar()
-        execute pos 'd _'
+        silent execute pos 'd _'
         call append(4, msg) | 4
       elseif !empty(out)
-        call setline(pos, msg)
+        call setline(pos, msg[0])
       endif
       redraw
     endfor
-    4 d _
+    silent 4 d _
     call s:do(s:update.pull, s:update.force, filter(copy(s:update.all), 'index(s:update.errors, v:key) < 0 && has_key(v:val, "do")'))
     call s:finish(s:update.pull)
     call setline(1, 'Updated. Elapsed time: ' . split(reltimestr(reltime(s:update.start)))[0] . ' sec.')
@@ -1172,7 +1175,7 @@ function! s:log(bullet, name, lines)
   if s:switch_in()
     let pos = s:logpos(a:name)
     if pos > 0
-      execute pos 'd _'
+      silent execute pos 'd _'
       if pos > winheight('.')
         let pos = 4
       endif
