@@ -122,6 +122,7 @@ cmap w!! w !sudo tee % >/dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 autocmd FileType c setlocal tw=80 cc=80
+autocmd BufReadPre README* setlocal tw=80 cc=80
 "autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin

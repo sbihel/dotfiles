@@ -30,9 +30,9 @@ set timeout = 10
 set mail_check = 5
 set beep_new
 
-set sidebar_delim   = '|'
+set sidebar_divider_char   = '│'
 set sidebar_visible = yes
-set sidebar_width   = 24
+set sidebar_width   = 20
 color sidebar_new color221 color233
 set status_chars   = " *%A"
 set status_format   = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
@@ -93,6 +93,8 @@ bind pager G  bottom
 
 bind pager R  group-reply
 
+# auto convert text/html MIME type to text/plain
+auto_view text/html
 # View attachments properly.
 bind attach <return> view-mailcap
 
@@ -111,3 +113,9 @@ set reply_to                         # reply to Reply to: field
 set reverse_name                     # reply as whomever it was to
 set include                          # include message in replies
 set forward_quote                    # include message in forwards
+
+unset confirmappend
+folder-hook . set trash="=Trash"
+folder-hook trash$ unset trash
+
+color progress white blue
