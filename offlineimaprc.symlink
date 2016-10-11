@@ -1,0 +1,42 @@
+[general]
+pythonfile = ~/.mutt/offlineimap.py
+accounts = Ens
+maxsyncaccounts = 1
+
+[mbnames]
+enabled = yes
+filename = ~/.mutt/mailboxes
+header = "mailboxes "
+peritem = "+%(foldername)s"
+sep = " "
+footer = "\n"
+
+[Account Ens]
+localrepository = Local-Ens
+remoterepository = Remote-Ens
+autorefresh = 0.5
+quick = 10
+status_backend = sqlite
+createfolders = False
+
+[Repository Local-Ens]
+sep = "/"
+type = Maildir
+localfolders = ~/Maildir
+#nametrans = lambda folder: {'info_2015':   'info.2015',
+#                            'info_news':   'info.news',
+#                            'tous_eleves': 'tous.eleves'}.get(folder, folder)
+
+[Repository Remote-Ens]
+type = IMAP
+remotehost = imap.ens-rennes.fr
+remoteport = 143
+ssl = no
+remoteuser = sbihe682
+remotepasseval = get_pass("ens-rennes")
+keepalive = 60
+holdconnectionopen = yes
+#nametrans = lambda folder: {'info.2015':   'info_2015',
+#                            'info.news':   'info_news',
+#                            'tous.eleves': 'tous_eleves'}.get(folder, folder)
+folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash']
