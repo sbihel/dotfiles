@@ -16,6 +16,7 @@ Plug 'gregsexton/gitv'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'  " detect indentation
+Plug 'tpope/vim-obsession'  " save session
 Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet.vim'

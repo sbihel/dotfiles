@@ -3,10 +3,14 @@
 set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-battery'
 set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tmux-resurrect'
+
+set -g @resurrect-strategy-nvim 'session'
+set -g @resurrect-capture-pane-contents 'on'
 
 # SETTINGS
 
-if "[[ `$OSTYPE` != `linux-gnu` ]]" \
+if-shell "if [[ $OSTYPE != 'linux-gnu' ]]; then true; else false; fi" \
      'set -g default-command "reattach-to-user-namespace -l zsh"'
 #set -g default-terminal "screen-256color"
 

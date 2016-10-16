@@ -26,6 +26,7 @@ set autoread " detect when a file is changed
 
 " faster redrawing
 "set ttyfast
+set lazyredraw
 
 " TAB control, indentation
 set expandtab  " insert spaces instead of tabs for <Tab>
@@ -210,6 +211,20 @@ autocmd User Startified setlocal buftype=
 
 " Bclose
 nnoremap <silent> <Leader>bd :Bclose<CR>
+
+" completeopt
+"set completeopt=menu,preview,noinsert
+" If you prefer the Omni-Completion tip window to close when a selection is
+" made, these lines close it on movement in insert mode or when leaving
+" insert mode
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+" Obsession and airline
+let airline_section_y = '%{ObsessionStatus()}'
+
+" GitGutter
+let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with \h
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
