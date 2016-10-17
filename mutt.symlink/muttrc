@@ -19,7 +19,7 @@ set imap_keepalive
 set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 # set smtp_authenticators = 'sbihel'
 set ssl_starttls = yes
-#set record = +Sent
+set record = +Sent
 unset record
 
 set imap_delim_chars='/'

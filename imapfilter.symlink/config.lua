@@ -1,11 +1,12 @@
 options.timeout = 120
 options.subscribe = true
+options.create = true
 
 function forever()
     results = myaccount.mymailbox:is_old()
     results:move_messages(myaccount.myothermailbox)
 end
-become_daemon(600, forever)
+become_daemon(100, forever)
 
 
 file = assert(io.popen('python2 ~/.mutt/offlineimap.py ens-rennes', 'r'))
@@ -21,7 +22,7 @@ local account = IMAP {
 
 account.INBOX:check_status()
 
-mails = account.INBOX:is_new()
+mails = account.INBOX:is_new() + account.INBOX:is_unseen()
 filtered = mails:contain_subject("[info.2015]")
 filtered:move_messages(account["info.2015"])
 filtered = mails:contain_subject("[info.news]")
