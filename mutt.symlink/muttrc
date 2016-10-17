@@ -1,10 +1,10 @@
 # IMAP: offlineimap
 set folder = "~/Maildir"
 source ~/.mutt/mailboxes
-set spoolfile = "+Ens/INBOX"
-set record = "+Ens/Sent"
-set postponed = "+Ens/Drafts"
-set mbox = "+Ens/Archives"
+#set spoolfile = "+Ens/INBOX"
+#set record = "+Ens/Sent"
+#set postponed = "+Ens/Drafts"
+#set mbox = "+Ens/Archives"
 
 set realname = "Simon Bihel"
 set from = 'simon.bihel@ens-rennes.fr'
@@ -14,13 +14,15 @@ set spoolfile = +INBOX
 mailboxes = INBOX
 set imap_check_subscribed
 set imap_keepalive
-#set mbox = "archive"
-#set postponed = "drafts"
+set mbox = +Archives
+set postponed = +Drafts
 set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 # set smtp_authenticators = 'sbihel'
 set ssl_starttls = yes
 set record = +Sent
-unset record
+
+set delete=yes
+
 
 set imap_delim_chars='/'
 
