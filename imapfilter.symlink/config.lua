@@ -9,7 +9,7 @@ file:close()
 output = string.gsub(output, "\n", "")
 
 
-function forever()
+--function forever()
     local account = IMAP {
         server = 'imap.ens-rennes.fr',
         username = 'sbihe682',
@@ -31,6 +31,6 @@ function forever()
     filtered:move_messages(account["easychair"])
     filtered = mails:contain_from("piazza")
     filtered:move_messages(account["piazza"])
-end
+--end
 
-become_daemon(100, forever)
+--become_daemon(100, forever)

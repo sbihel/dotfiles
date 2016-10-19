@@ -12,6 +12,7 @@ sep = " "
 footer = "\n"
 
 [Account Ens]
+presynchook = imapfilter
 localrepository = Local-Ens
 remoterepository = Remote-Ens
 autorefresh = 0.5
@@ -23,9 +24,6 @@ createfolders = False
 sep = "/"
 type = Maildir
 localfolders = ~/Maildir
-#nametrans = lambda folder: {'info_2015':   'info.2015',
-#                            'info_news':   'info.news',
-#                            'tous_eleves': 'tous.eleves'}.get(folder, folder)
 
 [Repository Remote-Ens]
 type = IMAP
@@ -36,7 +34,4 @@ remoteuser = sbihe682
 remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
-#nametrans = lambda folder: {'info.2015':   'info_2015',
-#                            'info.news':   'info_news',
-#                            'tous.eleves': 'tous_eleves'}.get(folder, folder)
 folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash']
