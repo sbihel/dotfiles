@@ -58,6 +58,8 @@ Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to p
 Plug 'othree/html5.vim', { 'for': 'html' } " html5 support
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " JavaScript indent support
 Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
+Plug 'vim-scripts/Conque-GDB', { 'for': ['c', 'cpp'] } " gdb integration
+Plug 'dylon/vim-antlr', { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

@@ -130,6 +130,7 @@ autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
 autocmd FileType latex setlocal tw=80 cc=80
 autocmd FileType tex setlocal tw=80 cc=80
+autocmd FileType python setlocal cc=79
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -225,6 +226,10 @@ let airline_section_y = '%{ObsessionStatus()}'
 
 " GitGutter
 let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with \h
+
+" Antlr
+au BufRead,BufNewFile *.g set filetype=antlr3
+au BufRead,BufNewFile *.g4 set filetype=antlr4
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

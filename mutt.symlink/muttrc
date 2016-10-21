@@ -28,7 +28,7 @@ set imap_delim_chars='/'
 
 set editor = 'nvim + -c "set textwidth=78" -c "set formatoptions+=w" -c "set cc=78"'
 
-source ~/.mutt/mutt-colors-solarized/mutt-colors-solarized-dark-16.muttrc
+source ~/.mutt/colors/test.mutt
 set signature  = ~/.mutt/sig
 set alias_file = ~/.mutt/aliases
 set sort_alias = alias
