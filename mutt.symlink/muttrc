@@ -26,7 +26,7 @@ set delete=yes
 
 set imap_delim_chars='/'
 
-set editor = 'nvim + -c "set textwidth=78" -c "set formatoptions+=w" -c "set cc=78"'
+set editor = 'nvim + -c "set textwidth=78" -c "set formatoptions+=w" -c "set cc=78" -c "set spell"'
 
 source ~/.mutt/colors/vombatidae.mutt
 set signature  = ~/.mutt/sig
