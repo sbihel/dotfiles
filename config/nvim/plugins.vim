@@ -11,7 +11,7 @@ Plug 'morhetz/gruvbox'
 " utilities
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
-Plug 'ctrlpvim/ctrlp.vim'
+"Plug 'ctrlpvim/ctrlp.vim'
 Plug 'gregsexton/gitv'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
@@ -38,6 +38,9 @@ Plug 'sjl/gundo.vim'  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
 Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-emoji'
 
 
 " language-specific plugins

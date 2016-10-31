@@ -116,3 +116,5 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
