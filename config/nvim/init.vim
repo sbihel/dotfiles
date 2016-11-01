@@ -12,8 +12,13 @@ syntax enable
 set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
-colorscheme gruvbox
 let g:gruvbox_contrast_dark='hard'
+colo gruvbox
+let g:seoul256_light_background = 256
+let g:seoul256_background = 233
+colo seoul256-light
+colo seoul256
+let g:airline_theme='seoul256'
 if has('gui_running')
     set background=dark
 else
@@ -129,7 +134,8 @@ autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
 autocmd FileType latex setlocal tw=80 cc=80
-autocmd FileType tex setlocal tw=80 cc=80
+let g:tex_flavor = "latex"
+autocmd FileType tex setlocal tw=80 cc=80 spell
 autocmd FileType python setlocal cc=79
 
 
@@ -231,6 +237,64 @@ let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with \h
 au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
 
+" fzf
+let $FZF_DEFAULT_OPTS .= ' --inline-info'
+
+" File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
+let g:fzf_files_options =
+  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+" nnoremap <silent> <Leader><Leader> :Files<CR>
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <Leader>C        :Colors<CR>
+nnoremap <silent> <Leader><Enter>  :Buffers<CR>
+nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
+xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
+nnoremap <silent> <Leader>`        :Marks<CR>
+" nnoremap <silent> q: :History:<CR>
+" nnoremap <silent> q/ :History/<CR>
+
+"inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
+inoremap <expr> <c-x><c-k> fzf#complete('cat /usr/share/dict/words')
+imap <c-x><c-k> <plug>(fzf-complete-word)
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+
+nmap <leader><tab> <plug>(fzf-maps-n)
+xmap <leader><tab> <plug>(fzf-maps-x)
+omap <leader><tab> <plug>(fzf-maps-o)
+
+command! Plugs call fzf#run({
+  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+  \ 'options': '--delimiter / --nth -1',
+  \ 'down':    '~40%',
+  \ 'sink':    'Explore'})
+
+" [Buffers] Jump to the existing window if possible
+"let g:fzf_buffers_jump = 1
+
+" [[B]Commits] Customize the options used by 'git log':
+"let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+
+" [Tags] Command to generate tags file
+"let g:fzf_tags_command = 'ctags -R'
+
+" [Commands] --expect expression for directly executing the command
+"let g:fzf_commands_expect = 'alt-enter,ctrl-x'
+
+" 고요 & Limelight
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
+
+" Easy align
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -257,7 +321,7 @@ function! WinMove(key)
   endif
 endfunction
 
-function! StripWS()  " remove trailing whitespaces
+function! StripWS()  " remove all trailing whitespaces
   execute '%s/\s\+$//e'
 endfunction
 
