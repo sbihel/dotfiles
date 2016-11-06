@@ -4,8 +4,10 @@ call plug#begin('~/.config/nvim/plugged')
 
 
 " colorschemes
-" Plug 'altercation/vim-colors-solarized'
 Plug 'morhetz/gruvbox'
+Plug 'tomasr/molokai'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'altercation/vim-colors-solarized'
 
 
 " utilities
@@ -17,6 +19,10 @@ Plug 'junegunn/rainbow_parentheses.vim'
 Plug 'junegunn/vim-easy-align',                 { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'junegunn/vim-slash'
+Plug 'junegunn/gv.vim'
+Plug 'junegunn/vim-peekaboo'
+Plug 'junegunn/vim-after-object'
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
 "Plug 'ctrlpvim/ctrlp.vim'
@@ -69,6 +75,7 @@ Plug 'gavocanov/vim-js-indent',    { 'for': 'javascript' } " JavaScript indent s
 Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
 Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
+Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

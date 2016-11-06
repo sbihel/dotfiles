@@ -295,6 +295,23 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+" slash
+function! s:flash()
+  set cursorline!
+  redraw
+  sleep 20m
+  set cursorline!
+  return ''
+endfunction
+
+noremap <expr> <plug>(slash-after) <sid>flash()
+
+" peekaboo
+let g:peekaboo_delay = 250
+
+" after-object
+autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -338,6 +355,26 @@ function Tmpwatch(path, days)
     echo "Tmpwatch(): Directory '" . l:path . "' not found"
   endif
 endfunction
+
+" color scheme selector
+function! s:colors(...)
+  return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+        \                  'v:val !~ "^/usr/"'),
+        \           'fnamemodify(v:val, ":t:r")'),
+        \       '!a:0 || stridx(v:val, a:1) >= 0')
+endfunction
+
+function! s:rotate_colors()
+  if !exists('s:colors')
+    let s:colors = s:colors()
+  endif
+  let name = remove(s:colors, 0)
+  call add(s:colors, name)
+  execute 'colorscheme' name
+  redraw
+  echo name
+endfunction
+nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ABBREVIATIONS
