@@ -32,7 +32,7 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-sleuth'  " detect indentation
 Plug 'tpope/vim-obsession'  " save session
 Plug 'tpope/vim-tbone'
-Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/neocomplete.vim'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
@@ -53,10 +53,13 @@ Plug 'sjl/gundo.vim'  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
 Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
+Plug 'evidanary/grepg.vim'
+Plug 'justinmk/vim-gtfo'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
 
 
 " language-specific plugins
-Plug 'fatih/vim-go',               { 'for': 'go' }
+Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoInstallBinaries' }
 Plug 'derekwyatt/vim-scala',       { 'for': 'scala' }
 Plug 'dag/vim2hs',                 { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml

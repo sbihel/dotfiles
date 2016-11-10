@@ -11,7 +11,7 @@ set -g @resurrect-capture-pane-contents 'on'
 # SETTINGS
 
 if-shell "if [[ $OSTYPE != 'linux-gnu' ]]; then true; else false; fi" \
-     'set -g default-command "reattach-to-user-namespace -l zsh"'
+     'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
 #set -g default-terminal "screen-256color"
 
 # color theme, file created by vim-airline
@@ -68,6 +68,8 @@ set -g focus-events on
 
 # increase scrollback buffer size
 set -g history-limit 50000
+
+set-window-option -g allow-rename off
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/dotfiles/tmux/plugins/tpm/tpm'

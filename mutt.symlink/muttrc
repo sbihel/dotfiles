@@ -130,3 +130,4 @@ folder-hook . set trash="=Trash"
 folder-hook trash$ unset trash
 
 color progress white blue
+set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
