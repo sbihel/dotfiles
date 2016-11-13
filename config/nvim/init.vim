@@ -20,9 +20,9 @@ colo seoul256-light
 colo seoul256
 let g:airline_theme='seoul256'
 if has('gui_running')
-    set background=dark
+  set background=dark
 else
-    set background=dark
+  set background=dark
 endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
@@ -97,10 +97,15 @@ set visualbell
 set t_vb=
 set tm=500
 
+"set inccomand=nosplit
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set paste toggle
+let mapleader      = ' '
+let maplocalleader = ' '
+
+" <F6> | paste toggle
 set pastetoggle=<F6>
 
 nnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
@@ -109,16 +114,44 @@ map <silent> <C-h> :call WinMove('h')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
 map <silent> <C-k> :call WinMove('k')<cr>
 map <silent> <C-l> :call WinMove('l')<cr>
+" circular windows navigation
+nnoremap <tab>   <c-w>w
+nnoremap <S-tab> <c-w>W
 
 " toggle cursor line
 nnoremap <leader>i :set cursorline!<cr>
 
 " switch between current and last buffer
-nmap <leader>. <c-^>
+nnoremap <leader>. <c-^>
+
+nnoremap <leader>l :bnext<CR>
+nnoremap        ]b :bnext<cr>
+nnoremap <leader>h :bprevious<CR>
+nnoremap        [b :bprev<cr>
+
+nnoremap ]t :tabn<cr>
+nnoremap [t :tabp<cr>
+
+" jk | Escaping!
+inoremap jk <Esc>
+"xnoremap jk <Esc>
+"cnoremap jk <C-c>
+
+" Save
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <leader>s :update<cr>
+nnoremap <leader>w :update<cr>
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>Q :qa!<cr>
 
 " remove extra whitespace
-nmap <leader><space> :'<,'>s/\s\+$//e<cr>
-nmap <leader><space> :s/\s\+$//e<cr>
+"nmap <leader><space> :'<,'>s/\s\+$//e<cr>
+"nmap <leader><space> :s/\s\+$//e<cr>
 
 " write read-only files
 cmap w!! w !sudo tee % >/dev/null
@@ -137,6 +170,7 @@ autocmd FileType latex setlocal tw=80 cc=80
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=80 cc=80 spell
 autocmd FileType python setlocal cc=79
+autocmd FileType mail setlocal tw=78 cc=78 spell fo+=w
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -180,37 +214,43 @@ let g:airline#extensions#tabline#enabled = 1
 
 " tagbar go
 let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-        \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }
+      \ 'ctagstype' : 'go',
+      \ 'kinds'     : [
+      \ 'p:package',
+      \ 'i:imports:1',
+      \ 'c:constants',
+      \ 'v:variables',
+      \ 't:types',
+      \ 'n:interfaces',
+      \ 'w:fields',
+      \ 'e:embedded',
+      \ 'm:methods',
+      \ 'r:constructor',
+      \ 'f:functions'
+      \ ],
+      \ 'sro' : '.',
+      \ 'kind2scope' : {
+      \ 't' : 'ctype',
+      \ 'n' : 'ntype'
+      \ },
+      \ 'scope2kind' : {
+      \ 'ctype' : 't',
+      \ 'ntype' : 'n'
+      \ },
+      \ 'ctagsbin'  : 'gotags',
+      \ 'ctagsargs' : '-sort -silent'
+      \ }
 
-nmap <leader>l :bnext<CR>
-nmap <leader>h :bprevious<CR>
+" NERD Tree | <F10>
+inoremap <F10> <esc>:NERDTreeToggle<cr>
+nnoremap <F10> :NERDTreeToggle<cr>
 
-" Gundo tree
+" TagBar | <F9>
+inoremap <F9> <esc>:TagbarToggle<cr>
+nnoremap <F9> :TagbarToggle<cr>
+"let g:tagbar_sort = 0
+
+" Gundo tree | <F5>
 nnoremap <F5> :GundoToggle<CR>
 
 " Startify
@@ -238,13 +278,15 @@ au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
 
 " fzf
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
+endif
 let $FZF_DEFAULT_OPTS .= ' --inline-info'
 
 " File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
 let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+      \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
-" nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
@@ -267,10 +309,10 @@ xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
 command! Plugs call fzf#run({
-  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-  \ 'options': '--delimiter / --nth -1',
-  \ 'down':    '~40%',
-  \ 'sink':    'Explore'})
+      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+      \ 'options': '--delimiter / --nth -1',
+      \ 'down':    '~40%',
+      \ 'sink':    'Explore'})
 
 " [Buffers] Jump to the existing window if possible
 "let g:fzf_buffers_jump = 1

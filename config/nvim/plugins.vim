@@ -1,5 +1,3 @@
-filetype off
-
 call plug#begin('~/.config/nvim/plugged')
 
 
@@ -43,7 +41,7 @@ Plug 'xuyuanp/nerdtree-git-plugin'
 " Plug 'scrooloose/syntastic'
 Plug 'benekastah/neomake'
 Plug 'janko-m/vim-test'
-Plug 'majutsushi/tagbar',                       { 'on': 'TagbarOpen' }
+Plug 'majutsushi/tagbar' ",                       { 'on': ['TagbarOpen', 'TagbarToggle'] }
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -55,7 +53,8 @@ Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 Plug 'evidanary/grepg.vim'
 Plug 'justinmk/vim-gtfo'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe',                  { 'do': './install.py' }
+Plug 'Yggdroot/indentLine',                     { 'on': 'IndentLinesEnable' }
 
 
 " language-specific plugins
@@ -84,4 +83,3 @@ Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 
 
 call plug#end()
-filetype plugin indent on
