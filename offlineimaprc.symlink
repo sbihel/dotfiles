@@ -34,4 +34,4 @@ remoteuser = sbihe682
 remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
-folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash']
+folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash', 'INBOX.Drafts', 'INBOX.Sent', 'INBOX.Trash']

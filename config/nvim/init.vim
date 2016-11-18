@@ -170,7 +170,7 @@ autocmd FileType latex setlocal tw=80 cc=80
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=80 cc=80 spell
 autocmd FileType python setlocal cc=79
-autocmd FileType mail setlocal tw=78 cc=78 spell fo+=w
+autocmd FileType mail setlocal tw=78 cc=78 spell " fo+=w
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

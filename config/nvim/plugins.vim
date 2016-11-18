@@ -13,45 +13,45 @@ Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': './inst
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/rainbow_parentheses.vim'
+Plug 'junegunn/rainbow_parentheses.vim',        { 'on': 'RainbowParentheses' }
 Plug 'junegunn/vim-easy-align',                 { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim',                       { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim',                  { 'on': 'Goyo' }
 Plug 'junegunn/vim-slash'
-Plug 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim',                         { 'on': 'GV' }
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-after-object'
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
 "Plug 'ctrlpvim/ctrlp.vim'
-Plug 'gregsexton/gitv'
+Plug 'gregsexton/gitv',                         { 'on': 'Gitv'}
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-commentary'
+"Plug 'tpope/vim-commentary',                    { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sleuth'  " detect indentation
-Plug 'tpope/vim-obsession'  " save session
+Plug 'tpope/vim-obsession',                     { 'on': 'Obsess' }  " save session
 Plug 'tpope/vim-tbone'
 "Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/neocomplete.vim'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree',                     { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'xuyuanp/nerdtree-git-plugin'
+Plug 'xuyuanp/nerdtree-git-plugin',             { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'scrooloose/syntastic'
-Plug 'benekastah/neomake'
-Plug 'janko-m/vim-test'
+Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
+Plug 'janko-m/vim-test',                        { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 Plug 'majutsushi/tagbar' ",                       { 'on': ['TagbarOpen', 'TagbarToggle'] }
 Plug 'edkolev/tmuxline.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'wellle/targets.vim'  " Additional text objects
-Plug 'sjl/gundo.vim'  " undo tree
+Plug 'sjl/gundo.vim',                           { 'on': 'GundoToggle' }  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
 Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
-Plug 'evidanary/grepg.vim'
+Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 Plug 'Valloric/YouCompleteMe',                  { 'do': './install.py' }
 Plug 'Yggdroot/indentLine',                     { 'on': 'IndentLinesEnable' }
@@ -78,6 +78,8 @@ Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax p
 Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
 Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
+Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }
+Plug 'alcesleo/vim-uppercase-sql', { 'for': 'sql' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 
