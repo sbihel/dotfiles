@@ -49,12 +49,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'wellle/targets.vim'  " Additional text objects
 Plug 'sjl/gundo.vim',                           { 'on': 'GundoToggle' }  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
-Plug 'rbgrouleff/bclose.vim'  " :bd but not closing window/pane
+Plug 'rbgrouleff/bclose.vim',                   { 'on': 'Bclose' }  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 Plug 'Valloric/YouCompleteMe',                  { 'do': './install.py' }
 Plug 'Yggdroot/indentLine',                     { 'on': 'IndentLinesEnable' }
+Plug 'mptre/vim-printf',                        { 'on': 'Printf' }
+Plug 'gelguy/Cmd2.vim'
 
 
 " language-specific plugins

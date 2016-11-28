@@ -166,9 +166,9 @@ autocmd BufReadPre README* setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
-autocmd FileType latex setlocal tw=80 cc=80
+autocmd FileType latex setlocal tw=0 cc=80
 let g:tex_flavor = "latex"
-autocmd FileType tex setlocal tw=80 cc=80 spell
+autocmd FileType tex setlocal tw=0 cc=80 spell
 autocmd FileType python setlocal cc=79
 autocmd FileType mail setlocal tw=78 cc=78 spell " fo+=w
 
@@ -345,14 +345,54 @@ function! s:flash()
   set cursorline!
   return ''
 endfunction
+function! s:blink(times, delay)
+  let s:blink = { 'ticks': 2 * a:times, 'delay': a:delay }
+
+  function! s:blink.tick(_)
+    let self.ticks -= 1
+    let active = self == s:blink && self.ticks > 0
+
+    if !self.clear() && active && &hlsearch
+      let [line, col] = [line('.'), col('.')]
+      let w:blink_id = matchadd('IncSearch',
+            \ printf('\%%%dl\%%>%dc\%%<%dc', line, max([0, col-2]), col+2))
+    endif
+    if active
+      call timer_start(self.delay, self.tick)
+    endif
+  endfunction
+
+  function! s:blink.clear()
+    if exists('w:blink_id')
+      call matchdelete(w:blink_id)
+      unlet w:blink_id
+      return 1
+    endif
+  endfunction
+
+  call s:blink.clear()
+  call s:blink.tick(0)
+  return ''
+endfunction
 
 noremap <expr> <plug>(slash-after) <sid>flash()
+" noremap <expr> <plug>(slash-after) <sid>blink(2, 50)
 
 " peekaboo
-let g:peekaboo_delay = 250
+let g:peekaboo_delay = 750
 
 " after-object
 autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDTrimTrailingWhitespace = 1
+
+" cmd2
+nmap : :<F12>
+" for : mode (experimental)
+nmap / /<F12>
+cmap <F12> <Plug>(Cmd2Suggest)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
