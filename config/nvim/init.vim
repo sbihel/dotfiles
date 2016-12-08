@@ -13,12 +13,12 @@ set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
 let g:gruvbox_contrast_dark='hard'
-colo gruvbox
 let g:seoul256_light_background = 256
 let g:seoul256_background = 233
 colo seoul256-light
 colo seoul256
-let g:airline_theme='seoul256'
+" let g:airline_theme='seoul256'
+colo gruvbox
 if has('gui_running')
   set background=dark
 else
@@ -389,7 +389,7 @@ let g:NERDSpaceDelims = 1
 let g:NERDTrimTrailingWhitespace = 1
 
 " cmd2
-nmap : :<F12>
+" nmap : :<F12>
 " for : mode (experimental)
 nmap / /<F12>
 cmap <F12> <Plug>(Cmd2Suggest)

@@ -1,4 +1,4 @@
-text/html; google-chrome %s &; test=test -n "$DISPLAY" %s; needsterminal
+text/html; open %s &; test=test -n "$DISPLAY" %s; needsterminal
 text/html; w3m -I %{charset} -T text/html %s; copiousoutput
 image/*; ~/.mutt/muttimage.sh %s; copiousoutput
 
