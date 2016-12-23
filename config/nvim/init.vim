@@ -1,13 +1,11 @@
 set nocompatible  " not compatible with vi
 
-" load plugins from vundle
+" load plugins from vim-plug
 source ~/.config/nvim/plugins.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GENERAL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-syntax enable
 
 set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
@@ -97,7 +95,7 @@ set visualbell
 set t_vb=
 set tm=500
 
-"set inccomand=nosplit
+set inccommand=split " or nosplit
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
@@ -159,14 +157,13 @@ cmap w!! w !sudo tee % >/dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 autocmd FileType c setlocal tw=80 cc=80
 autocmd BufReadPre README* setlocal tw=80 cc=80
 "autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
-autocmd FileType latex setlocal tw=0 cc=80
+autocmd FileType latex setlocal tw=0 cc=80 spell
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=0 cc=80 spell
 autocmd FileType python setlocal cc=79
@@ -176,7 +173,6 @@ autocmd FileType mail setlocal tw=78 cc=78 spell " fo+=w
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 " neomake
 autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 
@@ -196,21 +192,22 @@ autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 "inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
 "inoremap <expr><Space> deoplete#mappings#undo_completion()."\<Space>"
 
-
 " airline
 set laststatus=2
 set guifont=Source\ Code\ Pro\ for\ Powerline " make sure to escape the spaces in the name properly
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tmuxline#enabled = 0
-let g:tmuxline_theme = 'airline'
+" let g:airline#extensions#tmuxline#enabled = 0
+" let g:tmuxline_theme = 'airline'
 let g:airline#extensions#tabline#enabled = 1
-
-" ocp-indent for indenting ocaml files
-" autocmd FileType ocaml source /Users/simonbihel/.vim/bundle/ocp-indent-vim/indent/
-" set rtp^="/Users/simonbihel/.opam/system/share/ocp-indent/vim"
-" set rtp+=</Users/simonbihel/.vim/bundle/ocp-indent-vim>
-" set rtp+=</home/simon/dotfiles/config/nvim/plugged/ocp-indent-vim>
-
+let g:tmuxline_preset = {
+      \ 'a': '#S',
+      \ 'b': '#F',
+      \ 'c': '#W',
+      \ 'win': ['#I', '#W'],
+      \ 'cwin': ['#I', '#W'],
+      \ 'x': '#{battery_icon} #{battery_percentage}',
+      \ 'y': ['%a %Y-%m-%d', '%H:%M'],
+      \ 'z': '#H'}
 
 " tagbar go
 let g:tagbar_type_go = {
@@ -271,7 +268,7 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let airline_section_y = '%{ObsessionStatus()}'
 
 " GitGutter
-let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with \h
+let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with <leader>h
 
 " Antlr
 au BufRead,BufNewFile *.g set filetype=antlr3
@@ -393,6 +390,25 @@ let g:NERDTrimTrailingWhitespace = 1
 " for : mode (experimental)
 nmap / /<F12>
 cmap <F12> <Plug>(Cmd2Suggest)
+
+" textmanip
+xmap <A-S-d> <Plug>(textmanip-duplicate-down)
+nmap <A-S-d> <Plug>(textmanip-duplicate-down)
+xmap <A-S-u> <Plug>(textmanip-duplicate-up)
+nmap <A-S-u> <Plug>(textmanip-duplicate-up)
+xmap <A-S-j> <Plug>(textmanip-move-down)
+xmap <A-S-k> <Plug>(textmanip-move-up)
+xmap <A-S-h> <Plug>(textmanip-move-left)
+xmap <A-S-l> <Plug>(textmanip-move-right)
+nmap <A-S-t> <Plug>(textmanip-toggle-mode)
+xmap <A-S-t> <Plug>(textmanip-toggle-mode)
+
+" pencil
+augroup pencil
+  autocmd!
+  autocmd FileType latex call pencil#init()
+                     \ | let g:airline_section_x = '%{PencilMode()}'
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

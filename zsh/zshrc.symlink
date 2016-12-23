@@ -87,6 +87,7 @@ fi
 
 # go
 export GOPATH=$HOME/.go
+export GOBIN=$HOME/.go/bin
 export PATH=$PATH:$GOPATH/bin
 if [[ `uname` == 'Darwin' ]]; then
   alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
