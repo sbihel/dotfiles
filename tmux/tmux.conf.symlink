@@ -10,17 +10,13 @@ set -g @resurrect-capture-pane-contents 'on'
 
 # SETTINGS
 
-if-shell "if [[ $OSTYPE != 'linux-gnu' ]]; then true; else false; fi" \
-     'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
+# if-shell "[[ $OSTYPE != 'linux-gnu' ]]" 'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
+set-option -g default-command "which reattach-to-user-namespace >/dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
 #set -g default-terminal "screen-256color"
 
-set -g @batt_charged_icon ""
-set -g @batt_discharging_icon ""
-#set -g @batt_charging_icon ""
-set -g @batt_charging_icon ""
-#
+
 # color theme, file created by vim-airline
-# source-file ~/.tmuxlinesnapshot
+source-file ~/.tmuxlinesnapshot
 #set -g status-right "#[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour246,bg=colour239] Batt: #{battery_icon} #{battery_percentage} #{battery_remain}  #[fg=colour246,bg=colour239] %Y-%m-%d  %H:%M #[fg=colour246,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour234,bg=colour246] #h "
 
 # unbind default prefix and set it to Ctrl+a

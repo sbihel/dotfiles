@@ -196,18 +196,18 @@ autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 set laststatus=2
 set guifont=Source\ Code\ Pro\ for\ Powerline " make sure to escape the spaces in the name properly
 let g:airline_powerline_fonts = 1
-" let g:airline#extensions#tmuxline#enabled = 0
+let g:airline#extensions#tmuxline#enabled = 0
 " let g:tmuxline_theme = 'airline'
 let g:airline#extensions#tabline#enabled = 1
-let g:tmuxline_preset = {
-      \ 'a': '#S',
-      \ 'b': '#F',
-      \ 'c': '#W',
-      \ 'win': ['#I', '#W'],
-      \ 'cwin': ['#I', '#W'],
-      \ 'x': '#{battery_icon} #{battery_percentage}',
-      \ 'y': ['%a %Y-%m-%d', '%H:%M'],
-      \ 'z': '#H'}
+" let g:tmuxline_preset = {
+"       \ 'a': '#S',
+"       \ 'b': '#F',
+"       \ 'c': '#W',
+"       \ 'win': ['#I', '#W'],
+"       \ 'cwin': ['#I', '#W'],
+"       \ 'x': '#{battery_icon} #{battery_percentage}',
+"       \ 'y': ['%a %Y-%m-%d', '%H:%M'],
+"       \ 'z': '#H'}
 
 " tagbar go
 let g:tagbar_type_go = {
