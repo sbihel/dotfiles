@@ -58,7 +58,7 @@ set scrolloff=3 " lines of text around cursor
 set relativenumber  " show relative lines number
 set number  " show lines number
 set showmatch  " show matching parenthesis
-set clipboard=unnamed  " allow copy/paste from vim to other app
+set clipboard=unnamedplus  " allow copy/paste from vim to other app
 set title  " change the terminal's title
 " set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hidden  " current buffer can be put into background

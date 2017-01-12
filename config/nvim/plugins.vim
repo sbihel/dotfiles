@@ -94,7 +94,7 @@ Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " an
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
 Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }
 Plug 'alcesleo/vim-uppercase-sql', { 'for': 'sql' }
-Plug 'vimwiki/vimwiki',            { 'for': 'vimwiki' }
+Plug 'vimwiki/vimwiki' ",            { 'for': 'vimwiki' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 
