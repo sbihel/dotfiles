@@ -95,7 +95,9 @@ set visualbell
 set t_vb=
 set tm=500
 
-set inccommand=split " or nosplit
+if has('nvim')
+  set inccommand=split " or nosplit
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS

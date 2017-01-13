@@ -56,7 +56,11 @@ Plug 'rbgrouleff/bclose.vim',                   { 'on': 'Bclose' }  " :bd but no
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
-Plug 'Valloric/YouCompleteMe',                  { 'do': './install.py' }
+if has('nvim')
+  Plug 'Valloric/YouCompleteMe',                { 'do': './install.py' }
+else
+  Plug 'Shougo/neocomplete.vim'
+endif
 Plug 'Yggdroot/indentLine',                     { 'on': 'IndentLinesEnable' }
 Plug 'mptre/vim-printf',                        { 'on': 'Printf' }
 Plug 'gelguy/Cmd2.vim'
