@@ -6,6 +6,7 @@ Plug 'morhetz/gruvbox'
 Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'altercation/vim-colors-solarized'
+Plug 'sjl/badwolf'
 
 
 " utilities
@@ -72,6 +73,7 @@ Plug 'AndrewRadev/linediff.vim',                { 'on': 'Linediff' }
 Plug 'AndrewRadev/dsf.vim'
 Plug 'matze/vim-move'
 Plug 't9md/vim-textmanip'
+Plug 'mileszs/ack.vim'
 
 
 " language-specific plugins
