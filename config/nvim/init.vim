@@ -436,6 +436,10 @@ if !has('nvim')
   inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 endif
 
+" multichange
+" let g:multichange_mapping        = '<C-S-n>'
+" let g:multichange_motion_mapping = '<C-S-n>'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

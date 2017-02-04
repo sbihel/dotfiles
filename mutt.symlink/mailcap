@@ -2,6 +2,9 @@ text/html; open %s &; test=test -n "$DISPLAY" %s; needsterminal
 text/html; w3m -I %{charset} -T text/html %s; copiousoutput
 image/*; ~/.mutt/muttimage.sh %s; copiousoutput
 
+text/calendar; mutt-ics; copiousoutput
+application/ics; mutt-ics; copiousoutput
+
 # Images
 image/jpg; ~/.mutt/view_attachment.sh %s jpg
 image/jpeg; ~/.mutt/view_attachment.sh %s jpg
