@@ -444,6 +444,10 @@ endif
 " endif
 " command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
+" multichange
+" let g:multichange_mapping        = '<C-S-n>'
+" let g:multichange_motion_mapping = '<C-S-n>'
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

@@ -101,7 +101,13 @@ if [[ `uname` == 'Darwin' ]]; then
 
   export PATH=/usr/local/Cellar/bison/3.0.4/bin:$PATH
   export PATH=/usr/local/Cellar/flex/2.6.0/bin:$PATH
+
+  export JAVA_HOME="$(/usr/libexec/java_home)"
+  export HADOOP_PREFIX=$HOME/M1/CBD/hadoop-1.2.1
+  export PATH=$PATH:$HADOOP_PREFIX/bin
 fi
+
+export PATH=$PATH:$HOME/.local/bin
 
 # homebrew github token
 export HOMEBREW_GITHUB_API_TOKEN=cc002fb7e9fc4e9b8f52add9253af7f7a6fb5e23

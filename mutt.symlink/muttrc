@@ -23,6 +23,7 @@ set record = +Sent
 
 set delete=yes
 
+set text_flowed = yes
 
 set imap_delim_chars='/'
 
@@ -132,3 +133,5 @@ folder-hook trash$ unset trash
 
 color progress white blue
 set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
+
+auto_view text/calendar application/ics

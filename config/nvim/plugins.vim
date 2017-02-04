@@ -58,7 +58,7 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 if has('nvim')
-  Plug 'Valloric/YouCompleteMe',                { 'do': './install.py' }
+  Plug 'Valloric/YouCompleteMe',                { 'do': './install.py --clang-completer --gocode-completer' }
 else
   Plug 'Shougo/neocomplete.vim'
 endif
@@ -74,6 +74,9 @@ Plug 'AndrewRadev/dsf.vim'
 Plug 'matze/vim-move'
 Plug 't9md/vim-textmanip'
 Plug 'mileszs/ack.vim'
+" Plug 'AndrewRadev/multichange.vim' ",             { 'on': 'Multichange' }
+" Plug 'adinapoli/vim-markmultiple'
+Plug 'dietsche/vim-lastplace'
 
 
 " language-specific plugins
