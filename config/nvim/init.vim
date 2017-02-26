@@ -48,10 +48,10 @@ nnoremap <silent><Esc> :nohlsearch<Bar>:echo<CR>
   " cancel search with escape
 
 " code folding settings
-"set foldmethod=syntax " fold based on indent
-"set foldnestmax=10 " deepest fold is 10 levels
-""set nofoldenable " don't fold by default
-"set foldlevel=1
+" set foldmethod=syntax
+" set foldnestmax=10
+" set foldenable
+set foldlevel=0 " number of fold opened by default
 
 set scrolloff=3 " lines of text around cursor
 
@@ -277,9 +277,9 @@ au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
 
 " fzf
-if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
-endif
+" if executable('ag')
+"   let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
+" endif
 let $FZF_DEFAULT_OPTS .= ' --inline-info'
 
 " File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
@@ -447,6 +447,15 @@ endif
 " multichange
 " let g:multichange_mapping        = '<C-S-n>'
 " let g:multichange_motion_mapping = '<C-S-n>'
+
+" asterix
+let g:asterisk#keeppos = 1
+
+" closetag
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
+
+" anyfold
+let anyfold_activate=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

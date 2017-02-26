@@ -28,9 +28,10 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'gregsexton/gitv',                         { 'on': 'Gitv'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'machakann/vim-sandwich'
 "Plug 'tpope/vim-commentary',                    { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sleuth'  " detect indentation
-Plug 'tpope/vim-obsession',                     { 'on': 'Obsess' }  " save session
+Plug 'tpope/vim-obsession' ",                     { 'on': 'Obsess' }   save session
 Plug 'tpope/vim-tbone'  " helpers for tmux
 Plug 'tpope/vim-eunuch'  " helpers for UNIX
 Plug 'tpope/vim-repeat'  " . for supported plugin maps
@@ -75,8 +76,13 @@ Plug 'matze/vim-move'
 Plug 't9md/vim-textmanip'
 Plug 'mileszs/ack.vim'
 " Plug 'AndrewRadev/multichange.vim' ",             { 'on': 'Multichange' }
-" Plug 'adinapoli/vim-markmultiple'
+Plug 'haya14busa/vim-asterisk'
 Plug 'dietsche/vim-lastplace'
+Plug 'alvan/vim-closetag'
+Plug 'Chiel92/vim-autoformat',                  { 'on': 'Autoformat' }
+Plug 'pseewald/vim-anyfold'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'arecarn/vim-fold-cycle'
 
 
 " language-specific plugins
@@ -85,6 +91,7 @@ Plug 'derekwyatt/vim-scala',       { 'for': 'scala' }
 Plug 'dag/vim2hs',                 { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 Plug 'klen/python-mode',           { 'for': 'python' }
+Plug 'fisadev/vim-isort',          { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
 Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
