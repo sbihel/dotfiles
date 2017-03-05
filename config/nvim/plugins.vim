@@ -83,6 +83,8 @@ Plug 'Chiel92/vim-autoformat',                  { 'on': 'Autoformat' }
 Plug 'pseewald/vim-anyfold'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'arecarn/vim-fold-cycle'
+Plug 'kana/vim-textobj-user'
+Plug 'jceb/vim-textobj-uri'
 
 
 " language-specific plugins
@@ -97,8 +99,10 @@ Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
 Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
 Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
 Plug 'jceb/vim-orgmode',           { 'for': 'org' }
-Plug 'mattn/calendar-vim',         { 'for': 'org' }
+Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
+Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
 Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
+Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
 Plug 'elzr/vim-json',              { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
 Plug 'gregsexton/MatchTag',        { 'for': 'html' } " match tags in html, similar to paren support
