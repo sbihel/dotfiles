@@ -85,6 +85,8 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'arecarn/vim-fold-cycle'
 Plug 'kana/vim-textobj-user'
 Plug 'jceb/vim-textobj-uri'
+Plug 'dodie/vim-disapprove-deep-indentation'
+Plug 'tweekmonster/startuptime.vim',            { 'on': 'StartupTime' }
 
 
 " language-specific plugins
@@ -103,6 +105,7 @@ Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
 Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
 Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
+Plug 'Alok/notational-fzf-vim',    { 'for': 'vimwiki', 'on': 'NV' }
 Plug 'elzr/vim-json',              { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
 Plug 'gregsexton/MatchTag',        { 'for': 'html' } " match tags in html, similar to paren support

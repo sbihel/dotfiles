@@ -6,7 +6,6 @@ source ~/.config/nvim/plugins.vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GENERAL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
@@ -109,6 +108,7 @@ let maplocalleader = ' '
 set pastetoggle=<F6>
 
 nnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
+vnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
 
 map <silent> <C-h> :call WinMove('h')<cr>
 map <silent> <C-j> :call WinMove('j')<cr>
@@ -169,8 +169,12 @@ autocmd FileType latex setlocal tw=0 cc=80 spell
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=0 cc=80 spell
 autocmd FileType python setlocal cc=79
-autocmd FileType mail setlocal tw=78 cc=78 spell " fo+=w
+autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
+augroup mail_filetype
+  autocmd!
+  autocmd VimEnter /tmp/mutt* :call IsReply()
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -457,6 +461,13 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 " anyfold
 let anyfold_activate=1
 
+" lessspace
+let g:lessspace_blacklist = ['mail']
+
+" disapprove deep identation
+let g:LookOfDisapprovalTabTreshold=7
+let g:LookOfDisapprovalSpaceTreshold=(&tabstop*7)
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -520,6 +531,18 @@ function! s:rotate_colors()
   echo name
 endfunction
 nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
+
+function IsReply()
+  if line('$') > 1
+    :g/^>\s\=--\s\=$/,$ delete
+    :%!par w72q
+    :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
+    :%s/^>*\zs\s\+$//e
+    :1
+    :put! =\"\n\n\"
+    :1
+  endif
+endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ABBREVIATIONS
