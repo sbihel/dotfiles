@@ -459,7 +459,9 @@ let g:asterisk#keeppos = 1
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
 " anyfold
-let anyfold_activate=1
+" let anyfold_activate=1
+" autocmd Filetype startify let b:anyfold_activate=0
+" autocmd Filetype calendar let b:anyfold_activate=0
 
 " lessspace
 let g:lessspace_blacklist = ['mail']
@@ -467,6 +469,13 @@ let g:lessspace_blacklist = ['mail']
 " disapprove deep identation
 let g:LookOfDisapprovalTabTreshold=7
 let g:LookOfDisapprovalSpaceTreshold=(&tabstop*7)
+
+" calendar.vim
+let g:calendar_google_calendar = 1
+let g:calendar_google_task = 1
+
+" notational
+let g:nv_directories = ['~/vimwiki']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

@@ -87,6 +87,7 @@ Plug 'kana/vim-textobj-user'
 Plug 'jceb/vim-textobj-uri'
 Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'tweekmonster/startuptime.vim',            { 'on': 'StartupTime' }
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 
 " language-specific plugins
@@ -101,10 +102,11 @@ Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
 Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
 Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
 Plug 'jceb/vim-orgmode',           { 'for': 'org' }
-Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
+Plug 'mattn/calendar-vim' ",         { 'for': ['org', 'vimwiki'] }
 Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
 Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
+Plug 'tbabej/taskwiki',            { 'for': 'vimwiki' }  " has requirements
 Plug 'Alok/notational-fzf-vim',    { 'for': 'vimwiki', 'on': 'NV' }
 Plug 'elzr/vim-json',              { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
@@ -117,7 +119,7 @@ Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " an
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
 Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }
 Plug 'alcesleo/vim-uppercase-sql', { 'for': 'sql' }
-Plug 'vimwiki/vimwiki' ",            { 'for': 'vimwiki' }
+Plug 'vimwiki/vimwiki',            { 'branch': 'dev' } " { 'for': 'vimwiki' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 
