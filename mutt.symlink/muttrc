@@ -27,7 +27,7 @@ set text_flowed = yes
 
 set imap_delim_chars='/'
 
-set editor = 'nvim + +"norm gg}ko" +startinsert'
+set editor = 'nvim'
 
 source ~/.mutt/colors/vombatidae.mutt
 set mailcap_path = ~/.mutt/mailcap

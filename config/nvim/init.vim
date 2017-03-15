@@ -169,12 +169,16 @@ autocmd FileType latex setlocal tw=0 cc=80 spell
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=0 cc=80 spell
 autocmd FileType python setlocal cc=79
-autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
 augroup mail_filetype
   autocmd!
+  autocmd VimEnter /tmp/mutt* :0,'}s/\s\+$//e
+  " autocmd VimEnter /tmp/mutt* execute 'norm gg'
   autocmd VimEnter /tmp/mutt* :call IsReply()
+  autocmd VimEnter /tmp/mutt* execute 'norm gg}dd'
+  autocmd VimEnter /tmp/mutt* execute 'startinsert'
 augroup END
+autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -477,6 +481,9 @@ let g:calendar_google_task = 1
 " notational
 let g:nv_directories = ['~/vimwiki']
 
+" sandwich
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -544,12 +551,13 @@ nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 function IsReply()
   if line('$') > 1
     :g/^>\s\=--\s\=$/,$ delete
-    :%!par w72q
-    :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
+    " execute 'normal! }vG$'
+    " execute 'normal :%!par w72q\<cr>'
+    " :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
     :%s/^>*\zs\s\+$//e
-    :1
-    :put! =\"\n\n\"
-    :1
+    " :1
+    " :put! =\"\n\n\"
+    " :1
   endif
 endfunction
 

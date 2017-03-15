@@ -102,7 +102,7 @@ Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
 Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
 Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
 Plug 'jceb/vim-orgmode',           { 'for': 'org' }
-Plug 'mattn/calendar-vim' ",         { 'for': ['org', 'vimwiki'] }
+Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
 Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
 Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
