@@ -169,6 +169,8 @@ autocmd FileType latex setlocal tw=0 cc=80 spell
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=0 cc=80 spell
 autocmd FileType python setlocal cc=79
+autocmd FileType gitcommit setlocal tw=72 cc=72 spell
+autocmd FileType vim setlocal tw=78 cc=78
 
 augroup mail_filetype
   autocmd!
@@ -451,6 +453,11 @@ endif
 "   let &grepprg = 'grep -rn $* *'
 " endif
 " command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+cnoreabbrev Ack Ack!
+let g:ack_autoclose=1
+let g:ackhighlight = 1
+" let g:ack_use_dispatch = 1
+nnoremap <Leader>a :Ack!<Space>
 
 " multichange
 " let g:multichange_mapping        = '<C-S-n>'
@@ -478,8 +485,11 @@ let g:LookOfDisapprovalSpaceTreshold=(&tabstop*7)
 let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
+" vimwiki
+let g:vimwiki_list = [{'path': '~/personal_wiki'}]
+
 " notational
-let g:nv_directories = ['~/vimwiki']
+let g:nv_directories = ['~/personal_wiki']
 
 " sandwich
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)

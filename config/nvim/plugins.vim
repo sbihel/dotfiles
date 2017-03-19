@@ -35,6 +35,8 @@ Plug 'tpope/vim-obsession' ",                     { 'on': 'Obsess' }   save sess
 Plug 'tpope/vim-tbone'  " helpers for tmux
 Plug 'tpope/vim-eunuch'  " helpers for UNIX
 Plug 'tpope/vim-repeat'  " . for supported plugin maps
+Plug 'tpope/vim-dispatch'
+Plug 'radenling/vim-dispatch-neovim'
 "Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/neosnippet.vim'
@@ -60,6 +62,7 @@ Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 if has('nvim')
   Plug 'Valloric/YouCompleteMe',                { 'do': './install.py --clang-completer --gocode-completer' }
+  Plug 'rdnetto/YCM-Generator',                 { 'branch': 'stable'}
 else
   Plug 'Shougo/neocomplete.vim'
 endif
@@ -115,6 +118,7 @@ Plug 'othree/html5.vim',           { 'for': 'html' } " html5 support
 Plug 'gavocanov/vim-js-indent',    { 'for': 'javascript' } " JavaScript indent support
 Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
+Plug 'jeaye/color_coded',          { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
 Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }
