@@ -119,6 +119,7 @@ Plug 'gavocanov/vim-js-indent',    { 'for': 'javascript' } " JavaScript indent s
 Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
 Plug 'jeaye/color_coded',          { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
+Plug 'arakashic/chromatica.nvim',  { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
 Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }

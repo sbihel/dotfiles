@@ -10,6 +10,7 @@ set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
 let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_italic=1
 let g:seoul256_light_background = 256
 let g:seoul256_background = 233
 colo seoul256-light
@@ -23,6 +24,7 @@ else
 endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
+set termguicolors
 
 set autoread " detect when a file is changed
 
@@ -64,7 +66,8 @@ set hidden  " current buffer can be put into background
 
 "autocmd BufWritePre * :%s/\s\+$//e  " auto remove trailing whitespaces
 
-" cmap w!! w !sudo tee % >/dev/null  " write when forgot to launch nvim with sudo
+" write when forgot to launch nvim with sudo
+cmap w!! w !sudo tee % >/dev/null
 
 set undofile  " persistent undo
 set undodir=~/.config/nvim/undodir,~/.tmp,~/tmp,/var/tmp,/tmp
@@ -478,8 +481,8 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 let g:lessspace_blacklist = ['mail']
 
 " disapprove deep identation
-let g:LookOfDisapprovalTabTreshold=7
-let g:LookOfDisapprovalSpaceTreshold=(&tabstop*7)
+" let g:LookOfDisapprovalTabTreshold=7
+" let g:LookOfDisapprovalSpaceTreshold=(&tabstop*7)
 
 " calendar.vim
 let g:calendar_google_calendar = 1
@@ -493,6 +496,9 @@ let g:nv_directories = ['~/personal_wiki']
 
 " sandwich
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+
+" YouCompleteMe
+let g:ycm_confirm_extra_conf = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
