@@ -24,8 +24,8 @@ setw -g window-status-activity-fg "colour246"
 setw -g window-status-separator ""
 setw -g window-status-bg "colour237"
 
-set -g @batt_charged_icon ""
-set -g @batt_discharging_icon ""
+set -g @batt_charged_icon " "
+set -g @batt_discharging_icon " "
 #set -g @batt_charging_icon ""
 set -g @batt_charging_icon ""
 

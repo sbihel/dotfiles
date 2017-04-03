@@ -72,3 +72,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (setq fill-column 80)
 (setq text-mode-hook 'turn-on-auto-fill)
 (setq org-mode 'text-mode)
+
+
+;; Added by Kite
+(load-file "~/.emacs.d/kite.el")
+
+;; Added by Kite
+(load-file "~/.emacs.d/kite.el)
