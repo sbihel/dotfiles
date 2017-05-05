@@ -10,7 +10,9 @@ set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
 let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_italic=1
+if has('nvim')
+  let g:gruvbox_italic=1
+endif
 let g:seoul256_light_background = 256
 let g:seoul256_background = 233
 colo seoul256-light
@@ -24,7 +26,9 @@ else
 endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
-set termguicolors
+if has('termguicolors') && has('nvim')
+  set termguicolors
+endif
 
 set autoread " detect when a file is changed
 
@@ -81,6 +85,7 @@ set colorcolumn=120
 set wrap "turn on line wrapping
 set linebreak " set soft wrapping
 set showbreak=… " show ellipsis at breaking
+set breakindent
 
 " show tabs
 "set list
@@ -106,6 +111,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader      = ' '
 let maplocalleader = ' '
+nnoremap ; :
 
 " <F6> | paste toggle
 set pastetoggle=<F6>
@@ -139,6 +145,10 @@ nnoremap [t :tabp<cr>
 inoremap jk <Esc>
 "xnoremap jk <Esc>
 "cnoremap jk <C-c>
+
+" row by row
+nnoremap j gj
+nnoremap k gk
 
 " Save
 inoremap <C-s>     <C-O>:update<cr>
@@ -256,6 +266,7 @@ let g:tagbar_type_go = {
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap <F10> :NERDTreeToggle<cr>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " TagBar | <F9>
 inoremap <F9> <esc>:TagbarToggle<cr>
@@ -456,6 +467,9 @@ endif
 "   let &grepprg = 'grep -rn $* *'
 " endif
 " command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 cnoreabbrev Ack Ack!
 let g:ack_autoclose=1
 let g:ackhighlight = 1
@@ -499,6 +513,25 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 
 " YouCompleteMe
 let g:ycm_confirm_extra_conf = 0
+augroup load_ycm
+  autocmd!
+  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+                                \ | autocmd! load_ycm
+augroup END
+
+" Chromatica
+let g:chromatica#enable_at_startup=1
+let hostname = substitute(system('hostname'), '\n', '', '')
+if hostname == "mists"
+  let g:chromatica#libclang_path='/usr/lib64'
+endif
+
+" qf_resize
+nnoremap <silent> <c-w>= :wincmd =<cr>:QfResizeWindows<cr>
+
+" cosco
+autocmd FileType javascript,css,c,cpp nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
+autocmd FileType javascript,css,c,cpp imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

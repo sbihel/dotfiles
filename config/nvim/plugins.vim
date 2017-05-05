@@ -7,6 +7,10 @@ Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
+if has('termguicolors')
+  Plug 'trevordmiller/nova-vim'
+endif
+Plug 'chriskempson/base16-vim'
 
 
 " utilities
@@ -91,6 +95,11 @@ Plug 'jceb/vim-textobj-uri'
 Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'tweekmonster/startuptime.vim',            { 'on': 'StartupTime' }
 Plug 'powerman/vim-plugin-AnsiEsc'
+Plug 'vim-scripts/VisIncr'
+Plug 'google/vim-searchindex'
+Plug 'blueyed/vim-qf_resize'
+Plug 'romainl/vim-qf'
+Plug 'lfilho/cosco.vim'
 
 
 " language-specific plugins
@@ -109,14 +118,16 @@ Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
 Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
 Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
 Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
-Plug 'tbabej/taskwiki',            { 'for': 'vimwiki' }  " has requirements
+Plug 'tbabej/taskwiki',            { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
 Plug 'Alok/notational-fzf-vim',    { 'for': 'vimwiki', 'on': 'NV' }
 Plug 'elzr/vim-json',              { 'for': 'json' }
 Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
 Plug 'gregsexton/MatchTag',        { 'for': 'html' } " match tags in html, similar to paren support
 Plug 'othree/html5.vim',           { 'for': 'html' } " html5 support
+Plug 'hail2u/vim-css3-syntax',     { 'for': 'css' }
 Plug 'gavocanov/vim-js-indent',    { 'for': 'javascript' } " JavaScript indent support
 Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax plugin
+Plug 'pangloss/vim-javascript',    { 'for': 'javascript' }
 Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
 Plug 'jeaye/color_coded',          { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'arakashic/chromatica.nvim',  { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
