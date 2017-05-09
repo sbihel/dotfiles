@@ -1,5 +1,12 @@
 set nocompatible  " not compatible with vi
 
+" Automatic installation of vim-plug if not installed
+" if empty(glob('~/.vim/autoload/plug.vim'))
+"   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+"     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+"   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+" endif
+
 " load plugins from vim-plug
 source ~/.config/nvim/plugins.vim
 
@@ -46,6 +53,7 @@ set copyindent  " copy the previous indentation on autoindenting
 set smartindent
 
 " search
+set ignorecase
 set smartcase  " ignore case if search pattern is all lowercase
 set hlsearch  " highlight search terms
 set incsearch  " show search matches as you type
@@ -147,8 +155,12 @@ inoremap jk <Esc>
 "cnoremap jk <C-c>
 
 " row by row
-nnoremap j gj
-nnoremap k gk
+" nnoremap j gj
+" nnoremap k gk
+nnoremap <expr> j v:count ? 'j' : 'gj'
+nnoremap <expr> k v:count ? 'k' : 'gk'
+vnoremap <expr> j v:count ? 'j' : 'gj'
+vnoremap <expr> k v:count ? 'k' : 'gk'
 
 " Save
 inoremap <C-s>     <C-O>:update<cr>
@@ -532,6 +544,12 @@ nnoremap <silent> <c-w>= :wincmd =<cr>:QfResizeWindows<cr>
 " cosco
 autocmd FileType javascript,css,c,cpp nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
 autocmd FileType javascript,css,c,cpp imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
+
+" vimux
+nmap <Leader>vp :VimuxPromptCommand<CR>
+nmap <Leader>vl :VimuxRunLastCommand<CR>
+nmap <Leader>vi :VimuxInspectRunner<CR>
+nmap <Leader>vz :VimuxZoomRunner<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

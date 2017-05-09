@@ -1,5 +1,9 @@
 call plug#begin('~/.config/nvim/plugged')
 
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
 
 " colorschemes
 Plug 'morhetz/gruvbox'
@@ -7,29 +11,27 @@ Plug 'tomasr/molokai'
 Plug 'chriskempson/vim-tomorrow-theme'
 Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
-if has('termguicolors')
-  Plug 'trevordmiller/nova-vim'
-endif
+Plug 'trevordmiller/nova-vim', Cond(has('termguicolors'))
 Plug 'chriskempson/base16-vim'
 
 
 " utilities
-Plug 'junegunn/fzf',                            { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf',                             { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/seoul256.vim'
-Plug 'junegunn/rainbow_parentheses.vim',        { 'on': 'RainbowParentheses' }
-Plug 'junegunn/vim-easy-align',                 { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/goyo.vim',                       { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim',                  { 'on': 'Goyo' }
+Plug 'junegunn/rainbow_parentheses.vim',         { 'on': 'RainbowParentheses' }
+Plug 'junegunn/vim-easy-align',                  { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/goyo.vim',                        { 'on': 'Goyo' }
+Plug 'junegunn/limelight.vim',                   { 'on': 'Goyo' }
 Plug 'junegunn/vim-slash'
-Plug 'junegunn/gv.vim',                         { 'on': 'GV' }
+Plug 'junegunn/gv.vim',                          { 'on': 'GV' }
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/vim-after-object'
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
 "Plug 'ctrlpvim/ctrlp.vim'
-Plug 'gregsexton/gitv',                         { 'on': 'Gitv'}
+Plug 'gregsexton/gitv',                          { 'on': 'Gitv'}
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-sandwich'
@@ -46,38 +48,33 @@ Plug 'radenling/vim-dispatch-neovim'
 " Plug 'Shougo/neosnippet.vim'
 " Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree',                     { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-Plug 'xuyuanp/nerdtree-git-plugin',             { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'scrooloose/nerdtree',                      { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight',  { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'xuyuanp/nerdtree-git-plugin',              { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'scrooloose/syntastic'
 Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
-Plug 'janko-m/vim-test',                        { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
+Plug 'janko-m/vim-test',                         { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 Plug 'majutsushi/tagbar' ",                       { 'on': ['TagbarOpen', 'TagbarToggle'] }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'wellle/targets.vim'  " Additional text objects
-Plug 'sjl/gundo.vim',                           { 'on': 'GundoToggle' }  " undo tree
+Plug 'sjl/gundo.vim',                            { 'on': 'GundoToggle' }  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
-Plug 'rbgrouleff/bclose.vim',                   { 'on': 'Bclose' }  " :bd but not closing window/pane
+Plug 'rbgrouleff/bclose.vim',                    { 'on': 'Bclose' }  " :bd but not closing window/pane
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
-Plug 'evidanary/grepg.vim',                     { 'on': 'G' }
+Plug 'evidanary/grepg.vim',                      { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
-if has('nvim')
-  Plug 'Valloric/YouCompleteMe',                { 'do': './install.py --clang-completer --gocode-completer' }
-  Plug 'rdnetto/YCM-Generator',                 { 'branch': 'stable'}
-else
-  Plug 'Shougo/neocomplete.vim'
-endif
-Plug 'Yggdroot/indentLine',                     { 'on': 'IndentLinesEnable' }
-Plug 'mptre/vim-printf',                        { 'on': 'Printf' }
+Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer' })
+Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
+Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
+Plug 'Yggdroot/indentLine',                      { 'on': 'IndentLinesEnable' }
+Plug 'mptre/vim-printf',                         { 'on': 'Printf' }
 Plug 'gelguy/Cmd2.vim'
-if !has('nvim') && (v:version >= 800)
-  Plug 'djmoch/vim-makejob'
-endif
-Plug 'brooth/far.vim',                          { 'on': 'Far' }
-Plug 'AndrewRadev/linediff.vim',                { 'on': 'Linediff' }
+Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
+Plug 'brooth/far.vim',                           { 'on': 'Far' }
+Plug 'AndrewRadev/linediff.vim',                 { 'on': 'Linediff' }
 Plug 'AndrewRadev/dsf.vim'
 Plug 'matze/vim-move'
 Plug 't9md/vim-textmanip'
@@ -86,20 +83,22 @@ Plug 'mileszs/ack.vim'
 Plug 'haya14busa/vim-asterisk'
 Plug 'dietsche/vim-lastplace'
 Plug 'alvan/vim-closetag'
-Plug 'Chiel92/vim-autoformat',                  { 'on': 'Autoformat' }
+Plug 'Chiel92/vim-autoformat',                   { 'on': 'Autoformat' }
 Plug 'pseewald/vim-anyfold'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'arecarn/vim-fold-cycle'
 Plug 'kana/vim-textobj-user'
 Plug 'jceb/vim-textobj-uri'
 Plug 'dodie/vim-disapprove-deep-indentation'
-Plug 'tweekmonster/startuptime.vim',            { 'on': 'StartupTime' }
+Plug 'tweekmonster/startuptime.vim',             { 'on': 'StartupTime' }
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'vim-scripts/VisIncr'
 Plug 'google/vim-searchindex'
 Plug 'blueyed/vim-qf_resize'
 Plug 'romainl/vim-qf'
 Plug 'lfilho/cosco.vim'
+Plug 'benmills/vimux'
+Plug 'kana/vim-arpeggio'
 
 
 " language-specific plugins
@@ -112,6 +111,7 @@ Plug 'fisadev/vim-isort',          { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
 Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
+Plug 'brennier/quicktex',          { 'for': ['latex', 'tex'] }
 Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
 Plug 'jceb/vim-orgmode',           { 'for': 'org' }
 Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }

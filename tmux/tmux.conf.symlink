@@ -4,14 +4,36 @@ set -g @plugin 'tmux-plugins/tpm'
 set -g @plugin 'tmux-plugins/tmux-battery'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
+set -g @plugin 'tmux-plugins/tmux-continuum'
 
+set -g @resurrect-strategy-vim 'session'
 set -g @resurrect-strategy-nvim 'session'
 set -g @resurrect-capture-pane-contents 'on'
+set -g @continuum-boot-options 'fullscreen'
+set -g @continuum-restore 'on'
 
 # SETTINGS
 
+is_osx() {
+    local platform=$(uname)
+    [ "$platform" == "Darwin" ]
+}
+command_exists() {
+    local command="$1"
+    type "$command" >/dev/null 2>&1
+}
+option_value_not_changed() {
+    local option="$1"
+    local default_value="$2"
+    local option_value=$(tmux show-option -gv "$option")
+    [ "$option_value" == "$default_value" ]
+}
+
 # if-shell "[[ $OSTYPE != 'linux-gnu' ]]" 'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
-set-option -g default-command "which reattach-to-user-namespace >/dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
+# set-option -g default-command "which reattach-to-user-namespace >/dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
+if is_osx && command_exists "reattach-to-user-namespace" && option_value_not_changed "default-command" ""; then
+    tmux set-option -g default-command "reattach-to-user-namespace -l $SHELL"
+fi
 set -g default-terminal "tmux-256color"
 set -as terminal-overrides ',xterm*:sitm=\E[3m'
 set-option -ga terminal-overrides ",*256col*:Tc"
@@ -72,7 +94,10 @@ set -g focus-events on
 # increase scrollback buffer size
 set -g history-limit 50000
 
+# resize to smaller screen only if actively looking
+tmux set-window-option -g aggressive-resize on
+
 set-window-option -g allow-rename off
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
-run '~/dotfiles/tmux/plugins/tpm/tpm'
+run '~/.tmux/plugins/tpm/tpm'
