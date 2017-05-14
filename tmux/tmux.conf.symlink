@@ -13,27 +13,10 @@ set -g @continuum-boot-options 'fullscreen'
 set -g @continuum-restore 'on'
 
 # SETTINGS
-
-is_osx() {
-    local platform=$(uname)
-    [ "$platform" == "Darwin" ]
-}
-command_exists() {
-    local command="$1"
-    type "$command" >/dev/null 2>&1
-}
-option_value_not_changed() {
-    local option="$1"
-    local default_value="$2"
-    local option_value=$(tmux show-option -gv "$option")
-    [ "$option_value" == "$default_value" ]
-}
+run '~/.tmuxconf.tmux'
 
 # if-shell "[[ $OSTYPE != 'linux-gnu' ]]" 'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
 # set-option -g default-command "which reattach-to-user-namespace >/dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
-if is_osx && command_exists "reattach-to-user-namespace" && option_value_not_changed "default-command" ""; then
-    tmux set-option -g default-command "reattach-to-user-namespace -l $SHELL"
-fi
 set -g default-terminal "tmux-256color"
 set -as terminal-overrides ',xterm*:sitm=\E[3m'
 set-option -ga terminal-overrides ",*256col*:Tc"
@@ -68,8 +51,8 @@ unbind [
 bind Escape copy-mode
 unbind p
 bind p paste-buffer
-bind -t vi-copy 'v' begin-selection
-bind -t vi-copy 'y' copy-selection
+bind -Tcopy-mode-vi 'v' send -X begin-selection
+bind -Tcopy-mode-vi 'y' send -X copy-selection
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
 #if-shell "[[ `$OSTYPE` != `linux-gnu` ]]" \
@@ -95,7 +78,7 @@ set -g focus-events on
 set -g history-limit 50000
 
 # resize to smaller screen only if actively looking
-tmux set-window-option -g aggressive-resize on
+set-window-option -g aggressive-resize on
 
 set-window-option -g allow-rename off
 
