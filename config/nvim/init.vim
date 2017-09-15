@@ -8,6 +8,7 @@ set nocompatible  " not compatible with vi
 " endif
 
 au BufRead,BufNewFile *.v set filetype=coq
+au BufEnter *.v hi CheckedByCoq guibg=Black
 
 " load plugins from vim-plug
 source ~/.config/nvim/plugins.vim
