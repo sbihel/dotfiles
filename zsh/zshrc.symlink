@@ -97,14 +97,22 @@ if [[ `uname` == 'Darwin' ]]; then
   export PATH=$PATH:$GOROOT/bin
 
   export PATH=$PATH:/opt/local/bin
-  export PYTHONPATH=$PYTHONPATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
+  # export PYTHONPATH=$PYTHONPATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
 
   export PATH=/usr/local/Cellar/bison/3.0.4/bin:$PATH
   export PATH=/usr/local/Cellar/flex/2.6.0/bin:$PATH
 
+  export PATH="/usr/local/bin:$PATH"
+  export PATH="/usr/local/sbin:$PATH"
+
   export JAVA_HOME="$(/usr/libexec/java_home)"
   export HADOOP_PREFIX=$HOME/M1/CBD/hadoop-1.2.1
   export PATH=$PATH:$HADOOP_PREFIX/bin
+
+  export BINARY_DIR_PATH="/usr/local/Cellar/llvm@3.9/3.9.1_1"
+  export PATH="/usr/local/opt/llvm@3.9/bin:$PATH"
+
+  . /Users/simonbihel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
 
 export PATH=$PATH:$HOME/.local/bin
@@ -120,6 +128,8 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'max memory:                %M MB'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
+
+eval "$(thefuck --alias)"
 
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }

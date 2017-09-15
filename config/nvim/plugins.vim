@@ -42,6 +42,7 @@ Plug 'tpope/vim-tbone'  " helpers for tmux
 Plug 'tpope/vim-eunuch'  " helpers for UNIX
 Plug 'tpope/vim-repeat'  " . for supported plugin maps
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-vinegar'
 Plug 'radenling/vim-dispatch-neovim'
 "Plug 'Shougo/deoplete.nvim'
 " Plug 'Shougo/neocomplete.vim'
@@ -81,7 +82,8 @@ Plug 't9md/vim-textmanip'
 Plug 'mileszs/ack.vim'
 " Plug 'AndrewRadev/multichange.vim' ",             { 'on': 'Multichange' }
 Plug 'haya14busa/vim-asterisk'
-Plug 'dietsche/vim-lastplace'
+" Plug 'dietsche/vim-lastplace'
+Plug 'kopischke/vim-stay'
 Plug 'alvan/vim-closetag'
 Plug 'Chiel92/vim-autoformat',                   { 'on': 'Autoformat' }
 Plug 'pseewald/vim-anyfold'
@@ -89,7 +91,7 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'arecarn/vim-fold-cycle'
 Plug 'kana/vim-textobj-user'
 Plug 'jceb/vim-textobj-uri'
-Plug 'dodie/vim-disapprove-deep-indentation'
+" Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'tweekmonster/startuptime.vim',             { 'on': 'StartupTime' }
 Plug 'powerman/vim-plugin-AnsiEsc'
 Plug 'vim-scripts/VisIncr'
@@ -99,6 +101,15 @@ Plug 'romainl/vim-qf'
 Plug 'lfilho/cosco.vim'
 Plug 'benmills/vimux'
 Plug 'kana/vim-arpeggio'
+Plug 'octref/RootIgnore'
+Plug 'embear/vim-localvimrc'
+Plug 'AndrewRadev/deleft.vim'
+Plug 'sk1418/Join'
+Plug 'will133/vim-dirdiff',                      { 'on': 'DirDiff' }
+Plug 'Konfekt/FastFold'
+Plug 'justinmk/vim-dirvish', Cond(has('nvim'))
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-session'
 
 
 " language-specific plugins
@@ -133,9 +144,14 @@ Plug 'jeaye/color_coded',          { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'arakashic/chromatica.nvim',  { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
-Plug 'vim-scripts/Vim-R-plugin',   { 'for': 'R' }
+Plug 'jalvesaq/Nvim-R',            { 'for': 'r' }
 Plug 'alcesleo/vim-uppercase-sql', { 'for': 'sql' }
 Plug 'vimwiki/vimwiki',            { 'branch': 'dev' } " { 'for': 'vimwiki' }
+Plug 'JuliaEditorSupport/julia-vim' ", { 'for': 'julia' }
+Plug 'vim-scripts/coq-syntax',     { 'for': 'coq' }
+Plug 'vim-scripts/coq-indent',     { 'for': 'coq' }
+Plug 'let-def/vimbufsync',         { 'for': 'coq' }
+Plug 'the-lambda-church/coquille', { 'for': 'coq' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

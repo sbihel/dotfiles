@@ -38,6 +38,8 @@ set reverse_alias = yes
 source $alias_file
 set display_filter = "~/.mutt/save_alias.sh"  # automatically saves aliases
 
+set query_command="reattach-to-user-namespace lbdbq %s 2> /dev/null"
+
 set timeout = 10
 set mail_check = 5
 set beep_new
@@ -66,6 +68,7 @@ set sort_re                                # thread based on regex
 set reply_regexp = "^(([Rr][Ee]?(\[[0-9]+\])?: *)?(\[[^]]+\] *)?)*"
 
 # Index Key Bindings ---------------------------------
+bind index g noop
 bind index gg       first-entry
 bind index G        last-entry
 
@@ -100,6 +103,7 @@ set quote_regexp = "^( {0,4}[>|:#%]| {0,4}[a-z0-9]+[>|]+)+"
 # Pager Key Bindings ---------------------------------
 bind pager k  previous-line
 bind pager j  next-line
+bind pager g noop
 bind pager gg top
 bind pager G  bottom
 
@@ -133,5 +137,13 @@ folder-hook trash$ unset trash
 
 color progress white blue
 set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
+
+macro index \cb "\
+: set my_tmp_pipe_decode=\$pipe_decode\n\
+: set pipe_decode\n\
+|urlview\n\
+: set pipe_decode=\$my_tmp_pipe_decode\n\
+: unset my_tmp_pipe_decode\n" \
+'call urlview to extract URLs out of a message'
 
 auto_view text/calendar application/ics

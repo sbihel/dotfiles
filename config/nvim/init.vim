@@ -7,6 +7,8 @@ set nocompatible  " not compatible with vi
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
+au BufRead,BufNewFile *.v set filetype=coq
+
 " load plugins from vim-plug
 source ~/.config/nvim/plugins.vim
 
@@ -90,8 +92,8 @@ nmap ;s :set invspell spelllang=en<cr>
 
 set textwidth=120
 set colorcolumn=120
-set wrap "turn on line wrapping
-set linebreak " set soft wrapping
+set wrap "turn on visual line wrapping
+set linebreak " set wrapping
 set showbreak=… " show ellipsis at breaking
 set breakindent
 
@@ -114,12 +116,14 @@ if has('nvim')
   set inccommand=split " or nosplit
 endif
 
+set mouse=a
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader      = ' '
-let maplocalleader = ' '
-nnoremap ; :
+let maplocalleader = '\'
+" nnoremap ; :
 
 " <F6> | paste toggle
 set pastetoggle=<F6>
@@ -185,6 +189,7 @@ cmap w!! w !sudo tee % >/dev/null
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 autocmd FileType c setlocal tw=80 cc=80
+autocmd FileType cpp setlocal tw=80 cc=80
 autocmd BufReadPre README* setlocal tw=80 cc=80
 "autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
@@ -193,17 +198,20 @@ autocmd FileType calendar setlocal tw=0 cc=0
 autocmd FileType latex setlocal tw=0 cc=80 spell
 let g:tex_flavor = "latex"
 autocmd FileType tex setlocal tw=0 cc=80 spell
-autocmd FileType python setlocal cc=79
+autocmd FileType python setlocal cc=79 tw=79
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
+autocmd Filetype vimwiki setlocal nowrap
+autocmd FileType coq setlocal tw=80 cc=80
 
 augroup mail_filetype
-  autocmd!
-  autocmd VimEnter /tmp/mutt* :0,'}s/\s\+$//e
-  " autocmd VimEnter /tmp/mutt* execute 'norm gg'
-  autocmd VimEnter /tmp/mutt* :call IsReply()
-  autocmd VimEnter /tmp/mutt* execute 'norm gg}dd'
-  autocmd VimEnter /tmp/mutt* execute 'startinsert'
+  autocmd FileType mail
+    \ autocmd VimEnter *
+      \ :0,'}s/\s\+$//e
+      \ | :call IsReply()
+      \ | :execute 'normal gg}'
+      \ | :put! =\"\n\n\"
+      \ | :execute 'startinsert'
 augroup END
 autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
@@ -212,6 +220,7 @@ autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neomake
 autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
+" let g:neomake_open_list = 2
 
 " deoplete
 "let g:deoplete#enable_at_startup = 1
@@ -279,6 +288,8 @@ let g:tagbar_type_go = {
 inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap <F10> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let NERDTreeRespectWildIgnore=1
+let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " TagBar | <F9>
 inoremap <F9> <esc>:TagbarToggle<cr>
@@ -313,9 +324,9 @@ au BufRead,BufNewFile *.g set filetype=antlr3
 au BufRead,BufNewFile *.g4 set filetype=antlr4
 
 " fzf
-" if executable('ag')
-"   let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
-" endif
+if executable('ag')
+  let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
+endif
 let $FZF_DEFAULT_OPTS .= ' --inline-info'
 
 " File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
@@ -502,6 +513,7 @@ let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 " let anyfold_activate=1
 " autocmd Filetype startify let b:anyfold_activate=0
 " autocmd Filetype calendar let b:anyfold_activate=0
+let anyfold_fold_comments = 1
 
 " lessspace
 let g:lessspace_blacklist = ['mail']
@@ -525,17 +537,19 @@ let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 
 " YouCompleteMe
 let g:ycm_confirm_extra_conf = 0
-augroup load_ycm
-  autocmd!
-  autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
-                                \ | autocmd! load_ycm
-augroup END
+" augroup load_ycm
+"   autocmd!
+"   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+"                                 \ | autocmd! load_ycm
+" augroup END
 
 " Chromatica
 let g:chromatica#enable_at_startup=1
 let hostname = substitute(system('hostname'), '\n', '', '')
 if hostname == "mists"
   let g:chromatica#libclang_path='/usr/lib64'
+elseif hostname == "firnen"
+  let g:chromatica#libclang_path='/usr/local/Cellar/llvm/4.0.0_1/lib'
 endif
 
 " qf_resize
@@ -550,6 +564,36 @@ nmap <Leader>vp :VimuxPromptCommand<CR>
 nmap <Leader>vl :VimuxRunLastCommand<CR>
 nmap <Leader>vi :VimuxInspectRunner<CR>
 nmap <Leader>vz :VimuxZoomRunner<CR>
+
+" autopairs
+au Filetype markdown,vimwiki let b:autopairs_loaded=1
+
+" localvimrc
+let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm']
+let g:localvimrc_sandbox = 0
+
+" deleft
+let g:deleft_remove_strategy = "spaces"
+
+" python-mode
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_import_after_complete = 1
+let g:pymode_rope_completion = 0
+
+" stay
+set viewoptions=cursor,folds,slash,unix
+
+" FastFold
+" let g:fastfold_savehook = 0
+" xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
+" xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
+
+" autoformat
+let g:formatters_python = ['yapf', 'autopep8']
+
+" coquille
+au FileType coq call coquille#FNMapping()
+let g:coquille_auto_move  = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
@@ -618,9 +662,9 @@ nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 function IsReply()
   if line('$') > 1
     :g/^>\s\=--\s\=$/,$ delete
-    " execute 'normal! }vG$'
-    " execute 'normal :%!par w72q\<cr>'
-    " :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
+    execute 'normal! }vG$'
+    execute 'normal :%!par w78q\<cr>'
+    :%s/^.\+\ze\n\(>*$\)\@!/\0 /e
     :%s/^>*\zs\s\+$//e
     " :1
     " :put! =\"\n\n\"

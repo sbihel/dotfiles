@@ -13,11 +13,11 @@ footer = "\n"
 
 [Account Ens]
 presynchook = imapfilter
+postsynchook = ./~/.mutt/postsync-offlineimap.sh
 localrepository = Local-Ens
 remoterepository = Remote-Ens
 autorefresh = 0.5
 quick = 10
-status_backend = sqlite
 createfolders = False
 
 [Repository Local-Ens]
