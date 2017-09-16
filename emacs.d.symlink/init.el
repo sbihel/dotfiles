@@ -76,6 +76,3 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;; Added by Kite
 (load-file "~/.emacs.d/kite.el")
-
-;; Added by Kite
-(load-file "~/.emacs.d/kite.el)
