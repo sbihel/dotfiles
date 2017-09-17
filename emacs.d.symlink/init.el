@@ -27,31 +27,32 @@
 ;; Enable use-package
 (eval-when-compile
   (require 'use-package))
+(setq use-package-always-ensure t)
 
-(require 'gruvbox-theme)
+(use-package gruvbox-theme)
 
 ; Use evil mode
-(require 'evil)
+(use-package evil)
 (evil-mode t)
 
 (cua-mode t)
 
-(require 'powerline)
-(require 'powerline-evil)
+(use-package powerline)
+(use-package powerline-evil)
 (powerline-evil-center-color-theme)
 
-(require 'auto-complete-config)
+(use-package auto-complete-config)
 (ac-config-default)
-(require 'yasnippet)
+(use-package yasnippet)
 (yas-global-mode 1)
-(require 'go-autocomplete)
-(require 'auto-complete-clang)
+(use-package go-autocomplete)
+(use-package auto-complete-clang)
 
-(require 'autopair)
+(use-package autopair)
 (autopair-global-mode 1)
 (setq autopair-autowrap t)
 
-(require 'flycheck)
+(use-package flycheck)
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;; esc quits
