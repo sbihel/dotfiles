@@ -8,6 +8,7 @@
                     (not (gnutls-available-p))))
        (url (concat (if no-ssl "http" "https") "://melpa.org/packages/")))
   (add-to-list 'package-archives (cons "melpa" url) t))
+; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib

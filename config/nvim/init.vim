@@ -7,8 +7,10 @@ set nocompatible  " not compatible with vi
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
-au BufRead,BufNewFile *.v set filetype=coq
-au BufEnter *.v hi CheckedByCoq guibg=Black
+augroup filetypedetect
+  au BufRead,BufNewFile *.v set filetype=coq
+  au BufRead,BufNewFile *.v hi CheckedByCoq guibg=Black
+augroup END
 
 " load plugins from vim-plug
 source ~/.config/nvim/plugins.vim
@@ -209,7 +211,6 @@ augroup mail_filetype
   autocmd FileType mail
     \ autocmd VimEnter *
       \ :0,'}s/\s\+$//e
-      \ | :call IsReply()
       \ | :execute 'normal gg}'
       \ | :put! =\"\n\n\"
       \ | :execute 'startinsert'
@@ -595,6 +596,9 @@ let g:formatters_python = ['yapf', 'autopep8']
 " coquille
 au FileType coq call coquille#FNMapping()
 let g:coquille_auto_move  = 1
+
+" vim-session
+let g:session_autosave = 'no'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
