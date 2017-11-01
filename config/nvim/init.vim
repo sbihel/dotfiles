@@ -207,6 +207,7 @@ autocmd FileType vim setlocal tw=78 cc=78
 autocmd Filetype vimwiki setlocal nowrap
 autocmd FileType coq setlocal tw=80 cc=80
 
+autocmd BufRead,BufNewFile /tmp/neomutt* set filetype=mail
 augroup mail_filetype
   autocmd FileType mail
     \ autocmd VimEnter *

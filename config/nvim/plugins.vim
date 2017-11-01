@@ -110,6 +110,7 @@ Plug 'Konfekt/FastFold'
 Plug 'justinmk/vim-dirvish', Cond(has('nvim'))
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
+Plug 'dhruvasagar/vim-zoom'
 
 
 " language-specific plugins
