@@ -111,6 +111,7 @@ Plug 'justinmk/vim-dirvish', Cond(has('nvim'))
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'dhruvasagar/vim-zoom'
+Plug 'auwsmit/vim-active-numbers'
 
 
 " language-specific plugins
