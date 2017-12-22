@@ -112,6 +112,8 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'auwsmit/vim-active-numbers'
+" Plug 'haya14busa/vim-edgemotion'
+Plug 'gorkunov/smartpairs.vim'
 
 
 " language-specific plugins
