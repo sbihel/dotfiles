@@ -121,6 +121,10 @@ endif
 
 set mouse=a
 
+if v:version > 703 || v:version == 703 && has('patch541')
+  set formatoptions+=j
+endif
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -198,9 +202,14 @@ autocmd BufReadPre README* setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin
 autocmd FileType calendar setlocal tw=0 cc=0
-autocmd FileType latex setlocal tw=0 cc=80 spell
+
 let g:tex_flavor = "latex"
-autocmd FileType tex setlocal tw=0 cc=80 spell
+function! LatexFormatExpr(start, end)
+    silent execute a:start.','.a:end.'s/[.!?%]\zs /\r/g'
+endfunction
+autocmd FileType tex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
+autocmd FileType latex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
+
 autocmd FileType python setlocal cc=79 tw=79
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78

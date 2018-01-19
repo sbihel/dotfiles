@@ -114,6 +114,8 @@ Plug 'dhruvasagar/vim-zoom'
 Plug 'auwsmit/vim-active-numbers'
 Plug 'vim-scripts/MPage'
 Plug 'bergercookie/vim-debugstring'
+" Plug 'haya14busa/vim-edgemotion'
+Plug 'gorkunov/smartpairs.vim'
 
 
 " language-specific plugins
