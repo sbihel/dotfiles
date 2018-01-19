@@ -90,7 +90,7 @@ export GOPATH=$HOME/.go
 export GOBIN=$HOME/.go/bin
 export PATH=$PATH:$GOPATH/bin
 if [[ `uname` == 'Darwin' ]]; then
-  alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
+  # alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
   export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
 
   export GOROOT=/usr/local/opt/go/libexec

@@ -112,6 +112,8 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-session'
 Plug 'dhruvasagar/vim-zoom'
 Plug 'auwsmit/vim-active-numbers'
+Plug 'vim-scripts/MPage'
+Plug 'bergercookie/vim-debugstring'
 
 
 " language-specific plugins

@@ -51,8 +51,13 @@ unbind [
 bind Escape copy-mode
 unbind p
 bind p paste-buffer
-bind -Tcopy-mode-vi 'v' send -X begin-selection
-bind -Tcopy-mode-vi 'y' send -X copy-selection
+# bind -Tcopy-mode-vi 'v' send -X begin-selection
+# bind -Tcopy-mode-vi 'y' send -X copy-selection
+bind -Tcopy-mode-vi v send -X begin-selection
+bind -Tcopy-mode-vi V send -X select-line
+bind -Tcopy-mode-vi C-v send -X rectangle-toggle \; send -X begin-selection
+bind -Tcopy-mode-vi y send -X copy-selection-and-cancel
+bind -Tcopy-mode-vi Escape send -X cancel
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
 #if-shell "[[ `$OSTYPE` != `linux-gnu` ]]" \
