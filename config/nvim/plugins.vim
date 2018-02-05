@@ -116,6 +116,9 @@ Plug 'vim-scripts/MPage'
 Plug 'bergercookie/vim-debugstring'
 " Plug 'haya14busa/vim-edgemotion'
 Plug 'gorkunov/smartpairs.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'reedes/vim-litecorrect'
+Plug 'beloglazov/vim-online-thesaurus'
 
 
 " language-specific plugins
@@ -127,9 +130,10 @@ Plug 'klen/python-mode',           { 'for': 'python' }
 Plug 'fisadev/vim-isort',          { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
-Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
 Plug 'brennier/quicktex',          { 'for': ['latex', 'tex'] }
 Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
+Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
+Plug 'reedes/vim-wordy',           { 'for': ['latex', 'tex', 'org', 'vimwiki', 'markdown', 'html'] }
 Plug 'jceb/vim-orgmode',           { 'for': 'org' }
 Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
 Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }

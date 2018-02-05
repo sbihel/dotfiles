@@ -542,7 +542,7 @@ let g:calendar_google_task = 1
 let g:vimwiki_list = [{'path': '~/personal_wiki'}]
 
 " notational
-let g:nv_directories = ['~/personal_wiki']
+let g:nv_search_paths = ['~/personal_wiki']
 
 " sandwich
 let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
