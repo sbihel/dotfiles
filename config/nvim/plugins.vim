@@ -13,6 +13,7 @@ Plug 'altercation/vim-colors-solarized'
 Plug 'sjl/badwolf'
 Plug 'trevordmiller/nova-vim', Cond(has('termguicolors'))
 Plug 'chriskempson/base16-vim'
+Plug 'nanotech/jellybeans.vim'
 
 
 " utilities
@@ -44,10 +45,6 @@ Plug 'tpope/vim-repeat'  " . for supported plugin maps
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-vinegar'
 Plug 'radenling/vim-dispatch-neovim'
-"Plug 'Shougo/deoplete.nvim'
-" Plug 'Shougo/neocomplete.vim'
-" Plug 'Shougo/neosnippet.vim'
-" Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree',                      { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight',  { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -69,7 +66,12 @@ Plug 'evidanary/grepg.vim',                      { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer' })
 Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
-Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))
+" Plug 'Shougo/neocomplete.vim', Cond(!has('nvim')) " deprecated
+Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
+Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
+Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'Yggdroot/indentLine',                      { 'on': 'IndentLinesEnable' }
 Plug 'mptre/vim-printf',                         { 'on': 'Printf' }
 Plug 'gelguy/Cmd2.vim'
@@ -119,49 +121,55 @@ Plug 'gorkunov/smartpairs.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'reedes/vim-litecorrect'
 Plug 'beloglazov/vim-online-thesaurus'
+Plug 'thiagoalessio/rainbow_levels.vim'
+Plug 'Shougo/vimproc.vim',                       { 'do' : 'make'}
 
 
 " language-specific plugins
-Plug 'fatih/vim-go',               { 'for': 'go', 'do': ':GoInstallBinaries' }
-Plug 'derekwyatt/vim-scala',       { 'for': 'scala' }
-Plug 'dag/vim2hs',                 { 'for': 'haskell' }
+Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' }
+Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
+Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
-Plug 'klen/python-mode',           { 'for': 'python' }
-Plug 'fisadev/vim-isort',          { 'for': 'python', 'on': 'Isort' }
+Plug 'klen/python-mode',              { 'for': 'python' }
+Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
-Plug 'lervag/vimtex',              { 'for': ['latex', 'tex'] }
-Plug 'brennier/quicktex',          { 'for': ['latex', 'tex'] }
-Plug 'rhysd/vim-grammarous',       { 'on': 'GrammarousCheck', 'for': ['latex', 'tex'] }
-Plug 'reedes/vim-pencil',          { 'for': ['latex', 'tex'] }
-Plug 'reedes/vim-wordy',           { 'for': ['latex', 'tex', 'org', 'vimwiki', 'markdown', 'html'] }
-Plug 'jceb/vim-orgmode',           { 'for': 'org' }
-Plug 'mattn/calendar-vim',         { 'for': ['org', 'vimwiki'] }
-Plug 'itchyny/calendar.vim',       { 'on': 'Calendar' }
-Plug 'tpope/vim-speeddating',      { 'for': 'org' }  " Increment/Decrement timestamps
-Plug 'blindFS/vim-taskwarrior',    { 'on': 'TW' }
-Plug 'tbabej/taskwiki',            { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
-Plug 'Alok/notational-fzf-vim',    { 'for': 'vimwiki', 'on': 'NV' }
-Plug 'elzr/vim-json',              { 'for': 'json' }
-Plug 'andreshazard/vim-logreview', { 'for': 'logreview' }
-Plug 'gregsexton/MatchTag',        { 'for': 'html' } " match tags in html, similar to paren support
-Plug 'othree/html5.vim',           { 'for': 'html' } " html5 support
-Plug 'hail2u/vim-css3-syntax',     { 'for': 'css' }
-Plug 'gavocanov/vim-js-indent',    { 'for': 'javascript' } " JavaScript indent support
-Plug 'othree/yajs.vim',            { 'for': 'javascript' } " JavaScript syntax plugin
-Plug 'pangloss/vim-javascript',    { 'for': 'javascript' }
-Plug 'vim-scripts/Conque-GDB',     { 'for': ['c', 'cpp'] } " gdb integration
-Plug 'jeaye/color_coded',          { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
-Plug 'arakashic/chromatica.nvim',  { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
-Plug 'dylon/vim-antlr',            { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
-Plug 'junegunn/vader.vim',         { 'on': 'Vader', 'for': 'vader' }
-Plug 'jalvesaq/Nvim-R',            { 'for': 'r' }
-Plug 'alcesleo/vim-uppercase-sql', { 'for': 'sql' }
-Plug 'vimwiki/vimwiki',            { 'branch': 'dev' } " { 'for': 'vimwiki' }
+Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
+Plug 'brennier/quicktex',             { 'for': ['latex', 'tex'] }
+Plug 'reedes/vim-pencil',             { 'for': ['latex', 'tex'] }
+Plug 'rhysd/vim-grammarous',          { 'on': 'GrammarousCheck', 'for': ['latex', 'tex', 'org', 'markdown', 'html', 'vimwiki'] }
+Plug 'reedes/vim-wordy',              { 'for': ['latex', 'tex', 'org', 'vimwiki', 'markdown', 'html'] }
+Plug 'jceb/vim-orgmode',              { 'for': 'org' }
+Plug 'mattn/calendar-vim',            { 'for': ['org', 'vimwiki'] }
+Plug 'itchyny/calendar.vim',          { 'on': 'Calendar' }
+Plug 'tpope/vim-speeddating',         { 'for': 'org' }  " Increment/Decrement timestamps
+" Plug 'inkarkat/vim-SyntaxRange',      { 'for': 'org' }
+" Plug 'vim-scripts/SyntaxRange',       { 'for': 'org' }
+" Plug 'chrisbra/NrrwRgn',              { 'for': 'org' }
+Plug 'vimwiki/vimwiki',               { 'branch': 'dev' } " { 'for': 'vimwiki' }
+Plug 'blindFS/vim-taskwarrior',       { 'on': 'TW' }
+Plug 'tbabej/taskwiki',               { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
+Plug 'Alok/notational-fzf-vim',       { 'for': 'vimwiki', 'on': 'NV' }
+Plug 'elzr/vim-json',                 { 'for': 'json' }
+Plug 'andreshazard/vim-logreview',    { 'for': 'logreview' }
+Plug 'gregsexton/MatchTag',           { 'for': 'html' } " match tags in html, similar to paren support
+Plug 'othree/html5.vim',              { 'for': 'html' } " html5 support
+Plug 'hail2u/vim-css3-syntax',        { 'for': 'css' }
+Plug 'gavocanov/vim-js-indent',       { 'for': 'javascript' } " JavaScript indent support
+Plug 'othree/yajs.vim',               { 'for': 'javascript' } " JavaScript syntax plugin
+Plug 'pangloss/vim-javascript',       { 'for': 'javascript' }
+Plug 'vim-scripts/Conque-GDB',        { 'for': ['c', 'cpp'] } " gdb integration
+Plug 'jeaye/color_coded',             { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
+Plug 'arakashic/chromatica.nvim',     { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
+Plug 'dylon/vim-antlr',               { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
+Plug 'junegunn/vader.vim',            { 'on': 'Vader', 'for': 'vader' }
+Plug 'jalvesaq/Nvim-R',               { 'for': 'r' }
+Plug 'alcesleo/vim-uppercase-sql',    { 'for': 'sql' }
 Plug 'JuliaEditorSupport/julia-vim' ", { 'for': 'julia' }
-Plug 'vim-scripts/coq-syntax',     { 'for': 'coq' }
-Plug 'vim-scripts/coq-indent',     { 'for': 'coq' }
-Plug 'let-def/vimbufsync',         { 'for': 'coq' }
-Plug 'the-lambda-church/coquille', { 'for': 'coq' }
+Plug 'vim-scripts/coq-syntax',        { 'for': 'coq' }
+Plug 'vim-scripts/coq-indent',        { 'for': 'coq' }
+Plug 'let-def/vimbufsync',            { 'for': 'coq' }
+Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
+Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

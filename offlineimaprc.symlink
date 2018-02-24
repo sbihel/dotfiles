@@ -1,19 +1,19 @@
 [general]
 pythonfile = ~/.mutt/offlineimap.py
-accounts = Ens
-maxsyncaccounts = 1
+accounts = Ens, KTH
+maxsyncaccounts = 2
 
 [mbnames]
 enabled = yes
 filename = ~/.mutt/mailboxes
 header = "mailboxes "
-peritem = "+%(foldername)s"
+peritem = "+%(accountname)s/%(foldername)s"
 sep = " "
 footer = "\n"
 
 [Account Ens]
 presynchook = imapfilter
-postsynchook = ./~/.mutt/postsync-offlineimap.sh
+postsynchook = $HOME/.mutt/postsync-offlineimap.sh
 localrepository = Local-Ens
 remoterepository = Remote-Ens
 autorefresh = 0.5
@@ -23,7 +23,7 @@ createfolders = False
 [Repository Local-Ens]
 sep = "/"
 type = Maildir
-localfolders = ~/Maildir
+localfolders = ~/Maildir/Ens
 
 [Repository Remote-Ens]
 type = IMAP
@@ -34,5 +34,30 @@ remoteuser = sbihe682
 remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
-folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash', 'INBOX.Drafts', 'INBOX.Sent',
-                                  'INBOX.Trash', 'N1-Snoozed']
+# folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash', 'INBOX.Drafts', 'INBOX.Sent',
+#                                   'INBOX.Trash', 'N1-Snoozed']
+
+[Account KTH]
+postsynchook = $HOME/.mutt/postsync-offlineimap.sh
+localrepository = Local-KTH
+remoterepository = Remote-KTH
+autorefresh = 0.5
+quick = 10
+createfolders = False
+
+[Repository Local-KTH]
+sep = "/"
+type = Maildir
+localfolders = ~/Maildir/KTH
+
+[Repository Remote-KTH]
+type = IMAP
+remotehost = webmail.kth.se
+remoteport = 993
+ssl = yes
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+remoteuser = simbihe
+remotepasseval = get_pass("kth")
+keepalive = 60
+holdconnectionopen = yes
+folderfilter= lambda f: f not in ['Trash', 'Sent']

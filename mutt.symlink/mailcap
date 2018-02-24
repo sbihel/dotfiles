@@ -1,16 +1,16 @@
-text/html; open %s &; test=test -n "$DISPLAY" %s; needsterminal
-text/html; w3m -I %{charset} -T text/html %s; copiousoutput
-image/*; ~/.mutt/muttimage.sh %s; copiousoutput
+text/html; open %s &; test=test -n "$DISPLAY" %s; needsterminal;
+text/html; w3m -I %{charset} -T text/html; copiousoutput;
+# image/*; ~/.mutt/muttimage.sh %s; copiousoutput;
 
-text/calendar; mutt-ics; copiousoutput
-application/ics; mutt-ics; copiousoutput
+text/calendar; mutt-ics; copiousoutput;
+application/ics; mutt-ics; copiousoutput;
 
 # Images
-image/jpg; ~/.mutt/view_attachment.sh %s jpg
-image/jpeg; ~/.mutt/view_attachment.sh %s jpg
-image/pjpeg; ~/.mutt/view_attachment.sh %s jpg
-image/png; ~/.mutt/view_attachment.sh %s png
-image/gif; ~/.mutt/view_attachment.sh %s gif
+image/jpg; open %s
+image/jpeg; open %s
+image/pjpeg; open %s
+image/png; open %s
+image/gif; open %s
 
 # PDFs
-application/pdf; ~/.mutt/view_attachment.sh %s pdf
+application/pdf; open %s

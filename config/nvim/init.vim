@@ -22,8 +22,11 @@ set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace
 set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
 let g:gruvbox_contrast_dark='hard'
-if has('nvim')
+" let g:gruvbox_improved_strings  = 1
+" let g:gruvbox_improved_warnings = 1
+if (has('nvim') || (v:version >= 800)) && exists('$TMUX')
   let g:gruvbox_italic=1
+  let g:jellybeans_use_term_italics = 1
 endif
 let g:seoul256_light_background = 256
 let g:seoul256_background = 233
@@ -38,7 +41,11 @@ else
 endif
 "highlight Normal ctermbg=NONE
 "highlight nonText ctermbg=NONE
-if has('termguicolors') && has('nvim')
+if has('termguicolors')
+  if !has('nvim') && exists('$TMUX')
+    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  endif
   set termguicolors
 endif
 
@@ -62,21 +69,26 @@ set ignorecase
 set smartcase  " ignore case if search pattern is all lowercase
 set hlsearch  " highlight search terms
 set incsearch  " show search matches as you type
-nnoremap <silent><Esc> :nohlsearch<Bar>:echo<CR>
+" nnoremap <silent><Esc> :nohlsearch<Bar>:echo<CR>
+nnoremap <silent><leader>q :nohlsearch<CR>
   " cancel search with escape
 
 " code folding settings
-" set foldmethod=syntax
+set foldmethod=expr
 " set foldnestmax=10
-" set foldenable
 set foldlevel=0 " number of fold opened by default
+set foldenable
 
 set scrolloff=3 " lines of text around cursor
 
 set relativenumber  " show relative lines number
 set number  " show lines number
 set showmatch  " show matching parenthesis
-set clipboard=unnamedplus  " allow copy/paste from vim to other app
+if has('nvim')
+  set clipboard=unnamedplus  " allow copy/paste from nvim to other app
+else
+  set clipboard=unnamed  " allow copy/paste from vim to other app
+endif
 set title  " change the terminal's title
 " set backspace=indent,eol,start  " allow backspacing over everything in insert mode
 set hidden  " current buffer can be put into background
@@ -200,7 +212,7 @@ autocmd FileType cpp setlocal tw=80 cc=80
 autocmd BufReadPre README* setlocal tw=80 cc=80
 "autocmd FileType cpp setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
-autocmd FileType org setlocal tw=80 cc=80 nocin
+autocmd FileType org setlocal tw=80 cc=80 nocin spell fo+=n
 autocmd FileType calendar setlocal tw=0 cc=0
 
 let g:tex_flavor = "latex"
@@ -213,7 +225,7 @@ autocmd FileType latex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnu
 autocmd FileType python setlocal cc=79 tw=79
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
-autocmd Filetype vimwiki setlocal nowrap
+autocmd Filetype vimwiki setlocal nowrap spell
 autocmd FileType coq setlocal tw=80 cc=80
 
 autocmd BufRead,BufNewFile /*/neomutt* set filetype=mail
@@ -227,6 +239,8 @@ augroup mail_filetype
 augroup END
 autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
+autocmd FileType json setlocal tw=0 cc=0 foldmethod=syntax
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -235,24 +249,31 @@ autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 " let g:neomake_open_list = 2
 
 " deoplete
-"let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_smart_case = 1
-"" <C-h>, <BS>: close popup and delete backword char.
-"inoremap <expr><C-h> deoplete#mappings#smart_close_popup()."\<C-h>"
-"inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
-"" <CR>: close popup and save indent.
-"inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-"function! s:my_cr_function() abort
-"  return deoplete#mappings#close_popup() . "\<CR>"
-"endfunction
-"" C-g undo, tab completion, close popup by space
-"inoremap <expr><C-g>   deoplete#mappings#undo_completion()
-"inoremap <expr><TAB>   pumvisible() ? "\<C-n>" : "\<TAB>"
-"inoremap <expr><Space> deoplete#mappings#undo_completion()."\<Space>"
+if !has('nvim')
+  let g:deoplete#enable_at_startup = 1
+  let g:deoplete#enable_smart_case = 1
+  " <C-h>, <BS>: close popup and delete backword char.
+  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+  " <CR>: close popup and save indent.
+  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+  function! s:my_cr_function() abort
+    return deoplete#close_popup() . "\<CR>"
+  endfunction
+  "" C-g undo, tab completion
+  inoremap <expr><C-g>   deoplete#mappings#undo_completion()
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ deoplete#mappings#manual_complete()
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+  endfunction
+endif
 
 " airline
 set laststatus=2
-set guifont=Source\ Code\ Pro\ for\ Powerline " make sure to escape the spaces in the name properly
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tmuxline#enabled = 0
 " let g:tmuxline_theme = 'airline'
@@ -266,35 +287,6 @@ let g:airline#extensions#tabline#enabled = 1
 "       \ 'x': '#{battery_icon} #{battery_percentage}',
 "       \ 'y': ['%a %Y-%m-%d', '%H:%M'],
 "       \ 'z': '#H'}
-
-" tagbar go
-let g:tagbar_type_go = {
-      \ 'ctagstype' : 'go',
-      \ 'kinds'     : [
-      \ 'p:package',
-      \ 'i:imports:1',
-      \ 'c:constants',
-      \ 'v:variables',
-      \ 't:types',
-      \ 'n:interfaces',
-      \ 'w:fields',
-      \ 'e:embedded',
-      \ 'm:methods',
-      \ 'r:constructor',
-      \ 'f:functions'
-      \ ],
-      \ 'sro' : '.',
-      \ 'kind2scope' : {
-      \ 't' : 'ctype',
-      \ 'n' : 'ntype'
-      \ },
-      \ 'scope2kind' : {
-      \ 'ctype' : 't',
-      \ 'ntype' : 'n'
-      \ },
-      \ 'ctagsbin'  : 'gotags',
-      \ 'ctagsargs' : '-sort -silent'
-      \ }
 
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -471,30 +463,6 @@ augroup pencil
                      \ | let g:airline_section_x = '%{PencilMode()}'
 augroup END
 
-" NeoComplete
-if !has('nvim')
-  let g:neocomplete#enable_at_startup = 1
-  let g:neocomplete#enable_smart_case = 1
-
-  inoremap <expr><C-g>     neocomplete#undo_completion()
-  inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-  " <CR>: close popup and save indent.
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function()
-    return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? "\<C-y>" : "\<CR>"
-  endfunction
-  " <TAB>: completion.
-  inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-  " <C-h>, <BS>: close popup and delete backword char.
-  inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-  " Close popup by <Space>.
-  inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
-endif
-
 " ack
 " if executable('ag')
 "   let &grepprg = 'ag --nogroup --nocolor --column'
@@ -522,10 +490,10 @@ let g:asterisk#keeppos = 1
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
 " anyfold
-" let anyfold_activate=1
-" autocmd Filetype startify let b:anyfold_activate=0
-" autocmd Filetype calendar let b:anyfold_activate=0
-let anyfold_fold_comments = 1
+let b:anyfold_activate      = 1
+let b:anyfold_fold_comments = 1
+autocmd Filetype startify,calendar,tagbar,nerdtree,org,vimwiki
+      \ let b:anyfold_activate=0 | let b:anyfold_fold_comments=0
 
 " lessspace
 let g:lessspace_blacklist = ['mail']
@@ -540,6 +508,10 @@ let g:calendar_google_task = 1
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/personal_wiki'}]
+let g:automatic_nested_syntaxes = 1 " code blocks highlighting
+let g:vimwiki_table_mappings = 0
+let g:vimwiki_autowriteall = 0
+let g:vimwiki_folding = 'list'
 
 " notational
 let g:nv_search_paths = ['~/personal_wiki']
@@ -579,6 +551,7 @@ nmap <Leader>vz :VimuxZoomRunner<CR>
 
 " autopairs
 au Filetype markdown,vimwiki let b:autopairs_loaded=1
+au Filetype org let g:AutoPairsMapSpace=0
 
 " localvimrc
 let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm']
@@ -596,7 +569,7 @@ let g:pymode_rope_completion = 0
 set viewoptions=cursor,folds,slash,unix
 
 " FastFold
-" let g:fastfold_savehook = 0
+let g:fastfold_savehook = 1
 " xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
 " xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
 
@@ -609,6 +582,48 @@ let g:coquille_auto_move  = 1
 
 " vim-session
 let g:session_autosave = 'no'
+
+" auwsmit/vim-active-numbers
+let g:actnum_exclude = [ 'nerdtree', 'unite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m' ]
+
+" vim-litecorrect
+call litecorrect#init()
+
+" vim-orgmode
+if exists('$TMUX')
+  let g:org_aggressive_conceal = 1
+endif
+let g:org_export_emacs = '/usr/local/bin/emacs'
+let g:org_export_init_script = '$HOME/.emacs.d/init.el'
+
+" vim-javacomplete2
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" rainbow_levels
+" gruvbox theme
+if &l:background == 'dark'
+    let g:rainbow_levels = [
+        \{'ctermfg': 142, 'guifg': '#b8bb26'},
+        \{'ctermfg': 108, 'guifg': '#8ec07c'},
+        \{'ctermfg': 109, 'guifg': '#83a598'},
+        \{'ctermfg': 175, 'guifg': '#d3869b'},
+        \{'ctermfg': 167, 'guifg': '#fb4934'},
+        \{'ctermfg': 208, 'guifg': '#fe8019'},
+        \{'ctermfg': 214, 'guifg': '#fabd2f'},
+        \{'ctermfg': 223, 'guifg': '#ebdbb2'},
+        \{'ctermfg': 245, 'guifg': '#928374'}]
+else
+    let g:rainbow_levels = [
+        \{'ctermfg': 100, 'guifg': '#79740e'},
+        \{'ctermfg': 66,  'guifg': '#427b58'},
+        \{'ctermfg': 24,  'guifg': '#076678'},
+        \{'ctermfg': 96,  'guifg': '#8f3f71'},
+        \{'ctermfg': 88,  'guifg': '#9d0006'},
+        \{'ctermfg': 130, 'guifg': '#af3a03'},
+        \{'ctermfg': 136, 'guifg': '#b57614'},
+        \{'ctermfg': 244, 'guifg': '#928374'},
+        \{'ctermfg': 237, 'guifg': '#3c3836'}]
+  endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
@@ -686,11 +701,3 @@ function IsReply()
     " :1
   endif
 endfunction
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" ABBREVIATIONS
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-abbr funciton function
-abbr teh the
-abbr tempalte template
-abbr fitler filter

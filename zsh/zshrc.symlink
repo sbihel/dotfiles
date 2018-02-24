@@ -90,29 +90,25 @@ export GOPATH=$HOME/.go
 export GOBIN=$HOME/.go/bin
 export PATH=$PATH:$GOPATH/bin
 if [[ `uname` == 'Darwin' ]]; then
-  # alias emacs="/usr/local/Cellar/emacs/24.5/bin/emacs"
-  export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
-
   export GOROOT=/usr/local/opt/go/libexec
   export PATH=$PATH:$GOROOT/bin
 
   export PATH=$PATH:/opt/local/bin
   # export PYTHONPATH=$PYTHONPATH:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages
 
-  export PATH=/usr/local/Cellar/bison/3.0.4/bin:$PATH
-  export PATH=/usr/local/Cellar/flex/2.6.0/bin:$PATH
-
   export PATH="/usr/local/bin:$PATH"
   export PATH="/usr/local/sbin:$PATH"
 
-  export JAVA_HOME="$(/usr/libexec/java_home)"
+  # export JAVA_HOME="$(/usr/libexec/java_home)"
   export HADOOP_PREFIX=$HOME/M1/CBD/hadoop-1.2.1
   export PATH=$PATH:$HADOOP_PREFIX/bin
 
-  export BINARY_DIR_PATH="/usr/local/Cellar/llvm@3.9/3.9.1_1"
-  export PATH="/usr/local/opt/llvm@3.9/bin:$PATH"
-
   . /Users/simonbihel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+  export MAVEN_HOME="/usr/local/opt/maven/libexec"
+  export M2_HOME="/usr/local/opt/maven/libexec"
+  export M2="$M2_HOME/bin"
+  export PATH="$PATH:$M2_HOME/bin"
 else
   . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi

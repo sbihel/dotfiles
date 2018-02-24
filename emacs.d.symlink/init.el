@@ -31,10 +31,13 @@
 (setq use-package-always-ensure t)
 
 (use-package gruvbox-theme)
+(use-package color-theme-sanityinc-tomorrow)
 
 ; Use evil mode
-(use-package evil)
-(evil-mode t)
+(use-package evil
+  :config
+  (evil-mode t)
+)
 
 (cua-mode t)
 
@@ -42,19 +45,23 @@
 (use-package powerline-evil)
 (powerline-evil-center-color-theme)
 
-(use-package auto-complete-config)
+(use-package auto-complete)
+; (use-package auto-complete-config)
 (ac-config-default)
 (use-package yasnippet)
 (yas-global-mode 1)
 (use-package go-autocomplete)
 (use-package auto-complete-clang)
 
-(use-package autopair)
-(autopair-global-mode 1)
-(setq autopair-autowrap t)
+(use-package autopair
+  :config
+  (autopair-global-mode 1)
+  (setq autopair-autowrap t)
+)
 
-(use-package flycheck)
-(add-hook 'after-init-hook #'global-flycheck-mode)
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 
 ;; esc quits
 (defun minibuffer-keyboard-quit ()
@@ -77,17 +84,33 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (setq-default tab-width 4 indent-tabs-mode nil)
 
-(autoload 'octave-mode "octave-mod" nil t)
-(setq auto-mode-alist
-(cons '("\\.m$" . octave-mode) auto-mode-alist))
-
-;; (add-hook 'org-mode-hook
-;;   '(lambda()
-;;     (setq fill-column 80)))
 (setq fill-column 80)
 (setq text-mode-hook 'turn-on-auto-fill)
-(setq org-mode 'text-mode)
+
+(setq org-src-fontify-natively t)
+(use-package htmlize)
+(setq org-html-htmlize-output-type 'css)
+(setq org-html-checkbox-type 'html)
+(use-package table)
+(use-package ox-pandoc)
+(require 'ox-md)
+
+(use-package smooth-scrolling
+  :config
+  (smooth-scrolling-mode 1)
+)
 
 
-;; Added by Kite
-(load-file "~/.emacs.d/kite.el")
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(pandoc ## ox-pandoc yasnippet use-package powerline-evil htmlize helm gruvbox-theme go-mode go-autocomplete flycheck esup color-theme-sanityinc-tomorrow autopair auto-complete-clang)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

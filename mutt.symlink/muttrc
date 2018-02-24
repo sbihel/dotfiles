@@ -1,32 +1,41 @@
-# IMAP: offlineimap
-set folder = "~/Maildir"
+set folder = $HOME/Maildir
 source ~/.mutt/mailboxes
-#set spoolfile = "+Ens/INBOX"
-#set record = "+Ens/Sent"
-#set postponed = "+Ens/Drafts"
-#set mbox = "+Ens/Archives"
+set mbox_type=Maildir
+mailboxes "+Ens" "+KTH"
 
 set realname = "Simon Bihel"
 set from = 'simon.bihel@ens-rennes.fr'
+folder-hook Ens set from="simon.bihel@ens-rennes.fr"
+folder-hook KTH set from="simbihe@kth.se"
+
 set imap_user = 'sbihe682'
-#set folder = 'imap://imap.ens-rennes.fr:143'
-set spoolfile = +INBOX
-mailboxes = INBOX
+folder-hook Ens set imap_user = 'sbihe682'
+folder-hook KTH set imap_user = 'simbihe'
 set imap_check_subscribed
 set imap_keepalive
-set mbox = +Archives
-set postponed = +Drafts
-set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
-# set smtp_authenticators = 'sbihel'
-set ssl_starttls = yes
-set record = +Sent
-
-set delete=yes
-
-set text_flowed = yes
-
 set imap_delim_chars='/'
 
+set spoolfile = +Ens/INBOX
+folder-hook Ens set spoolfile = +Ens/INBOX
+folder-hook KTH set spoolfile = +KTH/Inbox
+set mbox = +Ens/Archives
+folder-hook Ens set mbox = +Ens/Archives
+folder-hook KTH set mbox = +KTH/Archives
+set postponed = +Ens/Drafts
+folder-hook Ens set postponed = +Ens/Drafts
+folder-hook KTH set postponed = +KTH/Drafts
+set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
+folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
+folder-hook KTH set smtp_url = 'smtp://simbihe@smtp.kth.se:587/'
+folder-hook KTH set ssl_starttls  = yes
+folder-hook KTH set ssl_force_tls = yes
+folder-hook KTH set smtp_authenticators="login"
+set ssl_starttls = yes
+set record = +Ens/Sent
+folder-hook Ens set record = +Ens/Sent
+folder-hook KTH set record = "+KTH/Sent%20Items"
+
+set text_flowed = yes
 set editor = 'nvim'
 
 source ~/.mutt/colors/vombatidae.mutt
@@ -42,15 +51,21 @@ set query_command="reattach-to-user-namespace lbdbq %s 2> /dev/null"
 
 set timeout = 10
 set mail_check = 5
+set mail_check_stats = yes
 set beep_new
 
-set sidebar_divider_char   = '│'
-set sidebar_visible = yes
-set sidebar_width   = 20
+set sidebar_sort_method   = "path"
+set sidebar_divider_char  = '│'
+set sidebar_visible       = yes
+set sidebar_width         = 20
 color sidebar_new color221 color233
-set status_chars   = " *%A"
-set sidebar_format = "%B%?F? [%F]?%* %?N?%N"
-set status_format   = "───[ Folder: %f ]───[%r%m messages%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)? ]───%>─%?p?( %p postponed )?───"
+set sidebar_delim_chars   = "/"
+set sidebar_short_path    = yes
+set sidebar_folder_indent = yes
+set sidebar_indent_string = "  "
+set status_chars          = " *%A"
+set sidebar_format        = "%B%?F? [%F]?%* %?N?%N?"
+set status_format         = "───[Folder %f]───[Msgs:%r%m%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)?]───%>─%?p?( %p postponed )?───"
 
 # Header Options -------------------------------------
 ignore *                                # ignore all headers
@@ -87,8 +102,11 @@ macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
 
 # Sidebar Navigation ---------------------------------
 bind index,pager <down>   sidebar-next
+bind index,pager J        sidebar-next
 bind index,pager <up>     sidebar-prev
+bind index,pager K        sidebar-prev
 bind index,pager <right>  sidebar-open
+bind index,pager L        sidebar-open
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -132,8 +150,10 @@ set include                          # include message in replies
 set forward_quote                    # include message in forwards
 
 unset confirmappend
-folder-hook . set trash="=Trash"
+folder-hook Ens set trash = +Ens/Trash
+folder-hook KTH set trash = "+KTH/Deleted%20Items"
 folder-hook trash$ unset trash
+set delete=yes
 
 color progress white blue
 set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
