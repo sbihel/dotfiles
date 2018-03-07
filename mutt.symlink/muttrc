@@ -33,7 +33,7 @@ folder-hook KTH set smtp_authenticators="login"
 set ssl_starttls = yes
 set record = +Ens/Sent
 folder-hook Ens set record = +Ens/Sent
-folder-hook KTH set record = "+KTH/Sent%20Items"
+folder-hook KTH set record = "'+KTH/Sent Items'"
 
 set text_flowed = yes
 set editor = 'nvim'

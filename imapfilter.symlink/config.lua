@@ -3,7 +3,7 @@ options.subscribe = true
 options.create = true
 
 
-file = assert(io.popen('python2 ~/.mutt/offlineimap.py ens-rennes', 'r'))
+file = assert(io.popen('python ~/.mutt/offlineimap.py ens-rennes', 'r'))
 output = file:read('*a')
 file:close()
 output = string.gsub(output, "\n", "")

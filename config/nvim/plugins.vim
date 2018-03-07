@@ -123,6 +123,7 @@ Plug 'reedes/vim-litecorrect'
 Plug 'beloglazov/vim-online-thesaurus'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'Shougo/vimproc.vim',                       { 'do' : 'make'}
+Plug 'tmux-plugins/vim-tmux'
 
 
 " language-specific plugins
@@ -130,7 +131,7 @@ Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' 
 Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
 Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
-Plug 'klen/python-mode',              { 'for': 'python' }
+Plug 'klen/python-mode',              { 'for': 'python', 'do': 'git submodule update --init --recursive' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
