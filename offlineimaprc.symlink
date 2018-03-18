@@ -34,8 +34,6 @@ remoteuser = sbihe682
 remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
-# folderfilter= lambda f: f not in ['INBOX/Drafts', 'INBOX/Sent', 'INBOX/Trash', 'INBOX.Drafts', 'INBOX.Sent',
-#                                   'INBOX.Trash', 'N1-Snoozed']
 
 [Account KTH]
 postsynchook = $HOME/.mutt/postsync-offlineimap.sh
@@ -60,4 +58,4 @@ remoteuser = simbihe
 remotepasseval = get_pass("kth")
 keepalive = 60
 holdconnectionopen = yes
-folderfilter= lambda f: f not in ['Trash', 'Sent']
+folderfilter= lambda f: f not in ['Trash', 'Sent', 'Journal', 'Outbox', 'Contacts', 'Tasks', 'Calendar', 'Notes']

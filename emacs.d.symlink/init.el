@@ -91,6 +91,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (use-package htmlize)
 (setq org-html-htmlize-output-type 'css)
 (setq org-html-checkbox-type 'html)
+(setq org-export-with-broken-links 'mark)
 (use-package table)
 (use-package ox-pandoc)
 (require 'ox-md)

@@ -124,6 +124,7 @@ Plug 'beloglazov/vim-online-thesaurus'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'Shougo/vimproc.vim',                       { 'do' : 'make'}
 Plug 'tmux-plugins/vim-tmux'
+Plug 'sodapopcan/vim-twiggy',                    { 'on': 'Twiggy' }
 
 
 " language-specific plugins

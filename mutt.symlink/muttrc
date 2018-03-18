@@ -27,10 +27,16 @@ folder-hook KTH set postponed = +KTH/Drafts
 set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 folder-hook KTH set smtp_url = 'smtp://simbihe@smtp.kth.se:587/'
-folder-hook KTH set ssl_starttls  = yes
-folder-hook KTH set ssl_force_tls = yes
-folder-hook KTH set smtp_authenticators="login"
-set ssl_starttls = yes
+set ssl_force_tls    = yes
+set ssl_starttls     = yes
+set ssl_use_sslv2    = no
+set ssl_use_sslv3    = no
+set ssl_use_tlsv1    = no
+set ssl_use_tlsv1_1  = no
+set ssl_use_tlsv1_2  = yes
+set ssl_verify_dates = yes
+set ssl_verify_host  = yes
+folder-hook KTH set smtp_authenticators = "login"
 set record = +Ens/Sent
 folder-hook Ens set record = +Ens/Sent
 folder-hook KTH set record = "'+KTH/Sent Items'"
@@ -151,7 +157,7 @@ set forward_quote                    # include message in forwards
 
 unset confirmappend
 folder-hook Ens set trash = +Ens/Trash
-folder-hook KTH set trash = "+KTH/Deleted%20Items"
+folder-hook KTH set trash = "'+KTH/Deleted Items'"
 folder-hook trash$ unset trash
 set delete=yes
 
@@ -167,3 +173,28 @@ macro index \cb "\
 'call urlview to extract URLs out of a message'
 
 auto_view text/calendar application/ics
+
+# PGP -------------------------------------------------------------------------
+set pgp_default_key="18A2FD3C8FD13ECF0CEF3F4A2D847F82773F0173"
+# set pgp_sign_as = 2D847F82773F0173
+
+set pgp_decode_command="gpg --status-fd=2 %?p?--pinentry-mode loopback --passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --status-fd=2 %?p?--pinentry-mode loopback --passphrase-fd 0? --no-verbose --quiet --batch --output - --decrypt %f"
+set pgp_sign_command="gpg %?p?--pinentry-mode loopback --passphrase-fd 0? --no-verbose --batch --quiet --output - --armor --textmode %?a?--local-user %a? --detach-sign %f"
+set pgp_clearsign_command="gpg %?p?--pinentry-mode loopback --passphrase-fd 0? --no-verbose --batch --quiet --output - --armor --textmode %?a?--local-user %a? --clearsign %f"
+set pgp_encrypt_only_command="/usr/lib/neomutt/pgpewrap gpg --batch --quiet --no-verbose --output - --textmode --armor --encrypt -- --recipient %r -- %f"
+set pgp_encrypt_sign_command="/usr/lib/neomutt/pgpewrap gpg %?p?--pinentry-mode loopback --passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - %?a?--local-user %a? --armor --sign --encrypt -- --recipient %r -- %f"
+set pgp_import_command="gpg --no-verbose --import %f"
+set pgp_export_command="gpg --no-verbose --armor --export %r"
+set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
+
+set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
+
+set crypt_autosign = no
+folder-hook Ens set crypt_autosign = yes
+folder-hook KTH set crypt_autosign = no
+set crypt_replyencrypt = yes

@@ -242,6 +242,8 @@ augroup END
 autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
 autocmd FileType json setlocal tw=0 cc=0 foldmethod=syntax
+autocmd FileType bib setlocal tw=0 cc=0
+autocmd FileType html setlocal tw=0 cc=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -509,7 +511,7 @@ let g:calendar_google_calendar = 1
 let g:calendar_google_task = 1
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/personal_wiki'}]
+let g:vimwiki_list = [{'path': '~/personal_wiki'}, {'path': '~/internship_coinse/reporting', 'path_html': '~/internship_coinse/reporting_html'}]
 let g:automatic_nested_syntaxes = 1 " code blocks highlighting
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_autowriteall = 0

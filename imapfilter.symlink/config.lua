@@ -37,6 +37,8 @@ output = string.gsub(output, "\n", "")
     filtered:move_messages(account["easychair"])
     filtered = mails:contain_from("piazza")
     filtered:move_messages(account["piazza"])
+    filtered = mails:contain_subject("[GP]")
+    filtered:move_messages(account["GP"])
 --end
 
 --become_daemon(100, forever)
