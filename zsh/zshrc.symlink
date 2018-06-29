@@ -161,6 +161,8 @@ export GOPATH=$HOME/.go
 export GOBIN=$HOME/.go/bin
 export PATH=$PATH:$GOPATH/bin
 if [[ `uname` == 'Darwin' ]]; then
+  alias emacs="/usr/local/bin/emacs -nw"
+
   export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
 
   export GOROOT=/usr/local/opt/go/libexec
@@ -172,10 +174,6 @@ if [[ `uname` == 'Darwin' ]]; then
   export PATH="/usr/local/bin:$PATH"
   export PATH="/usr/local/sbin:$PATH"
 
-  # export JAVA_HOME="$(/usr/libexec/java_home)"
-  export HADOOP_PREFIX=$HOME/M1/CBD/hadoop-1.2.1
-  export PATH=$PATH:$HADOOP_PREFIX/bin
-
   . /Users/simonbihel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
   export MAVEN_HOME="/usr/local/opt/maven/libexec"
@@ -183,6 +181,8 @@ if [[ `uname` == 'Darwin' ]]; then
   export M2="$M2_HOME/bin"
   export PATH="$PATH:$M2_HOME/bin"
 
+  export PATH="$HOME/.jenv/bin:$PATH"
+  eval "$(jenv init -)"
 else
   . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi

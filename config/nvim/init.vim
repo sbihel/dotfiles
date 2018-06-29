@@ -81,8 +81,8 @@ set foldenable
 
 set scrolloff=3 " lines of text around cursor
 
-set relativenumber  " show relative lines number
-set number  " show lines number
+set norelativenumber  " show relative lines number
+set nonumber  " show lines number
 set showmatch  " show matching parenthesis
 if has('nvim')
   set clipboard=unnamedplus  " allow copy/paste from nvim to other app
@@ -206,6 +206,8 @@ nnoremap <Leader>Q :qa!<cr>
 " write read-only files
 cmap w!! w !sudo tee % >/dev/null
 
+set spelllang=en_gb
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FILETYPE SPECIFICS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -236,7 +238,8 @@ augroup mail_filetype
     \ autocmd VimEnter *
       \ :0,'}s/\s\+$//e
       \ | :execute 'normal gg}'
-      \ | :put! =\"\n\n\"
+      \ | :put! =\"\n\"
+      \ | :execute 'normal j'
       \ | :execute 'startinsert'
 augroup END
 autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
@@ -244,6 +247,8 @@ autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 autocmd FileType json setlocal tw=0 cc=0 foldmethod=syntax
 autocmd FileType bib setlocal tw=0 cc=0
 autocmd FileType html setlocal tw=0 cc=0
+autocmd FileType muttrc setlocal tw=0 cc=0
+autocmd FileType markdown setlocal spell
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -251,6 +256,7 @@ autocmd FileType html setlocal tw=0 cc=0
 " neomake
 autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 " let g:neomake_open_list = 2
+let g:neomake_python_enabled_makers = []  " python-mode is already doing the job
 
 " deoplete
 if !has('nvim')
@@ -326,6 +332,11 @@ let airline_section_y = '%{ObsessionStatus()}'
 
 " GitGutter
 let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with <leader>h
+let g:gitgutter_sign_added = '┃'
+let g:gitgutter_sign_modified = '┃'
+let g:gitgutter_sign_removed = '◢'
+let g:gitgutter_sign_removed_first_line = '◥'
+let g:gitgutter_sign_modified_removed = '◢'
 
 " Antlr
 au BufRead,BufNewFile *.g set filetype=antlr3
@@ -589,7 +600,7 @@ let g:coquille_auto_move  = 1
 let g:session_autosave = 'no'
 
 " auwsmit/vim-active-numbers
-let g:actnum_exclude = [ 'nerdtree', 'unite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m' ]
+let g:actnum_exclude = [ 'nerdtree', 'unite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m', 'thesaurus' ]
 
 " vim-litecorrect
 call litecorrect#init()
@@ -629,6 +640,29 @@ else
         \{'ctermfg': 244, 'guifg': '#928374'},
         \{'ctermfg': 237, 'guifg': '#3c3836'}]
 endif
+
+" vim-ditto
+" au FileType markdown,text,tex DittoOn
+
+" vim-grammarous
+let g:grammarous#hooks = {}
+function! g:grammarous#hooks.on_check(errs) abort
+  nmap <buffer>gn <Plug>(grammarous-move-to-next-error)
+  nmap <buffer>gp <Plug>(grammarous-move-to-previous-error)
+  nmap <buffer>gr <Plug>(grammarous-move-to-info-window)r
+  nmap <buffer>gf <Plug>(grammarous-move-to-info-window)f
+  nmap <buffer>gR <Plug>(grammarous-move-to-info-window)R
+endfunction
+function! g:grammarous#hooks.on_reset(errs) abort
+  nunmap <buffer>gn
+  nunmap <buffer>gp
+  nunmap <buffer>gr
+  nunmap <buffer>gf
+  nunmap <buffer>gR
+endfunction
+
+" thesaurus_query
+let g:tq_map_keys=0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

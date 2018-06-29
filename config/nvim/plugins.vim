@@ -14,6 +14,7 @@ Plug 'sjl/badwolf'
 Plug 'trevordmiller/nova-vim', Cond(has('termguicolors'))
 Plug 'chriskempson/base16-vim'
 Plug 'nanotech/jellybeans.vim'
+Plug 'soft-aesthetic/soft-era-vim'
 
 
 " utilities
@@ -44,6 +45,8 @@ Plug 'tpope/vim-eunuch'  " helpers for UNIX
 Plug 'tpope/vim-repeat'  " . for supported plugin maps
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-apathy'
 Plug 'radenling/vim-dispatch-neovim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree',                      { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -120,11 +123,18 @@ Plug 'bergercookie/vim-debugstring'
 Plug 'gorkunov/smartpairs.vim'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'reedes/vim-litecorrect'
-Plug 'beloglazov/vim-online-thesaurus'
+" Plug 'beloglazov/vim-online-thesaurus'
+Plug 'Ron89/thesaurus_query.vim'
 Plug 'thiagoalessio/rainbow_levels.vim'
 Plug 'Shougo/vimproc.vim',                       { 'do' : 'make'}
 Plug 'tmux-plugins/vim-tmux'
 Plug 'sodapopcan/vim-twiggy',                    { 'on': 'Twiggy' }
+Plug 'dbmrq/vim-redacted',                       { 'on': 'Redact' }
+Plug 'dbmrq/vim-ditto'
+" Plug 'vim-vdebug/vdebug'
+Plug 'sickill/vim-pasta'
+Plug 'AndrewRadev/whitespaste.vim'
+Plug 'blueyed/vim-diminactive'
 
 
 " language-specific plugins
@@ -132,7 +142,7 @@ Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' 
 Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
 Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
-Plug 'klen/python-mode',              { 'for': 'python', 'do': 'git submodule update --init --recursive' }
+Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
@@ -172,6 +182,7 @@ Plug 'vim-scripts/coq-indent',        { 'for': 'coq' }
 Plug 'let-def/vimbufsync',            { 'for': 'coq' }
 Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
 Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
+Plug 'othree/xml.vim',                { 'for': 'xml' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

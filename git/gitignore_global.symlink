@@ -16,13 +16,41 @@ Icon
 # project-specific vim configurations
 .vimrc.local
 
+# emacs
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+.\#*
+*_flymake.*
+
 # typescript command garbage
 tscommand*.txt
 
-
-#
+# python
 *.pyc
+__pycache__
+.ropeproject
+*.egg-info
+
+# latex
 *.aux
 *.log
 *.out
 *.toc
+*.vrb
+*.xdv
+*-blx.bib
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.nav
+*.run.xml
+*.snm
+*.vrb
+*.xdv
+*_minted-main
+
+#
+.idea

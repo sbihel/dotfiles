@@ -3,30 +3,30 @@ source ~/.mutt/mailboxes
 set mbox_type=Maildir
 mailboxes "+Ens" "+KTH"
 
+set spoolfile = +Ens/INBOX
+folder-hook Ens set spoolfile = +Ens/INBOX
+folder-hook KTH set spoolfile = +KTH/Inbox
+
 set realname = "Simon Bihel"
-set from = 'simon.bihel@ens-rennes.fr'
 folder-hook Ens set from="simon.bihel@ens-rennes.fr"
 folder-hook KTH set from="simbihe@kth.se"
 
-set imap_user = 'sbihe682'
 folder-hook Ens set imap_user = 'sbihe682'
 folder-hook KTH set imap_user = 'simbihe'
 set imap_check_subscribed
 set imap_keepalive
 set imap_delim_chars='/'
 
-set spoolfile = +Ens/INBOX
-folder-hook Ens set spoolfile = +Ens/INBOX
-folder-hook KTH set spoolfile = +KTH/Inbox
-set mbox = +Ens/Archives
 folder-hook Ens set mbox = +Ens/Archives
 folder-hook KTH set mbox = +KTH/Archives
-set postponed = +Ens/Drafts
 folder-hook Ens set postponed = +Ens/Drafts
 folder-hook KTH set postponed = +KTH/Drafts
-set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
-folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
+# folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
+# folder-hook Ens set smtp_pass = `pass Mail/sendgrid`
+folder-hook Ens set smtp_url = 'smtp://sbihe682@smtpauth.ens-rennes.fr:587/'
+folder-hook Ens set smtp_pass = `pass Mail/ens-rennes`
 folder-hook KTH set smtp_url = 'smtp://simbihe@smtp.kth.se:587/'
+folder-hook KTH set smtp_pass = `pass Mail/kth`
 set ssl_force_tls    = yes
 set ssl_starttls     = yes
 set ssl_use_sslv2    = no
@@ -36,8 +36,8 @@ set ssl_use_tlsv1_1  = no
 set ssl_use_tlsv1_2  = yes
 set ssl_verify_dates = yes
 set ssl_verify_host  = yes
+folder-hook .   set smtp_authenticators = ""
 folder-hook KTH set smtp_authenticators = "login"
-set record = +Ens/Sent
 folder-hook Ens set record = +Ens/Sent
 folder-hook KTH set record = "'+KTH/Sent Items'"
 
@@ -82,6 +82,7 @@ hdr_order from: to: cc: date: subject:  # and in this order
 # Index View Options ---------------------------------
 set date_format = "%m/%d"
 set index_format = "[%Z]  %D  %-20.20F  %s"
+# set index_format = '%4C %Z %<[y?%<[m?%<[d?%[%H:%M ]&%[%a %d]>&%[%b %d]>&%[%m/%y ]> %-15.15L (%?l?%4l&%4c?) %s'
 set sort = threads                         # like gmail
 set sort_aux = reverse-last-date-received  # like gmail
 set uncollapse_jump                        # don't collapse on an unread message
@@ -191,10 +192,11 @@ set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
 set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r"
 set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
 
+set pgp_use_gpg_agent = yes
+
 set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
 set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
 
-set crypt_autosign = no
+folder-hook .   set crypt_autosign = no
 folder-hook Ens set crypt_autosign = yes
-folder-hook KTH set crypt_autosign = no
 set crypt_replyencrypt = yes
