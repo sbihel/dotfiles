@@ -117,7 +117,7 @@ set breakindent
 "set listchars=tab:!·
 " toggle invisible characters
 set invlist
-set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,eol:¬
+set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,eol:¬,nbsp:␣
 "highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
 set showbreak=↪
 
@@ -505,7 +505,7 @@ let g:asterisk#keeppos = 1
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
 " anyfold
-let b:anyfold_activate      = 1
+" let b:anyfold_activate      = 1
 let b:anyfold_fold_comments = 1
 autocmd FileType startify,calendar,tagbar,nerdtree,org,vimwiki
       \ let b:anyfold_activate=0 | let b:anyfold_fold_comments=0
@@ -526,7 +526,7 @@ let g:vimwiki_list = [{'path': '~/personal_wiki'}, {'path': '~/internship_coinse
 let g:automatic_nested_syntaxes = 1 " code blocks highlighting
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_autowriteall = 0
-let g:vimwiki_folding = ''
+let g:vimwiki_folding = 'custom'
 
 " notational
 let g:nv_search_paths = ['~/personal_wiki']

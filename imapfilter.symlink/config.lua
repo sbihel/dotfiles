@@ -53,6 +53,7 @@ output = string.gsub(output, "\n", "")
                mails:contain_from("0s-1s.com") +
                mails:contain_from("anxymag.com") +
                mails:contain_from("jamesclear.com") +
+               mails:contain_from("stylishacademic.com") +
                mails:contain_from("a f a s i a") +
                mails:contain_from("japan-architect.co.jp") +
                mails:contain_from("divisare.com") +

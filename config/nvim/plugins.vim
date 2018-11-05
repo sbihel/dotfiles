@@ -82,6 +82,10 @@ Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
 Plug 'brooth/far.vim',                           { 'on': 'Far' }
 Plug 'AndrewRadev/linediff.vim',                 { 'on': 'Linediff' }
 Plug 'AndrewRadev/dsf.vim'
+Plug 'AndrewRadev/deleft.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'AndrewRadev/whitespaste.vim'
+Plug 'AndrewRadev/undoquit.vim'
 Plug 'matze/vim-move'
 Plug 't9md/vim-textmanip'
 Plug 'mileszs/ack.vim'
@@ -108,7 +112,6 @@ Plug 'benmills/vimux'
 Plug 'kana/vim-arpeggio'
 Plug 'octref/RootIgnore'
 Plug 'embear/vim-localvimrc'
-Plug 'AndrewRadev/deleft.vim'
 Plug 'sk1418/Join'
 Plug 'will133/vim-dirdiff',                      { 'on': 'DirDiff' }
 Plug 'Konfekt/FastFold'
@@ -121,7 +124,6 @@ Plug 'vim-scripts/MPage'
 Plug 'bergercookie/vim-debugstring'
 " Plug 'haya14busa/vim-edgemotion'
 Plug 'gorkunov/smartpairs.vim'
-Plug 'AndrewRadev/splitjoin.vim'
 Plug 'reedes/vim-litecorrect'
 " Plug 'beloglazov/vim-online-thesaurus'
 Plug 'Ron89/thesaurus_query.vim'
@@ -133,9 +135,7 @@ Plug 'dbmrq/vim-redacted',                       { 'on': 'Redact' }
 Plug 'dbmrq/vim-ditto'
 " Plug 'vim-vdebug/vdebug'
 Plug 'sickill/vim-pasta'
-Plug 'AndrewRadev/whitespaste.vim'
 Plug 'blueyed/vim-diminactive'
-
 
 " language-specific plugins
 Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' }

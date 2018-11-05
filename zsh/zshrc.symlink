@@ -181,8 +181,10 @@ if [[ `uname` == 'Darwin' ]]; then
   export M2="$M2_HOME/bin"
   export PATH="$PATH:$M2_HOME/bin"
 
-  export PATH="$HOME/.jenv/bin:$PATH"
-  eval "$(jenv init -)"
+  if [ -x "$(command -v jenv)" ]; then
+    export PATH="$HOME/.jenv/bin:$PATH"
+    eval "$(jenv init -)"
+  fi
 else
   . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
@@ -205,7 +207,9 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
 
-eval "$(thefuck --alias)"
+if [ -x "$(command -v thefuck)" ]; then
+  eval "$(thefuck --alias)"
+fi
 
 # redefine prompt_context for hiding user@hostname
 prompt_context () { }
