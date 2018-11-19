@@ -174,7 +174,11 @@ if [[ `uname` == 'Darwin' ]]; then
   export PATH="/usr/local/bin:$PATH"
   export PATH="/usr/local/sbin:$PATH"
 
-  . /Users/simonbihel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+  export PATH="/usr/local/opt/python/libexec/bin:$PATH"
+
+  if [ -x "$(command -v opam)" ]; then
+    . /Users/simonbihel/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+  fi
 
   export MAVEN_HOME="/usr/local/opt/maven/libexec"
   export M2_HOME="/usr/local/opt/maven/libexec"
@@ -212,8 +216,6 @@ if [ -x "$(command -v thefuck)" ]; then
 fi
 
 # redefine prompt_context for hiding user@hostname
-prompt_context () { }
+# prompt_context () { }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"
-export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"

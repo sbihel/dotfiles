@@ -18,7 +18,7 @@ run '~/.tmuxconf.tmux'
 
 # if-shell "[[ $OSTYPE != 'linux-gnu' ]]" 'set -g default-shell $SHELL; set -g default-command "reattach-to-user-namespace -l ${SHELL}"'
 # set-option -g default-command "which reattach-to-user-namespace >/dev/null && reattach-to-user-namespace -l $SHELL || $SHELL"
-set -g default-terminal "tmux-256color"
+set -g default-terminal "xterm-256color"
 set -as terminal-overrides ',xterm*:sitm=\E[3m'
 set-option -ga terminal-overrides ",*256col*:Tc"
 # set -as terminal-overrides ',xterm*:smxx=\E[9m'

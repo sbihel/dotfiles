@@ -56,6 +56,7 @@ Plug 'xuyuanp/nerdtree-git-plugin',              { 'on': ['NERDTreeToggle', 'NER
 Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
 Plug 'janko-m/vim-test',                         { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 Plug 'majutsushi/tagbar' ",                       { 'on': ['TagbarOpen', 'TagbarToggle'] }
+Plug 'xolox/vim-easytags'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -79,7 +80,7 @@ Plug 'Yggdroot/indentLine',                      { 'on': 'IndentLinesEnable' }
 Plug 'mptre/vim-printf',                         { 'on': 'Printf' }
 Plug 'gelguy/Cmd2.vim'
 Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
-Plug 'brooth/far.vim',                           { 'on': 'Far' }
+Plug 'brooth/far.vim',                           { 'on': ['Far', 'Farp'] }
 Plug 'AndrewRadev/linediff.vim',                 { 'on': 'Linediff' }
 Plug 'AndrewRadev/dsf.vim'
 Plug 'AndrewRadev/deleft.vim'
@@ -143,6 +144,7 @@ Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
 Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
+Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }

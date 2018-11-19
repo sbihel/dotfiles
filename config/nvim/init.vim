@@ -232,6 +232,8 @@ autocmd FileType vim setlocal tw=78 cc=78
 autocmd FileType vimwiki setlocal nowrap spell
 autocmd FileType coq setlocal tw=80 cc=80
 
+autocmd BufRead,BufNewFile /*/git/config set filetype=gitconfig
+
 autocmd BufRead,BufNewFile /*/neomutt* set filetype=mail
 augroup mail_filetype
   autocmd FileType mail
@@ -315,6 +317,7 @@ nnoremap <F5> :GundoToggle<CR>
 
 " Startify
 autocmd User Startified setlocal buftype=
+let g:startify_change_to_vcs_root = 1
 
 " Bclose
 nnoremap <silent> <Leader>bd :Bclose<CR>
@@ -359,6 +362,7 @@ nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
+nnoremap <silent> <Leader>f        :Tags<CR>
 " nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>
 
@@ -541,6 +545,9 @@ let g:ycm_confirm_extra_conf = 0
 "   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
 "                                 \ | autocmd! load_ycm
 " augroup END
+let g:ycm_filetype_specific_completion_to_disable = {
+      \ 'python': 1
+      \}
 
 " Chromatica
 let g:chromatica#enable_at_startup=1
@@ -576,7 +583,7 @@ let g:localvimrc_sandbox = 0
 let g:deleft_remove_strategy = "spaces"
 
 " python-mode
-let g:pymode_python = 'python3'
+" let g:pymode_python = 'python3'
 let g:pymode_rope_autoimport = 1
 let g:pymode_rope_autoimport_import_after_complete = 1
 let g:pymode_rope_completion = 1
