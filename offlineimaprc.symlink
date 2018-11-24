@@ -1,6 +1,6 @@
 [general]
 pythonfile = ~/.mutt/offlineimap.py
-accounts = Ens, KTH
+accounts = Ens
 maxsyncaccounts = 2
 
 [mbnames]
@@ -12,7 +12,7 @@ sep = " "
 footer = "\n"
 
 [Account Ens]
-presynchook = imapfilter
+presynchook = imapfilter -t /usr/local/etc/openssl/cert.pem
 postsynchook = $HOME/.mutt/postsync-offlineimap.sh
 localrepository = Local-Ens
 remoterepository = Remote-Ens
@@ -27,35 +27,11 @@ localfolders = ~/Maildir/Ens
 
 [Repository Remote-Ens]
 type = IMAP
-remotehost = imap.ens-rennes.fr
-remoteport = 143
-ssl = no
-remoteuser = sbihe682
+remotehost = partage.ens-rennes.fr
+remoteport = 993
+ssl = yes
+remoteuser = simon.bihel@ens-rennes.fr
 remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
-
-[Account KTH]
-postsynchook = $HOME/.mutt/postsync-offlineimap.sh
-localrepository = Local-KTH
-remoterepository = Remote-KTH
-autorefresh = 0.5
-quick = 10
-createfolders = False
-
-[Repository Local-KTH]
-sep = "/"
-type = Maildir
-localfolders = ~/Maildir/KTH
-
-[Repository Remote-KTH]
-type = IMAP
-remotehost = webmail.kth.se
-remoteport = 993
-ssl = yes
 sslcacertfile = /usr/local/etc/openssl/cert.pem
-remoteuser = simbihe
-remotepasseval = get_pass("kth")
-keepalive = 60
-holdconnectionopen = yes
-folderfilter= lambda f: f not in ['Trash', 'Sent', 'Journal', 'Outbox', 'Contacts', 'Tasks', 'Calendar', 'Notes']

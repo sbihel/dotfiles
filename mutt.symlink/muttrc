@@ -1,32 +1,25 @@
 set folder = $HOME/Maildir
 source ~/.mutt/mailboxes
 set mbox_type=Maildir
-mailboxes "+Ens" "+KTH"
+mailboxes "+Ens"
 
 set spoolfile = +Ens/INBOX
 folder-hook Ens set spoolfile = +Ens/INBOX
-folder-hook KTH set spoolfile = +KTH/Inbox
 
 set realname = "Simon Bihel"
 folder-hook Ens set from="simon.bihel@ens-rennes.fr"
-folder-hook KTH set from="simbihe@kth.se"
 
-folder-hook Ens set imap_user = 'sbihe682'
-folder-hook KTH set imap_user = 'simbihe'
+folder-hook Ens set imap_user = 'simon.bihel@ens-rennes.fr'
 set imap_check_subscribed
 set imap_keepalive
 set imap_delim_chars='/'
 
 folder-hook Ens set mbox = +Ens/Archives
-folder-hook KTH set mbox = +KTH/Archives
 folder-hook Ens set postponed = +Ens/Drafts
-folder-hook KTH set postponed = +KTH/Drafts
 # folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 # folder-hook Ens set smtp_pass = `pass Mail/sendgrid`
-folder-hook Ens set smtp_url = 'smtp://sbihe682@smtpauth.ens-rennes.fr:587/'
+folder-hook Ens set smtp_url = 'smtp://simon.bihel@ens-rennes.fr@partage.ens-rennes.fr:587/'
 folder-hook Ens set smtp_pass = `pass Mail/ens-rennes`
-folder-hook KTH set smtp_url = 'smtp://simbihe@smtp.kth.se:587/'
-folder-hook KTH set smtp_pass = `pass Mail/kth`
 set ssl_force_tls    = yes
 set ssl_starttls     = yes
 set ssl_use_sslv2    = no
@@ -37,9 +30,8 @@ set ssl_use_tlsv1_2  = yes
 set ssl_verify_dates = yes
 set ssl_verify_host  = yes
 folder-hook .   set smtp_authenticators = ""
-folder-hook KTH set smtp_authenticators = "login"
+folder-hook Ens set smtp_authenticators = "login"
 folder-hook Ens set record = +Ens/Sent
-folder-hook KTH set record = "'+KTH/Sent Items'"
 
 set text_flowed = yes
 set editor = 'nvim'
@@ -158,7 +150,6 @@ set forward_quote                    # include message in forwards
 
 unset confirmappend
 folder-hook Ens set trash = +Ens/Trash
-folder-hook KTH set trash = "'+KTH/Deleted Items'"
 folder-hook trash$ unset trash
 set delete=yes
 

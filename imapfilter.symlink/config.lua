@@ -11,9 +11,11 @@ output = string.gsub(output, "\n", "")
 
 --function forever()
     local account = IMAP {
-        server = 'imap.ens-rennes.fr',
-        username = 'sbihe682',
+        server = 'partage.ens-rennes.fr',
+        username = 'simon.bihel@ens-rennes.fr',
         password = output,
+        port = 993,
+        ssl = 'tsl1',
     }
 
     account.INBOX:check_status()
