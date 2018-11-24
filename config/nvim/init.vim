@@ -299,13 +299,31 @@ let g:airline#extensions#tabline#enabled = 1
 "       \ 'x': '#{battery_icon} #{battery_percentage}',
 "       \ 'y': ['%a %Y-%m-%d', '%H:%M'],
 "       \ 'z': '#H'}
+let g:airline_mode_map = {
+      \ '__' : '-',
+      \ 'c'  : 'C',
+      \ 'i'  : 'I',
+      \ 'ic' : 'I',
+      \ 'ix' : 'I',
+      \ 'n'  : 'N',
+      \ 'ni' : 'N',
+      \ 'no' : 'N',
+      \ 'R'  : 'R',
+      \ 'Rv' : 'R',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ 't'  : 'T',
+      \ 'v'  : 'V',
+      \ 'V'  : 'V',
+      \ '' : 'V',
+      \ }
 
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap <F10> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeRespectWildIgnore=1
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 
 " TagBar | <F9>
 inoremap <F9> <esc>:TagbarToggle<cr>
@@ -545,9 +563,11 @@ let g:ycm_confirm_extra_conf = 0
 "   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
 "                                 \ | autocmd! load_ycm
 " augroup END
-let g:ycm_filetype_specific_completion_to_disable = {
-      \ 'python': 1
-      \}
+" let g:ycm_filetype_specific_completion_to_disable = {
+"       \ 'python': 1
+"       \}
+nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>n :YcmCompleter GoToReferences<CR>
 
 " Chromatica
 let g:chromatica#enable_at_startup=1
@@ -586,7 +606,7 @@ let g:deleft_remove_strategy = "spaces"
 " let g:pymode_python = 'python3'
 let g:pymode_rope_autoimport = 1
 let g:pymode_rope_autoimport_import_after_complete = 1
-let g:pymode_rope_completion = 1
+let g:pymode_rope_completion = 0
 
 " stay
 set viewoptions=cursor,folds,slash,unix
@@ -670,6 +690,9 @@ endfunction
 
 " thesaurus_query
 let g:tq_map_keys=0
+
+" jedi-vim
+" let g:jedi#completions_enabled = 0
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

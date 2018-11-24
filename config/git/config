@@ -9,6 +9,8 @@
 [log]
 	; showSignature = true
 [alias]
+	co = !"git checkout"
+
 	adog = log --all --decorate --oneline --graph
 
 	lg = !"git lg1"

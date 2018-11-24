@@ -137,6 +137,8 @@ Plug 'dbmrq/vim-ditto'
 " Plug 'vim-vdebug/vdebug'
 Plug 'sickill/vim-pasta'
 Plug 'blueyed/vim-diminactive'
+Plug 'euclio/gitignore.vim'
+" Plug 'ervandew/supertab'
 
 " language-specific plugins
 Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' }
@@ -144,7 +146,7 @@ Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
 Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
-Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
+" Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
