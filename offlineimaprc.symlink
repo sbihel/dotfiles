@@ -1,6 +1,6 @@
 [general]
 pythonfile = ~/.mutt/offlineimap.py
-accounts = Ens
+accounts = Ens, Protonmail
 maxsyncaccounts = 2
 
 [mbnames]
@@ -35,3 +35,27 @@ remotepasseval = get_pass("ens-rennes")
 keepalive = 60
 holdconnectionopen = yes
 sslcacertfile = /usr/local/etc/openssl/cert.pem
+folderfilter = lambda folder: folder not in ['Archive']
+
+[Account Protonmail]
+localrepository = Local-Protonmail
+remoterepository = Remote-Protonmail
+postsynchook = $HOME/.mutt/postsync-offlineimap.sh
+autorefresh = 0.5
+quick = 10
+createfolders = False
+
+[Repository Local-Protonmail]
+type = Maildir
+localfolders = ~/Maildir/Protonmail
+
+[Repository Remote-Protonmail]
+type = IMAP
+remoteport = 1143
+remotehost = 127.0.0.1
+remoteuser = simon@simonbihel.me
+remotepasseval = get_pass("protonmail_bridge", add_hostname=True)
+keepalive = 60
+holdconnectionopen = yes
+ssl = no
+folderfilter = lambda folder: folder not in ['All Mail']

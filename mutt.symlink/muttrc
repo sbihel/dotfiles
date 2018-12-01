@@ -1,25 +1,32 @@
 set folder = $HOME/Maildir
 source ~/.mutt/mailboxes
 set mbox_type=Maildir
-mailboxes "+Ens"
+mailboxes "+Ens" "+Protonmail"
 
-set spoolfile = +Ens/INBOX
+set spoolfile = +Protonmail/INBOX
 folder-hook Ens set spoolfile = +Ens/INBOX
+folder-hook Protonmail set spoolfile = +Protonmail/INBOX
 
 set realname = "Simon Bihel"
 folder-hook Ens set from="simon.bihel@ens-rennes.fr"
+folder-hook Protonmail set from="simon@simonbihel.me"
 
 folder-hook Ens set imap_user = 'simon.bihel@ens-rennes.fr'
+folder-hook Protonmail set imap_user = 'simon@simonbihel.me'
 set imap_check_subscribed
 set imap_keepalive
 set imap_delim_chars='/'
 
 folder-hook Ens set mbox = +Ens/Archives
+folder-hook Protonmail set mbox = +Protonmail/Archive
 folder-hook Ens set postponed = +Ens/Drafts
+folder-hook Protonmail set postponed = +Protonmail/Drafts
 # folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 # folder-hook Ens set smtp_pass = `pass Mail/sendgrid`
 folder-hook Ens set smtp_url = 'smtp://simon.bihel@ens-rennes.fr@partage.ens-rennes.fr:587/'
 folder-hook Ens set smtp_pass = `pass Mail/ens-rennes`
+folder-hook Protonmail set smtp_url = 'smtp://simon@simonbihel.me@127.0.0.1:1025'
+folder-hook Protonmail set smtp_pass = `pass Mail/protonmail_bridge_$(hostname)`
 set ssl_force_tls    = yes
 set ssl_starttls     = yes
 set ssl_use_sslv2    = no
@@ -31,7 +38,9 @@ set ssl_verify_dates = yes
 set ssl_verify_host  = yes
 folder-hook .   set smtp_authenticators = ""
 folder-hook Ens set smtp_authenticators = "login"
+folder-hook Protonmail set smtp_authenticators = "login"
 folder-hook Ens set record = +Ens/Sent
+folder-hook Protonmail set record = +Protonmail/Sent
 
 set text_flowed = yes
 set editor = 'nvim'
@@ -150,11 +159,12 @@ set forward_quote                    # include message in forwards
 
 unset confirmappend
 folder-hook Ens set trash = +Ens/Trash
+folder-hook Protonmail set trash = +Protonmail/Trash
 folder-hook trash$ unset trash
 set delete=yes
 
 color progress white blue
-set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
+# set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
 
 macro index \cb "\
 : set my_tmp_pipe_decode=\$pipe_decode\n\
@@ -167,8 +177,16 @@ macro index \cb "\
 auto_view text/calendar application/ics
 
 # PGP -------------------------------------------------------------------------
-set pgp_default_key="18A2FD3C8FD13ECF0CEF3F4A2D847F82773F0173"
-# set pgp_sign_as = 2D847F82773F0173
+folder-hook . set crypt_autosign = no
+folder-hook Ens set crypt_autosign = yes
+folder-hook Ens set pgp_default_key="18A2FD3C8FD13ECF0CEF3F4A2D847F82773F0173"
+folder-hook Protonmail set crypt_autosign = yes
+folder-hook Protonmail set pgp_default_key="EFCA633A68A260A7A7DA21888421E844776383D8"
+
+set crypt_replyencrypt = yes
+
+set pgp_use_gpg_agent = yes
+set crypt_use_gpgme = yes
 
 set pgp_decode_command="gpg --status-fd=2 %?p?--pinentry-mode loopback --passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
 set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
@@ -183,11 +201,5 @@ set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
 set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r"
 set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
 
-set pgp_use_gpg_agent = yes
-
 set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
-set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
-
-folder-hook .   set crypt_autosign = no
-folder-hook Ens set crypt_autosign = yes
-set crypt_replyencrypt = yes
+set pgp_check_gpg_decrypt_status_fd
