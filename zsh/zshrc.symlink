@@ -195,7 +195,7 @@ fi
 
 export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"
 
-alias vim='vim --servername VIM'
+# alias vim='vim --servername VIM'
 
 export PATH=$PATH:$HOME/.local/bin
 

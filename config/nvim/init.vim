@@ -76,7 +76,7 @@ nnoremap <silent><leader>q :nohlsearch<CR>
 " code folding settings
 set foldmethod=expr
 " set foldnestmax=10
-set foldlevel=0 " number of fold opened by default
+" set foldlevel=0 " number of fold opened by default
 set foldenable
 
 set scrolloff=3 " lines of text around cursor
@@ -117,7 +117,7 @@ set breakindent
 "set listchars=tab:!·
 " toggle invisible characters
 set invlist
-set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,eol:¬,nbsp:␣
+set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,nbsp:␣ ",eol:¬
 "highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
 set showbreak=↪
 
@@ -226,10 +226,10 @@ endfunction
 autocmd FileType tex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
 autocmd FileType latex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
 
-autocmd FileType python setlocal cc=79 tw=79
+autocmd FileType python setlocal cc=120 tw=120
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
-autocmd FileType vimwiki setlocal nowrap spell
+autocmd FileType vimwiki setlocal nowrap spell tw=0 cc=0
 autocmd FileType coq setlocal tw=80 cc=80
 
 autocmd BufRead,BufNewFile /*/git/config set filetype=gitconfig
@@ -251,6 +251,14 @@ autocmd FileType bib setlocal tw=0 cc=0
 autocmd FileType html setlocal tw=0 cc=0
 autocmd FileType muttrc setlocal tw=0 cc=0
 autocmd FileType markdown setlocal spell
+
+autocmd FileType qf setlocal tw=0 cc=0
+
+autocmd BufRead,BufNewFile /*/Jenkinsfile* set filetype=groovy
+
+autocmd BufRead,BufNewFile /*/*.yml.symlink set filetype=yaml
+
+autocmd FileType jproperties setlocal tw=0 cc=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -358,6 +366,8 @@ let g:gitgutter_sign_modified = '┃'
 let g:gitgutter_sign_removed = '◢'
 let g:gitgutter_sign_removed_first_line = '◥'
 let g:gitgutter_sign_modified_removed = '◢'
+nmap [c <Plug>GitGutterPrevHunk
+nmap ]c <Plug>GitGutterNextHunk
 
 " Antlr
 au BufRead,BufNewFile *.g set filetype=antlr3
@@ -548,7 +558,7 @@ let g:vimwiki_list = [{'path': '~/personal_wiki'}, {'path': '~/internship_coinse
 let g:automatic_nested_syntaxes = 1 " code blocks highlighting
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_autowriteall = 0
-let g:vimwiki_folding = 'custom'
+let g:vimwiki_folding = 'list'
 
 " notational
 let g:nv_search_paths = ['~/personal_wiki']
@@ -568,6 +578,7 @@ let g:ycm_confirm_extra_conf = 0
 "       \}
 nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>n :YcmCompleter GoToReferences<CR>
+nnoremap <leader>k :YcmCompleter GetDoc<CR>
 
 " Chromatica
 let g:chromatica#enable_at_startup=1
@@ -596,17 +607,20 @@ au FileType markdown,vimwiki let b:autopairs_loaded=1
 au FileType org let g:AutoPairsMapSpace=0
 
 " localvimrc
-let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm']
+let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm', '/Users/sbihel/nexmo_qa/qatests_voice']
 let g:localvimrc_sandbox = 0
+" let g:localvimrc_event = [ "VimEnter", "BufWinEnter" ]
 
 " deleft
 let g:deleft_remove_strategy = "spaces"
 
 " python-mode
-" let g:pymode_python = 'python3'
+let g:pymode_python = 'python'
+let g:pymode_rope = 1
 let g:pymode_rope_autoimport = 1
 let g:pymode_rope_autoimport_import_after_complete = 1
 let g:pymode_rope_completion = 0
+let g:pymode_options_max_line_length = 120
 
 " stay
 set viewoptions=cursor,folds,slash,unix

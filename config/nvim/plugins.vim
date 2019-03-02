@@ -68,7 +68,7 @@ Plug 'rbgrouleff/bclose.vim',                    { 'on': 'Bclose' }  " :bd but n
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 Plug 'evidanary/grepg.vim',                      { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
-Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer' })
+Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer --java-completer --rust-completer --js-completer' })
 Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
 " Plug 'Shougo/neocomplete.vim', Cond(!has('nvim')) " deprecated
 Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
@@ -79,7 +79,7 @@ Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
 Plug 'Yggdroot/indentLine',                      { 'on': 'IndentLinesEnable' }
 Plug 'mptre/vim-printf',                         { 'on': 'Printf' }
 Plug 'gelguy/Cmd2.vim'
-Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
+" Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
 Plug 'brooth/far.vim',                           { 'on': ['Far', 'Farp'] }
 Plug 'AndrewRadev/linediff.vim',                 { 'on': 'Linediff' }
 Plug 'AndrewRadev/dsf.vim'
@@ -139,6 +139,7 @@ Plug 'sickill/vim-pasta'
 Plug 'blueyed/vim-diminactive'
 Plug 'euclio/gitignore.vim'
 " Plug 'ervandew/supertab'
+Plug 'andymass/vim-matchup'
 
 " language-specific plugins
 Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' }
@@ -167,7 +168,7 @@ Plug 'tbabej/taskwiki',               { 'for': 'vimwiki' }  " has requirements `
 Plug 'Alok/notational-fzf-vim',       { 'for': 'vimwiki', 'on': 'NV' }
 Plug 'elzr/vim-json',                 { 'for': 'json' }
 Plug 'andreshazard/vim-logreview',    { 'for': 'logreview' }
-Plug 'gregsexton/MatchTag',           { 'for': 'html' } " match tags in html, similar to paren support
+" Plug 'gregsexton/MatchTag',           { 'for': 'html' } " match tags in html, similar to paren support
 Plug 'othree/html5.vim',              { 'for': 'html' } " html5 support
 Plug 'hail2u/vim-css3-syntax',        { 'for': 'css' }
 Plug 'gavocanov/vim-js-indent',       { 'for': 'javascript' } " JavaScript indent support
@@ -185,7 +186,7 @@ Plug 'vim-scripts/coq-syntax',        { 'for': 'coq' }
 Plug 'vim-scripts/coq-indent',        { 'for': 'coq' }
 Plug 'let-def/vimbufsync',            { 'for': 'coq' }
 Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
-Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
+" Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 Plug 'othree/xml.vim',                { 'for': 'xml' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts

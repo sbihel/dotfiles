@@ -5,6 +5,7 @@ set -g @plugin 'tmux-plugins/tmux-battery'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
+set -g @plugin 'tmux-plugins/tmux-open'
 set -g @plugin 'wfxr/tmux-fzf-url'
 
 set -g @resurrect-strategy-vim 'session'
@@ -58,7 +59,9 @@ bind -Tcopy-mode-vi v send -X begin-selection
 bind -Tcopy-mode-vi V send -X select-line
 bind -Tcopy-mode-vi C-v send -X rectangle-toggle \; send -X begin-selection
 bind -Tcopy-mode-vi y send -X copy-selection-and-cancel
-bind -Tcopy-mode-vi Escape send -X cancel
+# bind -Tcopy-mode-vi Escape send -X cancel
+unbind-key -T copy-mode MouseDragEnd1Pane
+unbind-key -T copy-mode-vi MouseDragEnd1Pane
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
 #if-shell "[[ `$OSTYPE` != `linux-gnu` ]]" \
@@ -87,6 +90,14 @@ set -g history-limit 50000
 set-window-option -g aggressive-resize on
 
 set-window-option -g allow-rename off
+
+set-window-option -g visual-bell off
+
+# bind clear scrollback buffer
+bind -n M-k send-keys -R \; send-keys C-l \; clear-history
+
+# bind e for synchronized input in panes
+bind e set-window-option synchronize-panes
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
