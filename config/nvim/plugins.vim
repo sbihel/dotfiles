@@ -188,6 +188,7 @@ Plug 'let-def/vimbufsync',            { 'for': 'coq' }
 Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 Plug 'othree/xml.vim',                { 'for': 'xml' }
+Plug 'rust-lang/rust.vim',            { 'for': 'rust' }
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

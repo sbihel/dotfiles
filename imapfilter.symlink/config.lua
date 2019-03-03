@@ -61,6 +61,7 @@ output = string.gsub(output, "\n", "")
                mails:contain_from("divisare.com") +
                mails:contain_from("readingdesign.org") +
                mails:contain_from("drawingmatter.org") +
+               mails:contain_from("niallhobhouse.com") +
                mails:contain_from("koreaexpose.com")
     filtered:move_messages(account["reading"])
 

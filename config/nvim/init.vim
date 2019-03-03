@@ -231,6 +231,7 @@ autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
 autocmd FileType vimwiki setlocal nowrap spell tw=0 cc=0
 autocmd FileType coq setlocal tw=80 cc=80
+autocmd FileType rust setlocal tw=100 cc=100
 
 autocmd BufRead,BufNewFile /*/git/config set filetype=gitconfig
 
@@ -707,6 +708,9 @@ let g:tq_map_keys=0
 
 " jedi-vim
 " let g:jedi#completions_enabled = 0
+
+" rust
+let g:rustfmt_autosave = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
