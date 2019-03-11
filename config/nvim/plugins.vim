@@ -33,7 +33,7 @@ Plug 'junegunn/vim-after-object'
 Plug 'vim-scripts/utl.vim' " opens url links
 Plug 'jiangmiao/auto-pairs'
 "Plug 'ctrlpvim/ctrlp.vim'
-Plug 'gregsexton/gitv',                          { 'on': 'Gitv'}
+Plug 'rbong/vim-flog',                           { 'on': 'Flog' }
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'machakann/vim-sandwich'
