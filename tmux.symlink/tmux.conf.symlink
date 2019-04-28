@@ -58,7 +58,7 @@ bind p paste-buffer
 bind -Tcopy-mode-vi v send -X begin-selection
 bind -Tcopy-mode-vi V send -X select-line
 bind -Tcopy-mode-vi C-v send -X rectangle-toggle \; send -X begin-selection
-bind -Tcopy-mode-vi y send -X copy-selection-and-cancel
+bind -Tcopy-mode-vi y send -X copy-selection
 # bind -Tcopy-mode-vi Escape send -X cancel
 unbind-key -T copy-mode MouseDragEnd1Pane
 unbind-key -T copy-mode-vi MouseDragEnd1Pane

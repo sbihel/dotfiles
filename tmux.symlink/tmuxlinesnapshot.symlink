@@ -1,28 +1,21 @@
 # This tmux statusbar config was created by tmuxline.vim
 # on Tue, 27 Dec 2016
 
-set -g status-bg "colour237"
-set -g message-command-fg "colour246"
-set -g status-justify "centre"
-set -g status-left-length "100"
 set -g status "on"
-set -g pane-active-border-fg "colour246"
-set -g message-bg "colour239"
-set -g status-right-length "100"
-set -g status-right-attr "none"
-set -g message-fg "colour246"
-set -g message-command-bg "colour239"
-set -g status-attr "none"
+set -g status-style bg="colour237",none
+set -g status-justify centre
+set -g status-left-style none
+set -g status-left-length 100
+set -g status-right-style none
+set -g status-right-length 100
 # set -g status-utf8 "on"
-set -g pane-border-fg "colour239"
-set -g status-left-attr "none"
-setw -g window-status-fg "colour246"
-setw -g window-status-attr "none"
-setw -g window-status-activity-bg "colour237"
-setw -g window-status-activity-attr "underscore"
-setw -g window-status-activity-fg "colour246"
+set -g message-style bg="colour239",fg="colour246"
+set -g message-command-style fg="colour246",bg="colour239"
+set -g pane-active-border-style fg="colour246"
+set -g pane-border-style fg="colour239"
+setw -g window-status-style bg="colour237",fg="colour246",none
+setw -g window-status-activity-style bg="colour237",fg="colour246",underscore
 setw -g window-status-separator ""
-setw -g window-status-bg "colour237"
 
 set -g @batt_charged_icon " "
 # set -g @batt_discharging_icon " "

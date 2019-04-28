@@ -140,6 +140,7 @@ Plug 'blueyed/vim-diminactive'
 Plug 'euclio/gitignore.vim'
 " Plug 'ervandew/supertab'
 Plug 'andymass/vim-matchup'
+Plug 'meain/vim-package-info', { 'do': 'npm install' }
 
 " language-specific plugins
 Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' }
@@ -149,6 +150,7 @@ Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
 " Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
+Plug 'raimon49/requirements.txt.vim'
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
 Plug 'brennier/quicktex',             { 'for': ['latex', 'tex'] }
@@ -163,8 +165,8 @@ Plug 'tpope/vim-speeddating',         { 'for': 'org' }  " Increment/Decrement ti
 " Plug 'vim-scripts/SyntaxRange',       { 'for': 'org' }
 " Plug 'chrisbra/NrrwRgn',              { 'for': 'org' }
 Plug 'vimwiki/vimwiki',               { 'branch': 'dev' } " { 'for': 'vimwiki' }
-Plug 'blindFS/vim-taskwarrior',       { 'on': 'TW' }
-Plug 'tbabej/taskwiki',               { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
+" Plug 'blindFS/vim-taskwarrior',       { 'on': 'TW' }
+" Plug 'tbabej/taskwiki',               { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
 Plug 'Alok/notational-fzf-vim',       { 'for': 'vimwiki', 'on': 'NV' }
 Plug 'elzr/vim-json',                 { 'for': 'json' }
 Plug 'andreshazard/vim-logreview',    { 'for': 'logreview' }

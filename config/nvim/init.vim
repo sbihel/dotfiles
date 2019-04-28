@@ -227,6 +227,7 @@ autocmd FileType tex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,
 autocmd FileType latex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
 
 autocmd FileType python setlocal cc=120 tw=120
+autocmd FileType git setlocal tw=0 cc=0 nofoldenable nowrap
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
 autocmd FileType vimwiki setlocal nowrap spell tw=0 cc=0
@@ -256,10 +257,17 @@ autocmd FileType markdown setlocal spell
 autocmd FileType qf setlocal tw=0 cc=0
 
 autocmd BufRead,BufNewFile /*/Jenkinsfile* set filetype=groovy
+autocmd FileType groovy setlocal tw=0
+
+autocmd FileType dockerfile setlocal tw=0 cc=0
 
 autocmd BufRead,BufNewFile /*/*.yml.symlink set filetype=yaml
+autocmd BufRead,BufNewFile *.eyaml set filetype=yaml
+autocmd BufRead,BufNewFile *.pp set filetype=ruby
 
 autocmd FileType jproperties setlocal tw=0 cc=0
+
+autocmd FileType netrw setlocal tw=0 cc=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -560,6 +568,7 @@ let g:automatic_nested_syntaxes = 1 " code blocks highlighting
 let g:vimwiki_table_mappings = 0
 let g:vimwiki_autowriteall = 0
 let g:vimwiki_folding = 'list'
+let g:vimwiki_hl_cb_checked = 1
 
 " notational
 let g:nv_search_paths = ['~/personal_wiki']
@@ -712,6 +721,14 @@ let g:tq_map_keys=0
 " rust
 let g:rustfmt_autosave = 1
 
+" flog
+autocmd FileType floggraph setlocal tw=0 cc=0
+
+" Isort
+augroup ImportSort
+  autocmd FileType python
+        \ autocmd! ImportSort BufWritePost <buffer> Isort
+augroup END
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
