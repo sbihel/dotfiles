@@ -7,14 +7,14 @@ endfunction
 
 " colorschemes
 Plug 'morhetz/gruvbox'
-Plug 'tomasr/molokai'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'altercation/vim-colors-solarized'
-Plug 'sjl/badwolf'
-Plug 'trevordmiller/nova-vim', Cond(has('termguicolors'))
-Plug 'chriskempson/base16-vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'soft-aesthetic/soft-era-vim'
+Plug 'tomasr/molokai', { 'on': 'Colors' }
+Plug 'chriskempson/vim-tomorrow-theme', { 'on': 'Colors' }
+Plug 'altercation/vim-colors-solarized', { 'on': 'Colors' }
+Plug 'sjl/badwolf', { 'on': 'Colors' }
+Plug 'trevordmiller/nova-vim', Cond(has('termguicolors'), { 'on': 'Colors' })
+Plug 'chriskempson/base16-vim', { 'on': 'Colors' }
+Plug 'nanotech/jellybeans.vim', { 'on': 'Colors' }
+Plug 'soft-aesthetic/soft-era-vim', { 'on': 'Colors' }
 
 
 " utilities
@@ -69,6 +69,7 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 Plug 'evidanary/grepg.vim',                      { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
 Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer --java-completer --rust-completer --js-completer' })
+" rustup component add rust-src
 Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
 " Plug 'Shougo/neocomplete.vim', Cond(!has('nvim')) " deprecated
 Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
@@ -191,6 +192,14 @@ Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 Plug 'othree/xml.vim',                { 'for': 'xml' }
 Plug 'rust-lang/rust.vim',            { 'for': 'rust' }
+Plug 'rodjek/vim-puppet',             { 'for': 'puppet' }
+Plug 'b4b4r07/vim-hcl'
+Plug 'hashivim/vim-vagrant'
+Plug 'hashivim/vim-consul'
+Plug 'hashivim/vim-nomadproject'
+Plug 'hashivim/vim-terraform'
+" Plug 'fatih/vim-hclfmt'
+Plug 'hwayne/tla.vim'
 
 Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

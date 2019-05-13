@@ -263,7 +263,6 @@ autocmd FileType dockerfile setlocal tw=0 cc=0
 
 autocmd BufRead,BufNewFile /*/*.yml.symlink set filetype=yaml
 autocmd BufRead,BufNewFile *.eyaml set filetype=yaml
-autocmd BufRead,BufNewFile *.pp set filetype=ruby
 
 autocmd FileType jproperties setlocal tw=0 cc=0
 
@@ -335,6 +334,7 @@ let g:airline_mode_map = {
       \ 'V'  : 'V',
       \ '' : 'V',
       \ }
+let g:airline_highlighting_cache = 1
 
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -589,6 +589,7 @@ let g:ycm_confirm_extra_conf = 0
 nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>n :YcmCompleter GoToReferences<CR>
 nnoremap <leader>k :YcmCompleter GetDoc<CR>
+" let g:ycm_echo_current_diagnostic = 1
 
 " Chromatica
 let g:chromatica#enable_at_startup=1
@@ -729,6 +730,15 @@ augroup ImportSort
   autocmd FileType python
         \ autocmd! ImportSort BufWritePost <buffer> Isort
 augroup END
+
+" easytags
+let g:easytags_async=1
+
+" matchup
+let g:matchup_matchparen_deferred = 1
+
+" terraform
+let g:terraform_fmt_on_save=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

@@ -2,7 +2,7 @@
 # on Tue, 27 Dec 2016
 
 set -g status "on"
-set -g status-style bg="colour237",none
+set -g status-style bg="colour237",fg="colour246",none
 set -g status-justify centre
 set -g status-left-style none
 set -g status-left-length 100
