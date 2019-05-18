@@ -341,6 +341,15 @@ inoremap <F10> <esc>:NERDTreeToggle<cr>
 nnoremap <F10> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 let NERDTreeRespectWildIgnore=1
+let g:NERDTreeDirArrowExpandable = "\u00a0"
+let g:NERDTreeDirArrowCollapsible = "\u00a0"
+let g:NERDTreeQuitOnOpen=3
+highlight! link NERDTreeFlags NERDTreeDir
+autocmd FileType nerdtree setlocal signcolumn=no
+
+" DevIcon
+let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
+let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
 
 " TagBar | <F9>
 inoremap <F9> <esc>:TagbarToggle<cr>
