@@ -52,5 +52,9 @@ __pycache__
 *.xdv
 *_minted-main
 
+# rust
+/**/target/
+**/*.rs.bk
+
 #
 .idea
