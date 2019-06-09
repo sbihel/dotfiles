@@ -203,6 +203,12 @@ nnoremap <Leader>Q :qa!<cr>
 "nmap <leader><space> :'<,'>s/\s\+$//e<cr>
 "nmap <leader><space> :s/\s\+$//e<cr>
 
+" Completion
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 " write read-only files
 cmap w!! w !sudo tee % >/dev/null
 
@@ -272,7 +278,7 @@ autocmd FileType netrw setlocal tw=0 cc=0
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neomake
-autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
+" autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
 " let g:neomake_open_list = 2
 let g:neomake_python_enabled_makers = []  " python-mode is already doing the job
 
@@ -335,6 +341,7 @@ let g:airline_mode_map = {
       \ '' : 'V',
       \ }
 let g:airline_highlighting_cache = 1
+let g:airline#extensions#coc#enabled = 1
 
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -368,11 +375,6 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 
 " completeopt
 "set completeopt=menu,preview,noinsert
-" If you prefer the Omni-Completion tip window to close when a selection is
-" made, these lines close it on movement in insert mode or when leaving
-" insert mode
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " Obsession and airline
 let airline_section_y = '%{ObsessionStatus()}'
@@ -641,6 +643,13 @@ let g:pymode_rope_autoimport = 1
 let g:pymode_rope_autoimport_import_after_complete = 1
 let g:pymode_rope_completion = 0
 let g:pymode_options_max_line_length = 120
+let g:pymode_folding = 1
+augroup unset_folding_in_insert_mode
+  autocmd!
+  autocmd InsertEnter *.py setlocal foldmethod=marker
+  autocmd InsertLeave *.py setlocal foldmethod=expr
+augroup END
+
 
 " stay
 set viewoptions=cursor,folds,slash,unix
@@ -735,10 +744,10 @@ let g:rustfmt_autosave = 1
 autocmd FileType floggraph setlocal tw=0 cc=0
 
 " Isort
-augroup ImportSort
-  autocmd FileType python
-        \ autocmd! ImportSort BufWritePost <buffer> Isort
-augroup END
+" augroup ImportSort
+"   autocmd FileType python
+"         \ autocmd! ImportSort BufWritePost <buffer> Isort
+" augroup END
 
 " easytags
 let g:easytags_async=1
@@ -748,6 +757,38 @@ let g:matchup_matchparen_deferred = 1
 
 " terraform
 let g:terraform_fmt_on_save=1
+
+" javascript
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+
+" coc
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <silent><expr> <c-space> coc#refresh()
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+nmap     <silent> <leader>d <Plug>(coc-definition)
+nmap     <silent> <leader>y <Plug>(coc-type-definition)
+nmap     <silent> <leader>n <Plug>(coc-implementation)
+nmap     <silent> <leader>r <Plug>(coc-references)
+nmap              <leader>rn <Plug>(coc-rename)
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

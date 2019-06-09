@@ -53,7 +53,7 @@ Plug 'scrooloose/nerdtree',                      { 'on': ['NERDTreeToggle', 'NER
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight',  { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'xuyuanp/nerdtree-git-plugin',              { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'scrooloose/syntastic'
-Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
+" Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
 Plug 'janko-m/vim-test',                         { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 Plug 'majutsushi/tagbar' ",                       { 'on': ['TagbarOpen', 'TagbarToggle'] }
 Plug 'xolox/vim-easytags'
@@ -68,11 +68,13 @@ Plug 'rbgrouleff/bclose.vim',                    { 'on': 'Bclose' }  " :bd but n
 Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
 Plug 'evidanary/grepg.vim',                      { 'on': 'G' }
 Plug 'justinmk/vim-gtfo'
-Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer --java-completer --rust-completer --js-completer' })
-" rustup component add rust-src
-Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
-" Plug 'Shougo/neocomplete.vim', Cond(!has('nvim')) " deprecated
-Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
+" Plug 'Valloric/YouCompleteMe', Cond(has('nvim'), { 'do': './install.py --clang-completer --gocode-completer --java-completer --rust-completer --ts-completer' })
+" " rustup component add rust-src
+" Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
+" " Plug 'Shougo/neocomplete.vim', Cond(!has('nvim')) " deprecated
+" Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': './install.sh'}
+Plug 'Shougo/echodoc.vim'
 Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
 " Plug 'Shougo/neosnippet.vim'
@@ -149,7 +151,7 @@ Plug 'fatih/vim-go',                  { 'for': 'go', 'do': ':GoInstallBinaries' 
 Plug 'derekwyatt/vim-scala',          { 'for': 'scala' }
 Plug 'dag/vim2hs',                    { 'for': 'haskell' }
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
-Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
+" Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
 " Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
 Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 Plug 'raimon49/requirements.txt.vim'
