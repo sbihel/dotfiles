@@ -191,6 +191,8 @@ if [[ `uname` == 'Darwin' ]]; then
   if [ -x "$(command -v jenv)" ]; then
     export PATH="$HOME/.jenv/bin:$PATH"
     eval "$(jenv init -)"
+    export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"
+    alias jenv_set_java_home='export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"'
   fi
 else
   . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -201,6 +203,10 @@ export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"
 # alias vim='vim --servername VIM'
 
 export PATH=$PATH:$HOME/.local/bin
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # homebrew github token
 export HOMEBREW_GITHUB_API_TOKEN=cc002fb7e9fc4e9b8f52add9253af7f7a6fb5e23
