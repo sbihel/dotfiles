@@ -609,6 +609,8 @@ if hostname == "mists"
   let g:chromatica#libclang_path='/usr/lib64'
 elseif hostname == "firnen"
   let g:chromatica#libclang_path='/usr/local/Cellar/llvm/4.0.0_1/lib'
+else
+  let g:chromatica#libclang_path='/usr/local/Cellar/llvm/8.0.0_1/lib'
 endif
 
 " qf_resize

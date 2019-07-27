@@ -140,7 +140,7 @@ Plug 'dbmrq/vim-redacted',                       { 'on': 'Redact' }
 Plug 'dbmrq/vim-ditto'
 " Plug 'vim-vdebug/vdebug'
 Plug 'sickill/vim-pasta'
-Plug 'blueyed/vim-diminactive'
+" Plug 'blueyed/vim-diminactive'
 Plug 'euclio/gitignore.vim'
 " Plug 'ervandew/supertab'
 Plug 'andymass/vim-matchup'
@@ -180,9 +180,9 @@ Plug 'hail2u/vim-css3-syntax',        { 'for': 'css' }
 Plug 'gavocanov/vim-js-indent',       { 'for': 'javascript' } " JavaScript indent support
 Plug 'othree/yajs.vim',               { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'pangloss/vim-javascript',       { 'for': 'javascript' }
-Plug 'vim-scripts/Conque-GDB',        { 'for': ['c', 'cpp'] } " gdb integration
-Plug 'jeaye/color_coded',             { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
-Plug 'arakashic/chromatica.nvim',     { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
+" Plug 'vim-scripts/Conque-GDB',        { 'for': ['c', 'cpp'] } " gdb integration
+" Plug 'jeaye/color_coded',             { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
+" Plug 'arakashic/chromatica.nvim',     { 'for': ['c', 'cpp', 'objc', 'objcpp'] }
 Plug 'dylon/vim-antlr',               { 'for': ['antlr', 'antlr3', 'antlr4'] } " antlr
 Plug 'junegunn/vader.vim',            { 'on': 'Vader', 'for': 'vader' }
 Plug 'jalvesaq/Nvim-R',               { 'for': 'r' }
