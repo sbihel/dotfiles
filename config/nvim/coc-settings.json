@@ -1,4 +1,5 @@
 {
+  "coc.preferences.formatOnSaveFiletypes": ["rust"],
   "suggest.echodocSupport": true,
   "python.jediEnabled": false,
   "languageserver": {
