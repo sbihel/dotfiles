@@ -1,6 +1,7 @@
 [general]
 pythonfile = ~/.mutt/offlineimap.py
-accounts = Ens, Protonmail
+accounts = Vonage, Protonmail
+# Ens, Protonmail, Vonage
 maxsyncaccounts = 2
 
 [mbnames]
@@ -59,3 +60,30 @@ keepalive = 60
 holdconnectionopen = yes
 ssl = no
 folderfilter = lambda folder: folder not in ['All Mail']
+
+[Account Vonage]
+presynchook = imapfilter -t /usr/local/etc/openssl/cert.pem
+postsynchook = $HOME/.mutt/postsync-offlineimap.sh
+localrepository = Local-Vonage
+remoterepository = Remote-Vonage
+autorefresh = 0.5
+quick = 10
+createfolders = False
+
+[Repository Local-Vonage]
+type = Maildir
+localfolders = ~/Maildir/Vonage
+nametrans = lambda foldername: '[Gmail].' + foldername if foldername in ['All Mail', 'Drafts', 'Important', 'Sent Mail', 'Spam', 'Starred', 'Trash'] else foldername
+
+[Repository Remote-Vonage]
+type = Gmail
+remotehost = imap.gmail.com
+remoteport = 993
+ssl = yes
+remoteuser = simon.bihel@vonage.com
+remotepasseval = get_pass("Vonage")
+keepalive = 60
+holdconnectionopen = yes
+sslcacertfile = /usr/local/etc/openssl/cert.pem
+nametrans = lambda foldername: re.sub('^\[Gmail\].', '', foldername)
+folderfilter = lambda foldername: foldername not in ['[Gmail]/All Mail', '[Gmail]/Important', '[Gmail]/Starred', 'Risky (by Trend Micro)']

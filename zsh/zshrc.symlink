@@ -1,75 +1,77 @@
-if [[ `uname` == 'Darwin' ]]; then
-  source /usr/local/opt/zsh-git-prompt/zshrc.sh
-  source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
-  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  # source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
-  fpath=(/usr/local/share/zsh-completions $fpath)
-fi
+# zmodload zsh/zprof
+
+# if [[ `uname` == 'Darwin' ]]; then
+#   source /usr/local/opt/zsh-git-prompt/zshrc.sh
+#   source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+#   # source /usr/local/share/zsh-navigation-tools/zsh-navigation-tools.plugin.zsh
+#   # source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+#   # source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+#   fpath=(/usr/local/share/zsh-completions $fpath)
+# fi
 
 
-# Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+# # Path to your oh-my-zsh installation.
+# export ZSH=$HOME/.oh-my-zsh
 
-ZSH_THEME=""
+# ZSH_THEME=""
 
-HYPHEN_INSENSITIVE="true"
-ENABLE_CORRECTION="true"
-COMPLETION_WAITING_DOTS="true"
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
-HIST_STAMPS="yyyy-mm-dd"
+# HYPHEN_INSENSITIVE="true"
+# # ENABLE_CORRECTION="true"
+# COMPLETION_WAITING_DOTS="true"
+# # DISABLE_UNTRACKED_FILES_DIRTY="true"
+# HIST_STAMPS="yyyy-mm-dd"
 
-plugins=(osx colored-man-pages) # colorize git
+# plugins=(colored-man-pages) # osx colorize git
 
-source $ZSH/oh-my-zsh.sh
+# source $ZSH/oh-my-zsh.sh
 
 
 # Wincent prompt #######################################################################################################
-autoload -U colors
-colors
+# autoload -U colors
+# colors
 
 # http://zsh.sourceforge.net/Doc/Release/User-Contributions.html
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
-zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
-zstyle ':vcs_info:*' use-simple true
-zstyle ':vcs_info:git+set-message:*' hooks git-untracked
-zstyle ':vcs_info:git*:*' formats '[%b%m%c%u] ' # default ' (%s)-[%b]%c%u-'
-zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] ' # default ' (%s)-[%b|%a]%c%u-'
-zstyle ':vcs_info:hg*:*' formats '[%m%b] '
-zstyle ':vcs_info:hg*:*' actionformats '[%b|%a%m] '
-zstyle ':vcs_info:hg*:*' branchformat '%b'
-zstyle ':vcs_info:hg*:*' get-bookmarks true
-zstyle ':vcs_info:hg*:*' get-revision true
-zstyle ':vcs_info:hg*:*' get-mq false
-zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
-zstyle ':vcs_info:hg*+set-message:*' hooks hg-message
+# autoload -Uz vcs_info
+# zstyle ':vcs_info:*' enable git hg
+# zstyle ':vcs_info:*' check-for-changes true
+# zstyle ':vcs_info:*' stagedstr "%F{green}●%f" # default 'S'
+# zstyle ':vcs_info:*' unstagedstr "%F{red}●%f" # default 'U'
+# zstyle ':vcs_info:*' use-simple true
+# zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+# zstyle ':vcs_info:git*:*' formats '[%b%m%c%u] ' # default ' (%s)-[%b]%c%u-'
+# zstyle ':vcs_info:git*:*' actionformats '[%b|%a%m%c%u] ' # default ' (%s)-[%b|%a]%c%u-'
+# zstyle ':vcs_info:hg*:*' formats '[%m%b] '
+# zstyle ':vcs_info:hg*:*' actionformats '[%b|%a%m] '
+# zstyle ':vcs_info:hg*:*' branchformat '%b'
+# zstyle ':vcs_info:hg*:*' get-bookmarks true
+# zstyle ':vcs_info:hg*:*' get-revision true
+# zstyle ':vcs_info:hg*:*' get-mq false
+# zstyle ':vcs_info:hg*+gen-hg-bookmark-string:*' hooks hg-bookmarks
+# zstyle ':vcs_info:hg*+set-message:*' hooks hg-message
 
-function +vi-hg-bookmarks() {
-  emulate -L zsh
-  if [[ -n "${hook_com[hg-active-bookmark]}" ]]; then
-    hook_com[hg-bookmark-string]="${(Mj:,:)@}"
-    ret=1
-  fi
-}
+# function +vi-hg-bookmarks() {
+#   emulate -L zsh
+#   if [[ -n "${hook_com[hg-active-bookmark]}" ]]; then
+#     hook_com[hg-bookmark-string]="${(Mj:,:)@}"
+#     ret=1
+#   fi
+# }
 
-function +vi-hg-message() {
-  emulate -L zsh
-  # Suppress hg branch display if we can display a bookmark instead.
-  if [[ -n "${hook_com[misc]}" ]]; then
-    hook_com[branch]=''
-  fi
-  return 0
-}
+# function +vi-hg-message() {
+#   emulate -L zsh
+#   Suppress hg branch display if we can display a bookmark instead.
+#   if [[ -n "${hook_com[misc]}" ]]; then
+#     hook_com[branch]=''
+#   fi
+#   return 0
+# }
 
-function +vi-git-untracked() {
-  emulate -L zsh
-  if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-    hook_com[unstaged]+="%F{blue}●%f"
-  fi
-}
+# function +vi-git-untracked() {
+#   emulate -L zsh
+#   if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+#     hook_com[unstaged]+="%F{blue}●%f"
+#   fi
+# }
 
 RPROMPT_BASE="\${vcs_info_msg_0_}%F{blue}%~%f"
 setopt PROMPT_SUBST
@@ -90,7 +92,8 @@ function () {
     # Note use a non-breaking space at the end of the prompt because we can use it as
     # a find pattern to jump back in tmux.
     local NBSP=' '
-    export PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{blue}%1~%F{yellow}%B%(1j.*.)%(?..!)%b%f%F{red}%B${SUFFIX}%b%f${NBSP}"
+    # export PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{blue}%1~%F{yellow}%B%(1j.*.)%(?..!)%b%f%F{red}%B${SUFFIX}%b%f${NBSP}"
+    export PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%F{red}%B${SUFFIX}%b%f${NBSP}"
     export ZLE_RPROMPT_INDENT=0
   else
     # Don't bother with ZLE_RPROMPT_INDENT here, because it ends up eating the
@@ -103,17 +106,17 @@ export RPROMPT=$RPROMPT_BASE
 export SPROMPT="zsh: correct %F{red}'%R'%f to %F{red}'%r'%f [%B%Uy%u%bes, %B%Un%u%bo, %B%Ue%u%bdit, %B%Ua%u%bbort]? "
 
 
-add-zsh-hook precmd vcs_info
+# add-zsh-hook precmd vcs_info
 
 
-typeset -F SECONDS
-function record-start-time() {
-    emulate -L zsh
-      ZSH_START_TIME=${ZSH_START_TIME:-$SECONDS}
+# typeset -F SECONDS
+# function record-start-time() {
+#     emulate -L zsh
+#       ZSH_START_TIME=${ZSH_START_TIME:-$SECONDS}
 
-}
+# }
 
-add-zsh-hook preexec record-start-time
+# add-zsh-hook preexec record-start-time
 
 function report-start-time() {
   emulate -L zsh
@@ -144,7 +147,7 @@ function report-start-time() {
   fi
 }
 
-add-zsh-hook precmd report-start-time
+# add-zsh-hook precmd report-start-time
 # Prompt ###############################################################################################################
 
 
@@ -155,6 +158,8 @@ if [[ -n $SSH_CONNECTION ]]; then
 else
   export EDITOR='nvim'
 fi
+bindkey -e
+bindkey "^[[3~" delete-char
 
 # go
 export GOPATH=$HOME/.go
@@ -168,8 +173,8 @@ if [[ `uname` == 'Darwin' ]]; then
 
   export PATH=$PATH:/Library/TeX/Distributions/Programs/texbin
 
-  export GOROOT=/usr/local/opt/go/libexec
-  export PATH=$PATH:$GOROOT/bin
+  # export GOROOT=/usr/local/opt/go@1.12/libexec
+  # export PATH=$PATH:$GOROOT/bin
 
   export PATH=$PATH:/opt/local/bin
   export PATH="/usr/local/opt/python@2/bin:$PATH"
@@ -194,6 +199,10 @@ if [[ `uname` == 'Darwin' ]]; then
     export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"
     alias jenv_set_java_home='export JAVA_HOME="$HOME/.jenv/versions/`jenv version-name`"'
   fi
+
+  export PATH="/Users/sbihel/.gem/ruby/2.7.0/bin:$PATH"
+  export PATH="/usr/local/opt/ruby/bin:$PATH"
+  export PATH="/usr/local/lib/ruby/gems/2.7.0/bin/:$PATH"
 else
   . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 fi
@@ -201,12 +210,19 @@ fi
 export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"
 
 # alias vim='vim --servername VIM'
+alias nvi='nvim'
+
+alias ..='cd ..'
+alias ....='cd ....'
+alias ......='cd ......'
 
 export PATH=$PATH:$HOME/.local/bin
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
+export PATH="${PATH}:${HOME}/.krew/bin"
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+# [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # homebrew github token
 export HOMEBREW_GITHUB_API_TOKEN=cc002fb7e9fc4e9b8f52add9253af7f7a6fb5e23
@@ -220,11 +236,15 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'page faults from disk:     %F'$'\n'\
 'other page faults:         %R'
 
-if [ -x "$(command -v thefuck)" ]; then
-  eval "$(thefuck --alias)"
-fi
+# if [ -x "$(command -v thefuck)" ]; then
+#   eval "$(thefuck --alias)"
+# fi
+
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 
 # redefine prompt_context for hiding user@hostname
 # prompt_context () { }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# zprof

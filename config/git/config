@@ -11,6 +11,7 @@
 	date = auto:human
 [alias]
 	co = !"git checkout"
+	st = !"git status"
 
 	adog = log --all --decorate --oneline --graph
 

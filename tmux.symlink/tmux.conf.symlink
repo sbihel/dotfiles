@@ -26,7 +26,6 @@ set-option -ga terminal-overrides ",*256col*:Tc"
 
 # color theme, file created by vim-airline
 source-file ~/.tmuxlinesnapshot
-#set -g status-right "#[fg=colour239,bg=colour237,nobold,nounderscore,noitalics]#[fg=colour246,bg=colour239] Batt: #{battery_icon} #{battery_percentage} #{battery_remain}  #[fg=colour246,bg=colour239] %Y-%m-%d  %H:%M #[fg=colour246,bg=colour239,nobold,nounderscore,noitalics]#[fg=colour234,bg=colour246] #h "
 
 # unbind default prefix and set it to Ctrl+a
 unbind C-b
@@ -53,15 +52,13 @@ unbind [
 bind Escape copy-mode
 unbind p
 bind p paste-buffer
-# bind -Tcopy-mode-vi 'v' send -X begin-selection
-# bind -Tcopy-mode-vi 'y' send -X copy-selection
-bind -Tcopy-mode-vi v send -X begin-selection
-bind -Tcopy-mode-vi V send -X select-line
-bind -Tcopy-mode-vi C-v send -X rectangle-toggle \; send -X begin-selection
-bind -Tcopy-mode-vi y send -X copy-selection
-# bind -Tcopy-mode-vi Escape send -X cancel
-unbind-key -T copy-mode MouseDragEnd1Pane
-unbind-key -T copy-mode-vi MouseDragEnd1Pane
+bind -T copy-mode-vi v      send -X begin-selection
+bind -T copy-mode-vi V      send -X select-line
+bind -T copy-mode-vi C-v    send -X rectangle-toggle \; send -X begin-selection
+bind -T copy-mode-vi y      send -X copy-selection
+bind -T copy-mode-vi Escape send -X clear-selection
+bind -T copy-mode-vi MouseDown1Pane select-pane \; send -X clear-selection
+# unbind MouseDragEnd1Pane
 
 # Buffers to/from Mac clipboard, yay tmux book from pragprog
 #if-shell "[[ `$OSTYPE` != `linux-gnu` ]]" \
@@ -101,3 +98,5 @@ bind e set-window-option synchronize-panes
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run '~/.tmux/plugins/tpm/tpm'
+
+unbind-key -T copy-mode-vi MouseDragEnd1Pane

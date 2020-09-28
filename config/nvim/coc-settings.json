@@ -1,7 +1,9 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust"],
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "python"],
   "suggest.echodocSupport": true,
   "python.jediEnabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.formatting.provider": "black",
   "languageserver": {
     "golang": {
       "command": "gopls",
@@ -35,6 +37,30 @@
           ]
         }
       }
+    },
+    "haskell": {
+      "command": "hie-wrapper",
+      "args": ["--lsp"],
+      "rootPatterns": [
+        "stack.yaml",
+        "cabal.config",
+        "package.yaml"
+      ],
+      "filetypes": [
+        "hs",
+        "lhs",
+        "haskell"
+      ],
+      "initializationOptions": {
+        "languageServerHaskell": {
+          "hlintOn": true
+        }
+      }
+    },
+    "ocaml-lsp": {
+        "command": "opam",
+        "args": ["config", "exec", "--", "ocamllsp"],
+        "filetypes": ["ocaml", "reason"]
     }
   }
 }

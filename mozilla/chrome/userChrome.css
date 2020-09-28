@@ -1,0 +1,11 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#TabsToolbar {
+  display: none;
+}
+
+#sidebar-header {
+  display: none;
+}
+
+#back-button, #forward-button { display:none!important; }

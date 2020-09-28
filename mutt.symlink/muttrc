@@ -1,32 +1,42 @@
 set folder = $HOME/Maildir
+mailboxes =Vonage------------- =Protonmail---------
+# "+Ens"
 source ~/.mutt/mailboxes
 set mbox_type=Maildir
-mailboxes "+Ens" "+Protonmail"
 
-set spoolfile = +Protonmail/INBOX
+set spoolfile = +Vonage/INBOX
 folder-hook Ens set spoolfile = +Ens/INBOX
 folder-hook Protonmail set spoolfile = +Protonmail/INBOX
+folder-hook Vonage set spoolfile = +Vonage/INBOX
+
+push ":unmailboxes +Vonage/Trash +Protonmail/Trash<enter>"
 
 set realname = "Simon Bihel"
 folder-hook Ens set from="simon.bihel@ens-rennes.fr"
 folder-hook Protonmail set from="simon@simonbihel.me"
+folder-hook Vonage set from="simon.bihel@vonage.com"
 
 folder-hook Ens set imap_user = 'simon.bihel@ens-rennes.fr'
 folder-hook Protonmail set imap_user = 'simon@simonbihel.me'
+folder-hook Vonage set imap_user = 'simon.bihel@vonage.com'
 set imap_check_subscribed
 set imap_keepalive
 set imap_delim_chars='/'
 
 folder-hook Ens set mbox = +Ens/Archives
 folder-hook Protonmail set mbox = +Protonmail/Archive
+folder-hook Vonage set mbox = +Vonage/Archive
 folder-hook Ens set postponed = +Ens/Drafts
 folder-hook Protonmail set postponed = +Protonmail/Drafts
+folder-hook Vonage set postponed = +Vonage/Drafts
 # folder-hook Ens set smtp_url = 'smtps://sbihel@smtp.sendgrid.net:465/'
 # folder-hook Ens set smtp_pass = `pass Mail/sendgrid`
 folder-hook Ens set smtp_url = 'smtp://simon.bihel@ens-rennes.fr@partage.ens-rennes.fr:587/'
-folder-hook Ens set smtp_pass = `pass Mail/ens-rennes`
+# folder-hook Ens set smtp_pass = `pass Mail/ens-rennes`
 folder-hook Protonmail set smtp_url = 'smtp://simon@simonbihel.me@127.0.0.1:1025'
 folder-hook Protonmail set smtp_pass = `pass Mail/protonmail_bridge_$(hostname)`
+folder-hook Vonage set smtp_url = 'smtp://simon.bihel@vonage.com@smtp.gmail.com:587/'
+folder-hook Vonage set smtp_pass = `pass Mail/Vonage`
 set ssl_force_tls    = yes
 set ssl_starttls     = yes
 set ssl_use_sslv2    = no
@@ -39,13 +49,17 @@ set ssl_verify_host  = yes
 folder-hook .   set smtp_authenticators = ""
 folder-hook Ens set smtp_authenticators = "login"
 folder-hook Protonmail set smtp_authenticators = "login"
+folder-hook Vonage set smtp_authenticators = "login"
 folder-hook Ens set record = +Ens/Sent
 folder-hook Protonmail set record = +Protonmail/Sent
+folder-hook Vonage set record = "+Vonage/Sent\\ Mail"
 
 set text_flowed = yes
 set editor = 'nvim'
 
-source ~/.mutt/colors/vombatidae.mutt
+# source ~/.mutt/colors/vombatidae.mutt
+source ~/.mutt/colors/colors-gruvbox-shuber.muttrc
+source ~/.mutt/colors/colors-gruvbox-shuber-extended.muttrc
 set mailcap_path = ~/.mutt/mailcap
 set signature  = ~/.mutt/sig
 set alias_file = ~/.mutt/aliases
@@ -73,6 +87,8 @@ set sidebar_indent_string = "  "
 set status_chars          = " *%A"
 set sidebar_format        = "%B%?F? [%F]?%* %?N?%N?"
 set status_format         = "───[Folder %f]───[Msgs:%r%m%?n? (%n new)?%?d? (%d to delete)?%?t? (%t tagged)?]───%>─%?p?( %p postponed )?───"
+
+set help=no # remove top bar
 
 # Header Options -------------------------------------
 ignore *                                # ignore all headers
@@ -107,14 +123,18 @@ macro index \Cr "T~U<enter><tag-prefix><clear-flag>N<untag-pattern>.<enter>" "ma
 # Saner copy/move dialogs
 macro index C "<copy-message>?<toggle-mailboxes>" "copy a message to a mailbox"
 macro index M "<save-message>?<toggle-mailboxes>" "move a message to a mailbox"
+macro attach W "<save-entry><bol>~/Downloads/<eol>"
 
 # Sidebar Navigation ---------------------------------
 bind index,pager <down>   sidebar-next
 bind index,pager J        sidebar-next
+bind index,pager \Cj      sidebar-next
 bind index,pager <up>     sidebar-prev
 bind index,pager K        sidebar-prev
+bind index,pager \Ck      sidebar-prev
 bind index,pager <right>  sidebar-open
 bind index,pager L        sidebar-open
+bind index,pager \Cl      sidebar-open
 
 # Pager View Options ---------------------------------
 set pager_index_lines = 10 # number of index lines to show
@@ -142,7 +162,7 @@ alternative_order text/plain text/enriched text/html
 bind attach <return> view-mailcap
 
 # Compose View Options -------------------------------
-set envelope_from                    # which from?
+set use_envelope_from                # which from?
 set sig_dashes                       # dashes before sig
 set edit_headers                     # show headers when composing
 set fast_reply                       # skip to compose when replying
@@ -160,10 +180,11 @@ set forward_quote                    # include message in forwards
 unset confirmappend
 folder-hook Ens set trash = +Ens/Trash
 folder-hook Protonmail set trash = +Protonmail/Trash
+folder-hook Vonage set trash = +Vonage/Trash
 folder-hook trash$ unset trash
 set delete=yes
 
-color progress white blue
+color progress black blue
 # set new_mail_command="sh ~/.mutt/newmailnotif.sh %v %f %n %u"
 
 macro index \cb "\
@@ -177,13 +198,17 @@ macro index \cb "\
 auto_view text/calendar application/ics
 
 # PGP -------------------------------------------------------------------------
-folder-hook . set crypt_autosign = no
+# folder-hook . set crypt_autosign = no
 folder-hook Ens set crypt_autosign = yes
 folder-hook Ens set pgp_default_key="18A2FD3C8FD13ECF0CEF3F4A2D847F82773F0173"
-folder-hook Protonmail set crypt_autosign = yes
+folder-hook Protonmail set crypt_autosign = no
 folder-hook Protonmail set pgp_default_key="EFCA633A68A260A7A7DA21888421E844776383D8"
+folder-hook Vonage set crypt_autosign = yes
+folder-hook Vonage set pgp_default_key="271B729295ABC543EFDE25E24E48F9F50FA5D2F1"
 
 set crypt_replyencrypt = yes
+set crypt_verify_sig = yes
+set crypt_opportunistic_encrypt = yes
 
 set pgp_use_gpg_agent = yes
 set crypt_use_gpgme = yes

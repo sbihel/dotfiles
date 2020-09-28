@@ -1,5 +1,8 @@
 set nocompatible  " not compatible with vi
 
+" let loaded_matchit = 1
+" using matchup
+
 " Automatic installation of vim-plug if not installed
 " if empty(glob('~/.vim/autoload/plug.vim'))
 "   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -28,10 +31,10 @@ if (has('nvim') || (v:version >= 800)) && exists('$TMUX')
   let g:gruvbox_italic=1
   let g:jellybeans_use_term_italics = 1
 endif
-let g:seoul256_light_background = 256
-let g:seoul256_background = 233
-colo seoul256-light
-colo seoul256
+" let g:seoul256_light_background = 256
+" let g:seoul256_background = 233
+" colo seoul256-light
+" colo seoul256
 " let g:airline_theme='seoul256'
 colo gruvbox
 if has('gui_running')
@@ -39,8 +42,8 @@ if has('gui_running')
 else
   set background=dark
 endif
-"highlight Normal ctermbg=NONE
-"highlight nonText ctermbg=NONE
+highlight Normal ctermbg=None
+" highlight NonText ctermbg=None
 if has('termguicolors')
   if !has('nvim') && exists('$TMUX')
     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -117,7 +120,7 @@ set breakindent
 "set listchars=tab:!·
 " toggle invisible characters
 set invlist
-set listchars=tab:▸\ ,trail:⋅,extends:❯,precedes:❮,nbsp:␣ ",eol:¬
+set listchars=tab:\|\ ,trail:⋅,extends:❯,precedes:❮,nbsp:␣ ",eol:¬
 "highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
 set showbreak=↪
 
@@ -138,6 +141,11 @@ if v:version > 703 || v:version == 703 && has('patch541')
 endif
 
 set nrformats+=alpha
+
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " MAPPINGS
@@ -236,9 +244,13 @@ autocmd FileType python setlocal cc=120 tw=120
 autocmd FileType git setlocal tw=0 cc=0 nofoldenable nowrap
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
+
+autocmd BufRead,BufNewFile *.wiki set filetype=vimwiki
 autocmd FileType vimwiki setlocal nowrap spell tw=0 cc=0
+
 autocmd FileType coq setlocal tw=80 cc=80
 autocmd FileType rust setlocal tw=100 cc=100
+autocmd FileType go setlocal tw=80 cc=80 noexpandtab
 
 autocmd BufRead,BufNewFile /*/git/config set filetype=gitconfig
 
@@ -274,44 +286,61 @@ autocmd FileType jproperties setlocal tw=0 cc=0
 
 autocmd FileType netrw setlocal tw=0 cc=0
 
+autocmd BufRead,BufNewFile /*/*.csv set filetype=csv
+
+autocmd BufRead,BufNewFile *.schema set filetype=json
+
+autocmd BufRead,BufNewFile *.g set filetype=antlr3
+autocmd BufRead,BufNewFile *.g4 set filetype=antlr4
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " neomake
-" autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
-" let g:neomake_open_list = 2
-let g:neomake_python_enabled_makers = []  " python-mode is already doing the job
+" " autocmd! BufWritePost * Neomake  " call neomake at write like syntastic
+" " let g:neomake_open_list = 2
+" let g:neomake_python_enabled_makers = []  " python-mode is already doing the job
 
 " deoplete
-if !has('nvim')
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#enable_smart_case = 1
-  " <C-h>, <BS>: close popup and delete backword char.
-  inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-  inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-  " <CR>: close popup and save indent.
-  inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-  function! s:my_cr_function() abort
-    return deoplete#close_popup() . "\<CR>"
-  endfunction
-  "" C-g undo, tab completion
-  inoremap <expr><C-g>   deoplete#mappings#undo_completion()
-  inoremap <silent><expr> <TAB>
-        \ pumvisible() ? "\<C-n>" :
-        \ <SID>check_back_space() ? "\<TAB>" :
-        \ deoplete#mappings#manual_complete()
-  function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-  endfunction
-endif
+" if !has('nvim')
+"   let g:deoplete#enable_at_startup = 1
+"   let g:deoplete#enable_smart_case = 1
+"   " <C-h>, <BS>: close popup and delete backword char.
+"   inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+"   inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"   " <CR>: close popup and save indent.
+"   inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"   function! s:my_cr_function() abort
+"     return deoplete#close_popup() . "\<CR>"
+"   endfunction
+"   "" C-g undo, tab completion
+"   inoremap <expr><C-g>   deoplete#mappings#undo_completion()
+"   inoremap <silent><expr> <TAB>
+"         \ pumvisible() ? "\<C-n>" :
+"         \ <SID>check_back_space() ? "\<TAB>" :
+"         \ deoplete#mappings#manual_complete()
+"   function! s:check_back_space() abort
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+"   endfunction
+" endif
 
 " airline
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_section_b = ''
+" let g:airline_section_y = ''
+let g:airline_section_z = '%3l/%L' " %3v'
+let g:airline_symbols.maxlinenr = ''
+let g:airline_symbols.linenr = ''
+let g:airline_symbols.branch = ''
 let g:airline#extensions#tmuxline#enabled = 0
 " let g:tmuxline_theme = 'airline'
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_type = 0
 " let g:tmuxline_preset = {
 "       \ 'a': '#S',
 "       \ 'b': '#F',
@@ -342,6 +371,33 @@ let g:airline_mode_map = {
       \ }
 let g:airline_highlighting_cache = 1
 let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
+let g:airline#extensions#tagbar#enabled = 0
+let g:airline#extensions#vista#enabled = 0
+let g:airline#extensions#fugitive#enabled = 0
+let g:airline#extensions#fugitiveline#enabled = 0
+let g:airline#extensions#obsession#enabled = 0
+let g:airline#extensions#keymap#enabled = 0
+let g:airline#extensions#tabline#enabled = 0
+
+" lightline
+let g:lightline = {
+      \ 'mode_map': {
+      \ 'n' : 'N',
+      \ 'i' : 'I',
+      \ 'R' : 'R',
+      \ 'v' : 'V',
+      \ 'V' : 'V',
+      \ "\<C-v>": 'V',
+      \ 'c' : 'C',
+      \ 's' : 'S',
+      \ 'S' : 'S',
+      \ "\<C-s>": 'S',
+      \ 't': 'T',
+      \ },
+      \ }
+let g:lightline.colorscheme = 'gruvbox'
 
 " NERD Tree | <F10>
 inoremap <F10> <esc>:NERDTreeToggle<cr>
@@ -353,15 +409,56 @@ let g:NERDTreeDirArrowCollapsible = "\u00a0"
 let g:NERDTreeQuitOnOpen=3
 highlight! link NERDTreeFlags NERDTreeDir
 autocmd FileType nerdtree setlocal signcolumn=no
+let g:NERDTreeMinimalUI=1
 
 " DevIcon
-let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
-let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
+" let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
+" let g:WebDevIconsUnicodeDecorateFolderNodes = v:true
 
 " TagBar | <F9>
-inoremap <F9> <esc>:TagbarToggle<cr>
-nnoremap <F9> :TagbarToggle<cr>
-"let g:tagbar_sort = 0
+"inoremap <F9> <esc>:TagbarToggle<cr>
+"nnoremap <F9> :TagbarToggle<cr>
+""let g:tagbar_sort = 0
+"let g:tagbar_case_insensitive = 1
+"let g:tagbar_compact = 1
+"let g:tagbar_autoshowtag = 1
+"let g:tagbar_type_rust = {
+"  \ 'ctagsbin' : 'ctags',
+"  \ 'ctagstype' : 'rust',
+"  \ 'kinds' : [
+"      \ 'n:modules',
+"      \ 's:structures:1',
+"      \ 'i:interfaces',
+"      \ 'c:implementations',
+"      \ 'f:functions:1',
+"      \ 'g:enumerations:1',
+"      \ 't:type aliases:1:0',
+"      \ 'v:constants:1:0',
+"      \ 'M:macros:1',
+"      \ 'm:fields:1:0',
+"      \ 'e:enum variants:1:0',
+"      \ 'P:methods:1',
+"  \ ],
+"  \ 'sro': '::',
+"  \ 'kind2scope' : {
+"      \ 'n': 'module',
+"      \ 's': 'struct',
+"      \ 'i': 'interface',
+"      \ 'c': 'implementation',
+"      \ 'f': 'function',
+"      \ 'g': 'enum',
+"      \ 't': 'typedef',
+"      \ 'v': 'variable',
+"      \ 'M': 'macro',
+"      \ 'm': 'field',
+"      \ 'e': 'enumerator',
+"      \ 'P': 'method',
+"  \ },
+"\ }
+
+" Vista
+inoremap <F9> <esc>:Vista!!<cr>
+nnoremap <F9> :Vista!!<cr>
 
 " Gundo tree | <F5>
 nnoremap <F5> :GundoToggle<CR>
@@ -377,7 +474,7 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 "set completeopt=menu,preview,noinsert
 
 " Obsession and airline
-let airline_section_y = '%{ObsessionStatus()}'
+" let airline_section_y = '%{ObsessionStatus()}'
 
 " GitGutter
 let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with <leader>h
@@ -388,10 +485,8 @@ let g:gitgutter_sign_removed_first_line = '◥'
 let g:gitgutter_sign_modified_removed = '◢'
 nmap [c <Plug>GitGutterPrevHunk
 nmap ]c <Plug>GitGutterNextHunk
-
-" Antlr
-au BufRead,BufNewFile *.g set filetype=antlr3
-au BufRead,BufNewFile *.g4 set filetype=antlr4
+" autocmd! gitgutter CursorHold,CursorHoldI
+" autocmd BufWritePost * GitGutter
 
 " fzf
 if executable('ag')
@@ -430,6 +525,31 @@ command! Plugs call fzf#run({
       \ 'options': '--delimiter / --nth -1',
       \ 'down':    '~40%',
       \ 'sink':    'Explore'})
+
+" " floating fzf
+" if has('nvim')
+"   let $FZF_DEFAULT_OPTS .= ' --layout=reverse'
+
+"   function! FloatingFZF()
+"     let height = &lines
+"     let width = float2nr(&columns - (&columns * 2 / 10))
+"     let col = float2nr((&columns - width) / 2)
+"     let col_offset = &columns / 10
+"     let opts = {
+"           \ 'relative': 'editor',
+"           \ 'row': 1,
+"           \ 'col': col + col_offset,
+"           \ 'width': width * 2 / 1,
+"           \ 'height': height / 2,
+"           \ 'style': 'minimal'
+"           \ }
+"     let buf = nvim_create_buf(v:false, v:true)
+"     let win = nvim_open_win(buf, v:true, opts)
+"     call setwinvar(win, '&winhl', 'NormalFloat:TabLine')
+"   endfunction
+
+"   let g:fzf_layout = { 'window': 'call FloatingFZF()' }
+" endif
 
 " [Buffers] Jump to the existing window if possible
 "let g:fzf_buffers_jump = 1
@@ -496,10 +616,10 @@ noremap <expr> <plug>(slash-after) <sid>flash()
 " noremap <expr> <plug>(slash-after) <sid>blink(2, 50)
 
 " peekaboo
-let g:peekaboo_delay = 750
+" let g:peekaboo_delay = 750
 
 " after-object
-autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
+" autocmd VimEnter * call after_object#enable('=', ':', '-', '#', ' ')
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -508,20 +628,20 @@ let g:NERDTrimTrailingWhitespace = 1
 " cmd2
 " nmap : :<F12>
 " for : mode (experimental)
-nmap / /<F12>
-cmap <F12> <Plug>(Cmd2Suggest)
+" nmap / /<F12>
+" cmap <F12> <Plug>(Cmd2Suggest)
 
 " textmanip
-xmap <A-S-d> <Plug>(textmanip-duplicate-down)
-nmap <A-S-d> <Plug>(textmanip-duplicate-down)
-xmap <A-S-u> <Plug>(textmanip-duplicate-up)
-nmap <A-S-u> <Plug>(textmanip-duplicate-up)
-xmap <A-S-j> <Plug>(textmanip-move-down)
-xmap <A-S-k> <Plug>(textmanip-move-up)
-xmap <A-S-h> <Plug>(textmanip-move-left)
-xmap <A-S-l> <Plug>(textmanip-move-right)
-nmap <A-S-t> <Plug>(textmanip-toggle-mode)
-xmap <A-S-t> <Plug>(textmanip-toggle-mode)
+" xmap <A-S-d> <Plug>(textmanip-duplicate-down)
+" nmap <A-S-d> <Plug>(textmanip-duplicate-down)
+" xmap <A-S-u> <Plug>(textmanip-duplicate-up)
+" nmap <A-S-u> <Plug>(textmanip-duplicate-up)
+" xmap <A-S-j> <Plug>(textmanip-move-down)
+" xmap <A-S-k> <Plug>(textmanip-move-up)
+" xmap <A-S-h> <Plug>(textmanip-move-left)
+" xmap <A-S-l> <Plug>(textmanip-move-right)
+" nmap <A-S-t> <Plug>(textmanip-toggle-mode)
+" xmap <A-S-t> <Plug>(textmanip-toggle-mode)
 
 " pencil
 augroup pencil
@@ -537,21 +657,21 @@ augroup END
 "   let &grepprg = 'grep -rn $* *'
 " endif
 " command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-endif
-cnoreabbrev Ack Ack!
-let g:ack_autoclose=1
-let g:ackhighlight = 1
-" let g:ack_use_dispatch = 1
-nnoremap <Leader>a :Ack!<Space>
+" if executable('ag')
+"   let g:ackprg = 'ag --vimgrep'
+" endif
+" cnoreabbrev Ack Ack!
+" let g:ack_autoclose=1
+" let g:ackhighlight = 1
+" " let g:ack_use_dispatch = 1
+" nnoremap <Leader>a :Ack!<Space>
 
 " multichange
 " let g:multichange_mapping        = '<C-S-n>'
 " let g:multichange_motion_mapping = '<C-S-n>'
 
 " asterix
-let g:asterisk#keeppos = 1
+" let g:asterisk#keeppos = 1
 
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
@@ -582,43 +702,43 @@ let g:vimwiki_folding = 'list'
 let g:vimwiki_hl_cb_checked = 1
 
 " notational
-let g:nv_search_paths = ['~/personal_wiki']
+" let g:nv_search_paths = ['~/personal_wiki']
 
 " sandwich
-let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+" let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
 
 " YouCompleteMe
-let g:ycm_confirm_extra_conf = 0
-" augroup load_ycm
-"   autocmd!
-"   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
-"                                 \ | autocmd! load_ycm
-" augroup END
-" let g:ycm_filetype_specific_completion_to_disable = {
-"       \ 'python': 1
-"       \}
-nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
-nnoremap <leader>n :YcmCompleter GoToReferences<CR>
-nnoremap <leader>k :YcmCompleter GetDoc<CR>
-" let g:ycm_echo_current_diagnostic = 1
+" let g:ycm_confirm_extra_conf = 0
+" " augroup load_ycm
+" "   autocmd!
+" "   autocmd CursorHold, CursorHoldI * :packadd YouCompleteMe
+" "                                 \ | autocmd! load_ycm
+" " augroup END
+" " let g:ycm_filetype_specific_completion_to_disable = {
+" "       \ 'python': 1
+" "       \}
+" nnoremap <leader>d :YcmCompleter GoToDefinition<CR>
+" nnoremap <leader>n :YcmCompleter GoToReferences<CR>
+" nnoremap <leader>k :YcmCompleter GetDoc<CR>
+" " let g:ycm_echo_current_diagnostic = 1
 
 " Chromatica
-let g:chromatica#enable_at_startup=1
-let hostname = substitute(system('hostname'), '\n', '', '')
-if hostname == "mists"
-  let g:chromatica#libclang_path='/usr/lib64'
-elseif hostname == "firnen"
-  let g:chromatica#libclang_path='/usr/local/Cellar/llvm/4.0.0_1/lib'
-else
-  let g:chromatica#libclang_path='/usr/local/Cellar/llvm/8.0.0_1/lib'
-endif
+" let g:chromatica#enable_at_startup=1
+" let hostname = substitute(system('hostname'), '\n', '', '')
+" if hostname == "mists"
+"   let g:chromatica#libclang_path='/usr/lib64'
+" elseif hostname == "firnen"
+"   let g:chromatica#libclang_path='/usr/local/Cellar/llvm/4.0.0_1/lib'
+" else
+"   let g:chromatica#libclang_path='/usr/local/Cellar/llvm/8.0.0_1/lib'
+" endif
 
 " qf_resize
-nnoremap <silent> <c-w>= :wincmd =<cr>:QfResizeWindows<cr>
+" nnoremap <silent> <c-w>= :wincmd =<cr>:QfResizeWindows<cr>
 
 " cosco
-autocmd FileType javascript,css,c,cpp nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
-autocmd FileType javascript,css,c,cpp imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
+" autocmd FileType javascript,css,c,cpp nmap <silent> <Leader>; <Plug>(cosco-commaOrSemiColon)
+" autocmd FileType javascript,css,c,cpp imap <silent> <Leader>; <c-o><Plug>(cosco-commaOrSemiColon)
 
 " vimux
 nmap <Leader>vp :VimuxPromptCommand<CR>
@@ -631,51 +751,51 @@ au FileType markdown,vimwiki let b:autopairs_loaded=1
 au FileType org let g:AutoPairsMapSpace=0
 
 " localvimrc
-let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm', '/Users/sbihel/nexmo_qa/qatests_voice']
-let g:localvimrc_sandbox = 0
+" let g:localvimrc_whitelist=['/Users/simonbihel/coinse/avm', '/Users/sbihel/nexmo_qa/qatests_voice']
+" let g:localvimrc_sandbox = 0
 " let g:localvimrc_event = [ "VimEnter", "BufWinEnter" ]
 
 " deleft
-let g:deleft_remove_strategy = "spaces"
+" let g:deleft_remove_strategy = "spaces"
 
 " python-mode
-let g:pymode_python = 'python'
-let g:pymode_rope = 1
-let g:pymode_rope_autoimport = 1
-let g:pymode_rope_autoimport_import_after_complete = 1
-let g:pymode_rope_completion = 0
-let g:pymode_options_max_line_length = 120
-let g:pymode_folding = 1
-augroup unset_folding_in_insert_mode
-  autocmd!
-  autocmd InsertEnter *.py setlocal foldmethod=marker
-  autocmd InsertLeave *.py setlocal foldmethod=expr
-augroup END
+" let g:pymode_python = 'python'
+" let g:pymode_rope = 1
+" let g:pymode_rope_autoimport = 1
+" let g:pymode_rope_autoimport_import_after_complete = 1
+" let g:pymode_rope_completion = 0
+" let g:pymode_options_max_line_length = 120
+" let g:pymode_folding = 1
+" augroup unset_folding_in_insert_mode
+"   autocmd!
+"   autocmd InsertEnter *.py setlocal foldmethod=marker
+"   autocmd InsertLeave *.py setlocal foldmethod=expr
+" augroup END
 
 
 " stay
-set viewoptions=cursor,folds,slash,unix
+" set viewoptions=cursor,folds,slash,unix
 
 " FastFold
-let g:fastfold_savehook = 1
+" let g:fastfold_savehook = 1
 " xnoremap iz :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zv[z<cr>
 " xnoremap az :<c-u>FastFoldUpdate<cr><esc>:<c-u>normal! ]zV[z<cr>
 
 " autoformat
-let g:formatters_python = ['yapf', 'autopep8']
+" let g:formatters_python = ['yapf', 'autopep8']
 
 " coquille
-au FileType coq call coquille#FNMapping()
-let g:coquille_auto_move  = 1
+" au FileType coq call coquille#FNMapping()
+" let g:coquille_auto_move  = 1
 
 " vim-session
 let g:session_autosave = 'no'
 
 " auwsmit/vim-active-numbers
-let g:actnum_exclude = [ 'nerdtree', 'unite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m', 'thesaurus' ]
+" let g:actnum_exclude = [ 'nerdtree', 'unite', 'tagbar', 'startify', 'undotree', 'gundo', 'vimshell', 'w3m', 'thesaurus' ]
 
 " vim-litecorrect
-call litecorrect#init()
+" call litecorrect#init()
 
 " vim-orgmode
 if exists('$TMUX')
@@ -685,33 +805,33 @@ let g:org_export_emacs = '/usr/local/bin/emacs'
 let g:org_export_init_script = '$HOME/.emacs.d/init.el'
 
 " vim-javacomplete2
-autocmd FileType java setlocal omnifunc=javacomplete#Complete
+" autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " rainbow_levels
 " gruvbox theme
-if &l:background == 'dark'
-  let g:rainbow_levels = [
-        \{'ctermfg': 142, 'guifg': '#b8bb26'},
-        \{'ctermfg': 108, 'guifg': '#8ec07c'},
-        \{'ctermfg': 109, 'guifg': '#83a598'},
-        \{'ctermfg': 175, 'guifg': '#d3869b'},
-        \{'ctermfg': 167, 'guifg': '#fb4934'},
-        \{'ctermfg': 208, 'guifg': '#fe8019'},
-        \{'ctermfg': 214, 'guifg': '#fabd2f'},
-        \{'ctermfg': 223, 'guifg': '#ebdbb2'},
-        \{'ctermfg': 245, 'guifg': '#928374'}]
-else
-  let g:rainbow_levels = [
-        \{'ctermfg': 100, 'guifg': '#79740e'},
-        \{'ctermfg': 66,  'guifg': '#427b58'},
-        \{'ctermfg': 24,  'guifg': '#076678'},
-        \{'ctermfg': 96,  'guifg': '#8f3f71'},
-        \{'ctermfg': 88,  'guifg': '#9d0006'},
-        \{'ctermfg': 130, 'guifg': '#af3a03'},
-        \{'ctermfg': 136, 'guifg': '#b57614'},
-        \{'ctermfg': 244, 'guifg': '#928374'},
-        \{'ctermfg': 237, 'guifg': '#3c3836'}]
-endif
+" if &l:background == 'dark'
+"   let g:rainbow_levels = [
+"         \{'ctermfg': 142, 'guifg': '#b8bb26'},
+"         \{'ctermfg': 108, 'guifg': '#8ec07c'},
+"         \{'ctermfg': 109, 'guifg': '#83a598'},
+"         \{'ctermfg': 175, 'guifg': '#d3869b'},
+"         \{'ctermfg': 167, 'guifg': '#fb4934'},
+"         \{'ctermfg': 208, 'guifg': '#fe8019'},
+"         \{'ctermfg': 214, 'guifg': '#fabd2f'},
+"         \{'ctermfg': 223, 'guifg': '#ebdbb2'},
+"         \{'ctermfg': 245, 'guifg': '#928374'}]
+" else
+"   let g:rainbow_levels = [
+"         \{'ctermfg': 100, 'guifg': '#79740e'},
+"         \{'ctermfg': 66,  'guifg': '#427b58'},
+"         \{'ctermfg': 24,  'guifg': '#076678'},
+"         \{'ctermfg': 96,  'guifg': '#8f3f71'},
+"         \{'ctermfg': 88,  'guifg': '#9d0006'},
+"         \{'ctermfg': 130, 'guifg': '#af3a03'},
+"         \{'ctermfg': 136, 'guifg': '#b57614'},
+"         \{'ctermfg': 244, 'guifg': '#928374'},
+"         \{'ctermfg': 237, 'guifg': '#3c3836'}]
+" endif
 
 " vim-ditto
 " au FileType markdown,text,tex DittoOn
@@ -740,7 +860,7 @@ let g:tq_map_keys=0
 " let g:jedi#completions_enabled = 0
 
 " rust
-let g:rustfmt_autosave = 1
+" let g:rustfmt_autosave = 1
 
 " flog
 autocmd FileType floggraph setlocal tw=0 cc=0
@@ -782,6 +902,8 @@ nmap     <silent> <leader>y <Plug>(coc-type-definition)
 nmap     <silent> <leader>n <Plug>(coc-implementation)
 nmap     <silent> <leader>r <Plug>(coc-references)
 nmap              <leader>rn <Plug>(coc-rename)
+nmap     <silent> <leader>] <Plug>(coc-diagnostic-next-error)
+nmap     <silent> <leader>[ <Plug>(coc-diagnostic-prev-error)
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -791,6 +913,13 @@ function! s:show_documentation()
   endif
 endfunction
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
+
+set updatetime=300
+
+" vim-go
+" nmap     <silent> <leader>d :GoDef<CR>
+" nmap     <silent> <leader>k :GoDoc<CR>
+" let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
@@ -818,9 +947,9 @@ function! WinMove(key)
   endif
 endfunction
 
-function! StripWS()  " remove all trailing whitespaces
-  execute '%s/\s\+$//e'
-endfunction
+" function! StripWS()  " remove all trailing whitespaces
+"   execute '%s/\s\+$//e'
+" endfunction
 
 " remove undo files which have not been modified for n days
 function Tmpwatch(path, days)
@@ -837,24 +966,24 @@ function Tmpwatch(path, days)
 endfunction
 
 " color scheme selector
-function! s:colors(...)
-  return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
-        \                  'v:val !~ "^/usr/"'),
-        \           'fnamemodify(v:val, ":t:r")'),
-        \       '!a:0 || stridx(v:val, a:1) >= 0')
-endfunction
+" function! s:colors(...)
+"   return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+"         \                  'v:val !~ "^/usr/"'),
+"         \           'fnamemodify(v:val, ":t:r")'),
+"         \       '!a:0 || stridx(v:val, a:1) >= 0')
+" endfunction
 
-function! s:rotate_colors()
-  if !exists('s:colors')
-    let s:colors = s:colors()
-  endif
-  let name = remove(s:colors, 0)
-  call add(s:colors, name)
-  execute 'colorscheme' name
-  redraw
-  echo name
-endfunction
-nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
+" function! s:rotate_colors()
+"   if !exists('s:colors')
+"     let s:colors = s:colors()
+"   endif
+"   let name = remove(s:colors, 0)
+"   call add(s:colors, name)
+"   execute 'colorscheme' name
+"   redraw
+"   echo name
+" endfunction
+" nnoremap <silent> <F8> :call <SID>rotate_colors()<cr>
 
 function IsReply()
   if line('$') > 1
