@@ -53,9 +53,7 @@ if has('termguicolors')
 endif
 
 set autoread " detect when a file is changed
-
-" faster redrawing
-"set ttyfast
+" faster redrawing set ttyfast
 set lazyredraw
 
 " TAB control, indentation
@@ -266,11 +264,12 @@ augroup mail_filetype
 augroup END
 autocmd FileType mail setlocal tw=78 cc=78 spell fo+=aw
 
+autocmd BufRead,BufNewFile *.jsonld set filetype=json
 autocmd FileType json setlocal tw=0 cc=0 foldmethod=syntax
 autocmd FileType bib setlocal tw=0 cc=0
 autocmd FileType html setlocal tw=0 cc=0
 autocmd FileType muttrc setlocal tw=0 cc=0
-autocmd FileType markdown setlocal spell
+autocmd FileType markdown setlocal spell tw=80 cc=80
 
 autocmd FileType qf setlocal tw=0 cc=0
 
@@ -292,6 +291,10 @@ autocmd BufRead,BufNewFile *.schema set filetype=json
 
 autocmd BufRead,BufNewFile *.g set filetype=antlr3
 autocmd BufRead,BufNewFile *.g4 set filetype=antlr4
+
+autocmd BufRead,BufNewFile *.tera set filetype=html
+
+autocmd FileType rust setlocal tw=0 cc=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
@@ -370,7 +373,8 @@ let g:airline_mode_map = {
       \ '' : 'V',
       \ }
 let g:airline_highlighting_cache = 1
-let g:airline#extensions#coc#enabled = 1
+" let g:airline#extensions#coc#enabled = 1
+let g:airline#extensions#nvimlsp#enabled = 1
 let g:airline#extensions#branch#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 let g:airline#extensions#tagbar#enabled = 0
@@ -498,12 +502,15 @@ let $FZF_DEFAULT_OPTS .= ' --inline-info'
 let g:fzf_files_options =
       \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
+let $BAT_THEME='base16'
+
 nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
-nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
-nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
-xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
+" nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
+nnoremap <silent> <Leader>ag       :Ag<CR>
+" nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
+" xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
 nnoremap <silent> <Leader>f        :Tags<CR>
 " nnoremap <silent> q: :History:<CR>
@@ -886,40 +893,96 @@ let g:javascript_plugin_ngdoc = 1
 let g:javascript_plugin_flow = 1
 
 " coc
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" inoremap <silent><expr> <c-space> coc#refresh()
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+" " inoremap <silent><expr> <c-space> coc#refresh()
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-nmap     <silent> <leader>d <Plug>(coc-definition)
-nmap     <silent> <leader>y <Plug>(coc-type-definition)
-nmap     <silent> <leader>n <Plug>(coc-implementation)
-nmap     <silent> <leader>r <Plug>(coc-references)
-nmap              <leader>rn <Plug>(coc-rename)
-nmap     <silent> <leader>] <Plug>(coc-diagnostic-next-error)
-nmap     <silent> <leader>[ <Plug>(coc-diagnostic-prev-error)
+" nmap     <silent> <leader>d <Plug>(coc-definition)
+" nmap     <silent> <leader>y <Plug>(coc-type-definition)
+" nmap     <silent> <leader>n <Plug>(coc-implementation)
+" nmap     <silent> <leader>r <Plug>(coc-references)
+" nmap              <leader>rn <Plug>(coc-rename)
+" nmap     <silent> <leader>] <Plug>(coc-diagnostic-next-error)
+" nmap     <silent> <leader>[ <Plug>(coc-diagnostic-prev-error)
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+" nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
-set updatetime=300
+" set updatetime=300
 
 " vim-go
 " nmap     <silent> <leader>d :GoDef<CR>
 " nmap     <silent> <leader>k :GoDoc<CR>
 " let g:go_metalinter_autosave_enabled = ['vet', 'golint', 'test']
+
+" nvim-lsp
+" " Trigger completion with <Tab>
+" inoremap <silent><expr> <TAB>
+"   \ pumvisible() ? "\<C-n>" :
+"   \ <SID>check_back_space() ? "\<TAB>" :
+"   \ completion#trigger_completion()
+
+" function! s:check_back_space() abort
+"     let col = col('.') - 1
+"     return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+" https://github.com/ms-jpq/coq_nvim/issues/90
+let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:false, 'keymap.jump_to_mark': '<C-S-h>' }
+ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
+ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
+ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
+ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
+ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+lua << EOF
+local lsp = require "lspconfig"
+local coq = require "coq"
+lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({}))
+lsp.terraformls.setup(coq.lsp_ensure_capabilities({}))
+lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
+lsp.pyright.setup(coq.lsp_ensure_capabilities({}))
+EOF
+
+" local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+" local opts = { noremap=true, silent=true }
+" buf_set_keymap('n', '<leader>D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+" buf_set_keymap('n', '<leader>d', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+" buf_set_keymap('n', '<leader>n', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+" buf_set_keymap('n', '<leader>r', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+" buf_set_keymap('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+" buf_set_keymap('n', '<leader>[', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+" buf_set_keymap('n', '<leader>]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+" buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+
+autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\) lua vim.lsp.buf.formatting_sync(nil, 1000)
+nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <leader>n  :lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> <leader>r  :lua vim.lsp.buf.references()<CR>
+nnoremap <silent> <leader>[  :lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <leader>]  :lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <leader>e  :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>k  :lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>K  :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
+
+" fugitive
+nnoremap <silent> <Leader>gs       :Git<CR>
+nnoremap <silent> <Leader>gc       :Git commit<CR>
+nnoremap <silent> <Leader>gp       :Git push<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS

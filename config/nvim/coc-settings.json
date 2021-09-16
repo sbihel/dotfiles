@@ -1,5 +1,5 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "python"],
+  "coc.preferences.formatOnSaveFiletypes": ["rust", "go", "python", "terraform"],
   "suggest.echodocSupport": true,
   "python.jediEnabled": false,
   "python.linting.flake8Enabled": true,
@@ -61,6 +61,16 @@
         "command": "opam",
         "args": ["config", "exec", "--", "ocamllsp"],
         "filetypes": ["ocaml", "reason"]
+    },
+    "terraform": {
+      "command": "terraform-ls",
+      "args": ["serve"],
+      "filetypes": [
+        "terraform",
+        "tf"
+      ],
+      "initializationOptions": {},
+      "settings": {}
     }
   }
 }

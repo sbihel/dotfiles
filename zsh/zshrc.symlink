@@ -203,14 +203,38 @@ if [[ `uname` == 'Darwin' ]]; then
   export PATH="/Users/sbihel/.gem/ruby/2.7.0/bin:$PATH"
   export PATH="/usr/local/opt/ruby/bin:$PATH"
   export PATH="/usr/local/lib/ruby/gems/2.7.0/bin/:$PATH"
+
+  # export NVM_DIR="$HOME/.nvm"
+  # [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
+  # [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 else
-  . /home/simon/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+  if [ -x "$(command -v opam)" ]; then
+    . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+  fi
+
+  HISTFILE=~/.zsh_history
+  HISTSIZE=100000
+  SAVEHIST=10000
+  setopt SHARE_HISTORY
+
+  export NVM_DIR="$HOME/.nvm"
+  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 fi
+
+# TODO cleanup
+NPM_PACKAGES="${HOME}/.npm-packages"
+export PATH="$PATH:$NPM_PACKAGES/bin"
+# Preserve MANPATH if you already defined it somewhere in your config.
+# Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
+export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
 export PATH="$PATH:~/.neomutt/keybaseMutt/scripts"
 
 # alias vim='vim --servername VIM'
 alias nvi='nvim'
+alias vi='nvim'
+alias vim='nvim'
 
 alias ..='cd ..'
 alias ....='cd ....'
@@ -219,10 +243,6 @@ alias ......='cd ......'
 export PATH=$PATH:$HOME/.local/bin
 
 export PATH="${PATH}:${HOME}/.krew/bin"
-
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-# [ -s "/usr/local/opt/nvm/etc/bash_completion" ] && . "/usr/local/opt/nvm/etc/bash_completion"  # This loads nvm bash_completion
 
 # homebrew github token
 export HOMEBREW_GITHUB_API_TOKEN=cc002fb7e9fc4e9b8f52add9253af7f7a6fb5e23
@@ -248,3 +268,12 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # zprof
+
+export BOUNDARY_ADDR=https://boundary.test.spruceid.xyz:9200
+export NOMAD_ADDR=http://127.0.0.1:4646
+
+alias httpie='/usr/bin/http'
+alias h='/usr/bin/http'
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/bin/terraform terraform

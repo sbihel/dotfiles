@@ -80,8 +80,11 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 " Plug 'rdnetto/YCM-Generator', Cond(has('nvim'),  { 'branch': 'stable'})
 " " Plug 'Shougo/neocomplete.vim', Cond(!has('nvim'))  deprecated
 " Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
-Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-" Plug 'neovim/nvim-lsp' TODO switch to it at some point
+" Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'neovim/nvim-lspconfig'
+Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
+Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+" Plug 'kabouzeid/nvim-lspinstall'
 " Plug 'Shougo/echodoc.vim'
 " Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
 " Plug 'roxma/nvim-yarp', Cond(!has('nvim'))
@@ -123,7 +126,6 @@ Plug 'vim-scripts/VisIncr'
 " Plug 'lfilho/cosco.vim'
 Plug 'benmills/vimux'
 " Plug 'kana/vim-arpeggio'
-" Plug 'octref/RootIgnore'
 " Plug 'embear/vim-localvimrc'
 Plug 'sk1418/Join'
 " Plug 'will133/vim-dirdiff',                      { 'on': 'DirDiff' }
@@ -148,6 +150,8 @@ Plug 'sk1418/Join'
 Plug 'sickill/vim-pasta'
 " Plug 'blueyed/vim-diminactive'
 " Plug 'euclio/gitignore.vim'
+" Plug 'vim-scripts/gitignore'
+" Plug 'octref/RootIgnore'
 " Plug 'ervandew/supertab'
 " Plug 'andymass/vim-matchup' TODO expensive but nice
 Plug 'meain/vim-package-info', { 'do': 'npm install' }
@@ -160,16 +164,16 @@ Plug 'wsdjeg/vim-fetch'
 " Plug 'def-lkb/ocp-indent-vim', { 'for': 'ocaml' } " indentation tool for OCaml
 " Plug 'python-mode/python-mode',       { 'for': 'python', 'branch': 'develop', 'do': 'git submodule update --init --recursive' }
 " Plug 'davidhalter/jedi-vim',          { 'for': 'python' }
-Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
+" Plug 'fisadev/vim-isort',             { 'for': 'python', 'on': 'Isort' }
 " Plug 'raimon49/requirements.txt.vim', {'for': 'requirements'}
 " Plug 'vim-scripts/TeX-9', { 'for': 'latex' }
 " Plug 'lervag/vimtex',                 { 'for': ['latex', 'tex'] }
 " Plug 'brennier/quicktex',             { 'for': ['latex', 'tex'] }
 " Plug 'reedes/vim-pencil',             { 'for': ['latex', 'tex'] }
-Plug 'rhysd/vim-grammarous',          { 'on': 'GrammarousCheck', 'for': ['latex', 'tex', 'org', 'markdown', 'html', 'vimwiki'] }
-Plug 'reedes/vim-wordy',              { 'for': ['latex', 'tex', 'org', 'vimwiki', 'markdown', 'html'] }
+" Plug 'rhysd/vim-grammarous',          { 'on': 'GrammarousCheck', 'for': ['latex', 'tex', 'org', 'markdown', 'html', 'vimwiki'] }
+" Plug 'reedes/vim-wordy',              { 'for': ['latex', 'tex', 'org', 'vimwiki', 'markdown', 'html'] }
 " Plug 'dbmrq/vim-ditto' TODO reuse it
-Plug 'jceb/vim-orgmode',              { 'for': 'org' }
+" Plug 'jceb/vim-orgmode',              { 'for': 'org' }
 " Plug 'mattn/calendar-vim',            { 'for': ['org', 'vimwiki'] }
 " Plug 'itchyny/calendar.vim',          { 'on': 'Calendar' }
 " Plug 'tpope/vim-speeddating',         { 'for': 'org' }  " Increment/Decrement timestamps
@@ -200,25 +204,30 @@ Plug 'andreshazard/vim-logreview',    { 'for': 'logreview' }
 " Plug 'vim-scripts/coq-indent',        { 'for': 'coq' }
 " Plug 'let-def/vimbufsync',            { 'for': 'coq' }
 " Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
-" Plug 'whonore/Coqtail',               { 'for': 'coq' }
+Plug 'whonore/Coqtail',               { 'for': 'coq' }
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 " Plug 'othree/xml.vim',                { 'for': 'xml' }
 " Plug 'rust-lang/rust.vim',            { 'for': 'rust' }
-Plug 'rodjek/vim-puppet',             { 'for': 'puppet' }
-Plug 'b4b4r07/vim-hcl'
+" Plug 'rodjek/vim-puppet',             { 'for': 'puppet' }
+" Plug 'b4b4r07/vim-hcl'
 " Plug 'hashivim/vim-vagrant'
 Plug 'hashivim/vim-consul'
-Plug 'hashivim/vim-nomadproject'
+" Plug 'hashivim/vim-nomadproject'
 Plug 'hashivim/vim-terraform'
 " Plug 'fatih/vim-hclfmt'
+Plug 'jvirtanen/vim-hcl'
 " Plug 'hwayne/tla.vim'
 " Plug 'chrisbra/csv.vim',              { 'for': 'csv' }
 Plug 'ekalinin/Dockerfile.vim'
 Plug 'cespare/vim-toml',              { 'for': 'toml' }
-Plug 'tmux-plugins/vim-tmux'
-Plug 'dag/vim-fish'
-Plug 'tikhomirov/vim-glsl'
-Plug 'rnestler/michelson.vim'
+" Plug 'tmux-plugins/vim-tmux'
+" Plug 'dag/vim-fish'
+" Plug 'tikhomirov/vim-glsl'
+" Plug 'rnestler/michelson.vim'
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'sheerun/vim-polyglot'
+" Plug 'evanleck/vim-svelte',           {'branch': 'main'}
+Plug 'leafgarland/typescript-vim',    { 'for': 'typescript' }
 
 " Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

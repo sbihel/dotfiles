@@ -2,6 +2,8 @@
 	; signingkey =
 	; email = simon.bihel@
 	name = Simon Bihel
+	signingkey = 79E384762D7634C76CB87CD0B7013150BEAA28FD
+	email = simon.bihel@spruceid.com
 [commit]
 	gpgsign = true
 [gpg]
@@ -29,3 +31,7 @@
 	prompt = true
 [mergetool "vimdiff"]
 	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main

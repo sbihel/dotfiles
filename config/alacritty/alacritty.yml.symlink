@@ -1,15 +1,15 @@
 font:
   normal:
-    family: FiraCode Nerd Font
+    family: Fira Code
     # style: Light
   bold:
-    family: FiraCode Nerd Font
+    family: Fira Code
   italic:
-    family: FiraCode Nerd Font
+    family: Fira Code
 
   size: 9.0
 
-  use_thin_strokes: true
+  use_thin_strokes: false
 
 window:
   decorations: none
