@@ -82,6 +82,7 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 " Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/lsp_signature.nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 " Plug 'kabouzeid/nvim-lspinstall'

@@ -271,9 +271,12 @@ TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 
 export BOUNDARY_ADDR=https://boundary.test.spruceid.xyz:9200
 export NOMAD_ADDR=http://127.0.0.1:4646
+export CONSUL_ADDR=http://127.0.0.1:8500
 
 alias httpie='/usr/bin/http'
 alias h='/usr/bin/http'
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+export PATH="$HOME/.poetry/bin:$PATH"

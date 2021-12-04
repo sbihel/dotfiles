@@ -296,6 +296,8 @@ autocmd BufRead,BufNewFile *.tera set filetype=html
 
 autocmd FileType rust setlocal tw=0 cc=0
 
+autocmd BufRead,BufNewFile *.nomad set filetype=hcl
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -950,10 +952,37 @@ ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 lua << EOF
 local lsp = require "lspconfig"
 local coq = require "coq"
+
+local function get_python_path(workspace)
+  local util = require('lspconfig/util')
+  local path = util.path
+  -- Use activated virtualenv.
+  if vim.env.VIRTUAL_ENV then
+    return path.join(vim.env.VIRTUAL_ENV, 'bin', 'python')
+  end
+  -- Find and use virtualenv via poetry in workspace directory.
+  local match = vim.fn.glob(path.join(workspace, 'poetry.lock'))
+  if match ~= '' then
+    local venv = vim.fn.trim(vim.fn.system('poetry env info -p'))
+    return path.join(venv, 'bin', 'python')
+  end
+  -- Fallback to system Python.
+  return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
+end
+
 lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({}))
 lsp.terraformls.setup(coq.lsp_ensure_capabilities({}))
 lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
-lsp.pyright.setup(coq.lsp_ensure_capabilities({}))
+lsp.pyright.setup(coq.lsp_ensure_capabilities({
+  on_attach = function()
+  require'lsp_signature'.on_attach {
+    hint_enable = false,
+    }
+      end,
+      on_init = function(client)
+      client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+    end
+}))
 EOF
 
 " local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
