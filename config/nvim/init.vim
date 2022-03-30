@@ -298,6 +298,8 @@ autocmd FileType rust setlocal tw=0 cc=0
 
 autocmd BufRead,BufNewFile *.nomad set filetype=hcl
 
+autocmd FileType javascript setlocal tabstop=2
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -970,7 +972,15 @@ local function get_python_path(workspace)
   return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
 
-lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({}))
+lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({
+  settings = {
+    ["rust-analyzer"] = {
+      ["checkOnSave"] = {
+        ["command"] = "clippy"
+      }
+    }
+  }
+}))
 lsp.terraformls.setup(coq.lsp_ensure_capabilities({}))
 lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
 lsp.pyright.setup(coq.lsp_ensure_capabilities({
@@ -1001,9 +1011,9 @@ nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>n  :lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> <leader>r  :lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <leader>[  :lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <leader>]  :lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <silent> <leader>e  :lua vim.lsp.diagnostic.show_line_diagnostics()<CR>
+nnoremap <silent> <leader>[  :lua vim.diagnostic.goto_prev()<CR>
+nnoremap <silent> <leader>]  :lua vim.diagnostic.goto_next()<CR>
+nnoremap <silent> <leader>e  :lua vim.diagnostic.show_line_diagnostics()<CR>
 nnoremap <silent> <leader>k  :lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <leader>K  :lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>

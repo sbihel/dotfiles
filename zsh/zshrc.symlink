@@ -213,8 +213,8 @@ else
   fi
 
   HISTFILE=~/.zsh_history
-  HISTSIZE=100000
-  SAVEHIST=10000
+  HISTSIZE=200000
+  SAVEHIST=200000
   setopt SHARE_HISTORY
 
   export NVM_DIR="$HOME/.nvm"
@@ -278,5 +278,7 @@ alias h='/usr/bin/http'
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
+
+source ~/.zshrc-secrets
 
 export PATH="$HOME/.poetry/bin:$PATH"
