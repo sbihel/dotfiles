@@ -972,26 +972,39 @@ local function get_python_path(workspace)
   return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
 
-lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({
-  settings = {
-    ["rust-analyzer"] = {
-      ["checkOnSave"] = {
-        ["command"] = "clippy"
+
+-- lsp.rust_analyzer.setup(coq.lsp_ensure_capabilities({
+--   settings = {
+--     ["rust-analyzer"] = {
+--       ["checkOnSave"] = {
+--         ["command"] = "clippy"
+--       }
+--     }
+--   }
+-- }))
+require('rust-tools').setup({
+  server = coq.lsp_ensure_capabilities({
+    settings = {
+      ["rust-analyzer"] = {
+        ["checkOnSave"] = {
+          ["command"] = "clippy"
+        }
       }
     }
-  }
-}))
+  })
+})
+
 lsp.terraformls.setup(coq.lsp_ensure_capabilities({}))
 lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
 lsp.pyright.setup(coq.lsp_ensure_capabilities({
   on_attach = function()
-  require'lsp_signature'.on_attach {
-    hint_enable = false,
+    require'lsp_signature'.on_attach {
+      hint_enable = false,
     }
-      end,
-      on_init = function(client)
-      client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
-    end
+  end,
+  on_init = function(client)
+    client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
+  end
 }))
 EOF
 
