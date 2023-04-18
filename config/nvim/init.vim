@@ -22,35 +22,36 @@ source ~/.config/nvim/plugins.vim
 " GENERAL
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set encoding=utf8
-let base16colorspace=256  " Access colors present in 256 colorspace
-set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
-let g:gruvbox_contrast_dark='hard'
+" let base16colorspace=256  " Access colors present in 256 colorspace
+" set t_Co=256  " Explicitly tell vim that the terminal supports 256 colors
+" let g:gruvbox_contrast_dark='hard'
 " let g:gruvbox_improved_strings  = 1
 " let g:gruvbox_improved_warnings = 1
-if (has('nvim') || (v:version >= 800)) && exists('$TMUX')
-  let g:gruvbox_italic=1
-  let g:jellybeans_use_term_italics = 1
-endif
-" let g:seoul256_light_background = 256
-" let g:seoul256_background = 233
-" colo seoul256-light
-" colo seoul256
-" let g:airline_theme='seoul256'
-colo gruvbox
-if has('gui_running')
-  set background=dark
-else
-  set background=dark
-endif
-highlight Normal ctermbg=None
+" let g:gruvbox_material_background = 'hard'
+" if (has('nvim') || (v:version >= 800)) && exists('$TMUX')
+"   let g:gruvbox_italic=1
+"   let g:jellybeans_use_term_italics = 1
+" endif
+" " let g:seoul256_light_background = 256
+" " let g:seoul256_background = 233
+" " colo seoul256-light
+" " colo seoul256
+" " let g:airline_theme='seoul256'
+" colo gruvbox
+" if has('gui_running')
+"   set background=dark
+" else
+"   set background=dark
+" endif
+" highlight Normal ctermbg=None
 " highlight NonText ctermbg=None
-if has('termguicolors')
-  if !has('nvim') && exists('$TMUX')
-    let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-    let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-  endif
-  set termguicolors
-endif
+" if has('termguicolors')
+"   if !has('nvim') && exists('$TMUX')
+"     let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+"     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+"   endif
+"   set termguicolors
+" endif
 
 set autoread " detect when a file is changed
 " faster redrawing set ttyfast
@@ -300,6 +301,8 @@ autocmd BufRead,BufNewFile *.nomad set filetype=hcl
 
 autocmd FileType javascript setlocal tabstop=2
 
+autocmd BufRead,BufNewFile *.typ set filetype=typst
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGINS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -333,91 +336,91 @@ autocmd FileType javascript setlocal tabstop=2
 " endif
 
 " airline
-set laststatus=2
-let g:airline_powerline_fonts = 0
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_section_b = ''
-" let g:airline_section_y = ''
-let g:airline_section_z = '%3l/%L' " %3v'
-let g:airline_symbols.maxlinenr = ''
-let g:airline_symbols.linenr = ''
-let g:airline_symbols.branch = ''
-let g:airline#extensions#tmuxline#enabled = 0
-" let g:tmuxline_theme = 'airline'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_type = 0
-" let g:tmuxline_preset = {
-"       \ 'a': '#S',
-"       \ 'b': '#F',
-"       \ 'c': '#W',
-"       \ 'win': ['#I', '#W'],
-"       \ 'cwin': ['#I', '#W'],
-"       \ 'x': '#{battery_icon} #{battery_percentage}',
-"       \ 'y': ['%a %Y-%m-%d', '%H:%M'],
-"       \ 'z': '#H'}
-let g:airline_mode_map = {
-      \ '__' : '-',
-      \ 'c'  : 'C',
-      \ 'i'  : 'I',
-      \ 'ic' : 'I',
-      \ 'ix' : 'I',
-      \ 'n'  : 'N',
-      \ 'ni' : 'N',
-      \ 'no' : 'N',
-      \ 'R'  : 'R',
-      \ 'Rv' : 'R',
-      \ 's'  : 'S',
-      \ 'S'  : 'S',
-      \ '' : 'S',
-      \ 't'  : 'T',
-      \ 'v'  : 'V',
-      \ 'V'  : 'V',
-      \ '' : 'V',
-      \ }
-let g:airline_highlighting_cache = 1
-" let g:airline#extensions#coc#enabled = 1
-let g:airline#extensions#nvimlsp#enabled = 1
-let g:airline#extensions#branch#enabled = 0
-let g:airline#extensions#hunks#enabled = 0
-let g:airline#extensions#tagbar#enabled = 0
-let g:airline#extensions#vista#enabled = 0
-let g:airline#extensions#fugitive#enabled = 0
-let g:airline#extensions#fugitiveline#enabled = 0
-let g:airline#extensions#obsession#enabled = 0
-let g:airline#extensions#keymap#enabled = 0
-let g:airline#extensions#tabline#enabled = 0
+" set laststatus=2
+" let g:airline_powerline_fonts = 0
+" if !exists('g:airline_symbols')
+"   let g:airline_symbols = {}
+" endif
+" let g:airline_section_b = ''
+" " let g:airline_section_y = ''
+" let g:airline_section_z = '%3l/%L' " %3v'
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.linenr = ''
+" let g:airline_symbols.branch = ''
+" let g:airline#extensions#tmuxline#enabled = 0
+" " let g:tmuxline_theme = 'airline'
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#show_tab_type = 0
+" " let g:tmuxline_preset = {
+" "       \ 'a': '#S',
+" "       \ 'b': '#F',
+" "       \ 'c': '#W',
+" "       \ 'win': ['#I', '#W'],
+" "       \ 'cwin': ['#I', '#W'],
+" "       \ 'x': '#{battery_icon} #{battery_percentage}',
+" "       \ 'y': ['%a %Y-%m-%d', '%H:%M'],
+" "       \ 'z': '#H'}
+" let g:airline_mode_map = {
+"       \ '__' : '-',
+"       \ 'c'  : 'C',
+"       \ 'i'  : 'I',
+"       \ 'ic' : 'I',
+"       \ 'ix' : 'I',
+"       \ 'n'  : 'N',
+"       \ 'ni' : 'N',
+"       \ 'no' : 'N',
+"       \ 'R'  : 'R',
+"       \ 'Rv' : 'R',
+"       \ 's'  : 'S',
+"       \ 'S'  : 'S',
+"       \ '' : 'S',
+"       \ 't'  : 'T',
+"       \ 'v'  : 'V',
+"       \ 'V'  : 'V',
+"       \ '' : 'V',
+"       \ }
+" let g:airline_highlighting_cache = 1
+" " let g:airline#extensions#coc#enabled = 1
+" let g:airline#extensions#nvimlsp#enabled = 1
+" let g:airline#extensions#branch#enabled = 0
+" let g:airline#extensions#hunks#enabled = 0
+" let g:airline#extensions#tagbar#enabled = 0
+" let g:airline#extensions#vista#enabled = 0
+" let g:airline#extensions#fugitive#enabled = 0
+" let g:airline#extensions#fugitiveline#enabled = 0
+" let g:airline#extensions#obsession#enabled = 0
+" let g:airline#extensions#keymap#enabled = 0
+" let g:airline#extensions#tabline#enabled = 0
 
-" lightline
-let g:lightline = {
-      \ 'mode_map': {
-      \ 'n' : 'N',
-      \ 'i' : 'I',
-      \ 'R' : 'R',
-      \ 'v' : 'V',
-      \ 'V' : 'V',
-      \ "\<C-v>": 'V',
-      \ 'c' : 'C',
-      \ 's' : 'S',
-      \ 'S' : 'S',
-      \ "\<C-s>": 'S',
-      \ 't': 'T',
-      \ },
-      \ }
-let g:lightline.colorscheme = 'gruvbox'
+" " lightline
+" let g:lightline = {
+"       \ 'mode_map': {
+"       \ 'n' : 'N',
+"       \ 'i' : 'I',
+"       \ 'R' : 'R',
+"       \ 'v' : 'V',
+"       \ 'V' : 'V',
+"       \ "\<C-v>": 'V',
+"       \ 'c' : 'C',
+"       \ 's' : 'S',
+"       \ 'S' : 'S',
+"       \ "\<C-s>": 'S',
+"       \ 't': 'T',
+"       \ },
+"       \ }
+" let g:lightline.colorscheme = 'gruvbox'
 
-" NERD Tree | <F10>
-inoremap <F10> <esc>:NERDTreeToggle<cr>
-nnoremap <F10> :NERDTreeToggle<cr>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let NERDTreeRespectWildIgnore=1
-let g:NERDTreeDirArrowExpandable = "\u00a0"
-let g:NERDTreeDirArrowCollapsible = "\u00a0"
-let g:NERDTreeQuitOnOpen=3
-highlight! link NERDTreeFlags NERDTreeDir
-autocmd FileType nerdtree setlocal signcolumn=no
-let g:NERDTreeMinimalUI=1
+" " NERD Tree | <F10>
+" inoremap <F10> <esc>:NERDTreeToggle<cr>
+" nnoremap <F10> :NERDTreeToggle<cr>
+" autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" let NERDTreeRespectWildIgnore=1
+" let g:NERDTreeDirArrowExpandable = "\u00a0"
+" let g:NERDTreeDirArrowCollapsible = "\u00a0"
+" let g:NERDTreeQuitOnOpen=3
+" highlight! link NERDTreeFlags NERDTreeDir
+" autocmd FileType nerdtree setlocal signcolumn=no
+" let g:NERDTreeMinimalUI=1
 
 " DevIcon
 " let g:WebDevIconsNerdTreeBeforeGlyphPadding = ""
@@ -464,9 +467,9 @@ let g:NERDTreeMinimalUI=1
 "  \ },
 "\ }
 
-" Vista
-inoremap <F9> <esc>:Vista!!<cr>
-nnoremap <F9> :Vista!!<cr>
+" " Vista
+" inoremap <F9> <esc>:Vista!!<cr>
+" nnoremap <F9> :Vista!!<cr>
 
 " Gundo tree | <F5>
 nnoremap <F5> :GundoToggle<CR>
@@ -484,23 +487,23 @@ nnoremap <silent> <Leader>bd :Bclose<CR>
 " Obsession and airline
 " let airline_section_y = '%{ObsessionStatus()}'
 
-" GitGutter
-let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with <leader>h
-let g:gitgutter_sign_added = '┃'
-let g:gitgutter_sign_modified = '┃'
-let g:gitgutter_sign_removed = '◢'
-let g:gitgutter_sign_removed_first_line = '◥'
-let g:gitgutter_sign_modified_removed = '◢'
-nmap [c <Plug>GitGutterPrevHunk
-nmap ]c <Plug>GitGutterNextHunk
-" autocmd! gitgutter CursorHold,CursorHoldI
-" autocmd BufWritePost * GitGutter
+" " GitGutter
+" let g:gitgutter_map_keys = 0 " remove shortcuts to avoid delay with <leader>h
+" let g:gitgutter_sign_added = '┃'
+" let g:gitgutter_sign_modified = '┃'
+" let g:gitgutter_sign_removed = '◢'
+" let g:gitgutter_sign_removed_first_line = '◥'
+" let g:gitgutter_sign_modified_removed = '◢'
+" nmap [c <Plug>GitGutterPrevHunk
+" nmap ]c <Plug>GitGutterNextHunk
+" " autocmd! gitgutter CursorHold,CursorHoldI
+" " autocmd BufWritePost * GitGutter
 
 " fzf
-if executable('ag')
-  let $FZF_DEFAULT_COMMAND = 'ag -g ""'  " the_silver_searcher required
-endif
-let $FZF_DEFAULT_OPTS .= ' --inline-info'
+" if executable('rg')
+"   let $FZF_DEFAULT_COMMAND = 'rg --column --line-number --no-heading --color=always --smart-case '
+" endif
+" let $FZF_DEFAULT_OPTS .= ' --inline-info'
 
 " File preview using Highlight (http://www.andre-simon.de/doku/highlight/en/highlight.php)
 let g:fzf_files_options =
@@ -508,11 +511,11 @@ let g:fzf_files_options =
 
 let $BAT_THEME='base16'
 
-nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent> <expr> <Leader><Leader> (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":GFiles\<cr>"
 nnoremap <silent> <Leader>C        :Colors<CR>
 nnoremap <silent> <Leader><Enter>  :Buffers<CR>
 " nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
-nnoremap <silent> <Leader>ag       :Ag<CR>
+nnoremap <silent> <Leader>ag       :Rg<CR>
 " nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
 " xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
 nnoremap <silent> <Leader>`        :Marks<CR>
@@ -531,11 +534,11 @@ nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
 
-command! Plugs call fzf#run({
-      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-      \ 'options': '--delimiter / --nth -1',
-      \ 'down':    '~40%',
-      \ 'sink':    'Explore'})
+" command! Plugs call fzf#run({
+"       \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+"       \ 'options': '--delimiter / --nth -1',
+"       \ 'down':    '~40%',
+"       \ 'sink':    'Explore'})
 
 " " floating fzf
 " if has('nvim')
@@ -753,7 +756,8 @@ let g:vimwiki_hl_cb_checked = 1
 
 " vimux
 nmap <Leader>vp :VimuxPromptCommand<CR>
-nmap <Leader>vl :VimuxRunLastCommand<CR>
+" nmap <Leader>vl :VimuxRunLastCommand<CR>
+nmap <Leader>vl :VimuxRunCommand "!!"<CR>
 nmap <Leader>vi :VimuxInspectRunner<CR>
 nmap <Leader>vz :VimuxZoomRunner<CR>
 
@@ -944,7 +948,7 @@ let g:javascript_plugin_flow = 1
 "     return !col || getline('.')[col - 1]  =~ '\s'
 " endfunction
 " https://github.com/ms-jpq/coq_nvim/issues/90
-let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:false, 'keymap.jump_to_mark': '<C-S-h>' }
+let g:coq_settings = { 'auto_start': 'shut-up', 'keymap.recommended': v:false, 'keymap.jump_to_mark': '<C-S-h>', 'clients.lsp.always_on_top': [] }
 ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
 ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
 ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
@@ -954,6 +958,7 @@ ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 lua << EOF
 local lsp = require "lspconfig"
 local coq = require "coq"
+require"fidget".setup{}
 
 local function get_python_path(workspace)
   local util = require('lspconfig/util')
@@ -986,8 +991,11 @@ require('rust-tools').setup({
   server = coq.lsp_ensure_capabilities({
     settings = {
       ["rust-analyzer"] = {
-        ["checkOnSave"] = {
-          ["command"] = "clippy"
+        checkOnSave = {
+          command = "clippy"
+        },
+        procMacro = {
+          enable = true
         }
       }
     }
@@ -1006,6 +1014,100 @@ lsp.pyright.setup(coq.lsp_ensure_capabilities({
     client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
   end
 }))
+lsp.gopls.setup(coq.lsp_ensure_capabilities({}))
+lsp.sourcekit.setup(coq.lsp_ensure_capabilities({}))
+lsp.jdtls.setup(coq.lsp_ensure_capabilities({}))
+lsp.yamlls.setup(coq.lsp_ensure_capabilities({}))
+-- lsp.spectral.setup(coq.lsp_ensure_capabilities({}))
+lsp.dartls.setup(coq.lsp_ensure_capabilities({}))
+lsp.typst_lsp.setup(coq.lsp_ensure_capabilities({}))
+require('null-ls').setup(coq.lsp_ensure_capabilities({}))
+require('crates').setup(coq.lsp_ensure_capabilities({
+  text = {
+    loading = "  Loading...",
+    version = "",
+    prerelease = "  %s",
+    yanked = "  %s yanked",
+    nomatch = "  Not found",
+    upgrade = " ^%s",
+    error = "  Error fetching crate",
+  },
+  popup = {
+    text = {
+      title = "# %s",
+      pill_left = "",
+      pill_right = "",
+      created_label = "created        ",
+      updated_label = "updated        ",
+      downloads_label = "downloads      ",
+      homepage_label = "homepage       ",
+      repository_label = "repository     ",
+      documentation_label = "documentation  ",
+      crates_io_label = "crates.io      ",
+    categories_label = "categories     ",
+    keywords_label = "keywords       ",
+    version = "%s",
+    prerelease = "%s pre-release",
+    yanked = "%s yanked",
+    enabled = "* s",
+    transitive = "~ s",
+    normal_dependencies_title = "  Dependencies",
+    build_dependencies_title = "  Build dependencies",
+    dev_dependencies_title = "  Dev dependencies",
+    optional = "? %s",
+    loading = " ...",
+    },
+  },
+  src = {
+    text = {
+      prerelease = " pre-release ",
+      yanked = " yanked ",
+    },
+  },
+  null_ls = {
+    enabled = true,
+  },
+  src = {
+    coq = {
+      enabled = true,
+    },
+  },
+}))
+
+require("gruvbox").setup({
+  contrast = "hard",
+})
+vim.cmd("colorscheme gruvbox")
+
+require('lualine').setup({
+  options = {
+    icons_enabled = false,
+    theme = 'gruvbox',
+    component_separators = { left = '', right = ''},
+    section_separators = { left = '', right = ''},
+  },
+  sections = {
+    lualine_a = {
+      { 'mode', fmt = function(str) return str:sub(1,1) end } },
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'filetype',},
+    lualine_y = {'encoding', 'fileformat'},
+    lualine_z = {'location', 'diagnostics'}
+  }
+})
+
+require('gitsigns').setup {
+  signs = {
+    add          = { text = '┃' },
+    change       = { text = '┃' },
+    delete       = { text = '◢' },
+    topdelete    = { text = '◥' },
+    changedelete = { text = '◢' },
+    untracked    = { text = '┆' },
+  },
+}
+
 EOF
 
 " local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -1019,7 +1121,7 @@ EOF
 " buf_set_keymap('n', '<leader>]', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
 " buf_set_keymap('n', '<leader>k', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
 
-autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\) lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\|dart\) lua vim.lsp.buf.format()
 nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>n  :lua vim.lsp.buf.implementation()<CR>
@@ -1030,6 +1132,7 @@ nnoremap <silent> <leader>e  :lua vim.diagnostic.show_line_diagnostics()<CR>
 nnoremap <silent> <leader>k  :lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <leader>K  :lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <leader>a  :lua vim.lsp.buf.code_action()<CR>
 
 " fugitive
 nnoremap <silent> <Leader>gs       :Git<CR>

@@ -6,7 +6,9 @@ call plug#begin('~/.config/nvim/plugged')
 " endfunction
 
 " colorschemes
-Plug 'morhetz/gruvbox'
+" Plug 'morhetz/gruvbox'
+" Plug 'sainnhe/gruvbox-material'
+Plug 'ellisonleao/gruvbox.nvim'
 " Plug 'tomasr/molokai', { 'on': 'Colors' }
 " Plug 'chriskempson/vim-tomorrow-theme', { 'on': 'Colors' }
 " Plug 'altercation/vim-colors-solarized', { 'on': 'Colors' }
@@ -24,7 +26,7 @@ Plug 'junegunn/fzf.vim'
 " Plug 'yuki-ycino/fzf-preview.vim'
 " Plug 'junegunn/vim-emoji'
 " Plug 'junegunn/rainbow_parentheses.vim',         { 'on': 'RainbowParentheses' }
-Plug 'junegunn/vim-easy-align',                  { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+" Plug 'junegunn/vim-easy-align',                  { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/goyo.vim',                        { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim',                   { 'on': 'Goyo' }
 " Plug 'junegunn/vim-slash'
@@ -35,7 +37,7 @@ Plug 'junegunn/gv.vim',                          { 'on': 'GV' }
 Plug 'jiangmiao/auto-pairs'
 "Plug 'ctrlpvim/ctrlp.vim'
 " Plug 'rbong/vim-flog',                           { 'on': 'Flog' }
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', { 'on': 'Git' }
 Plug 'tpope/vim-surround'
 " Plug 'machakann/vim-sandwich' TODO reuse it
 "Plug 'tpope/vim-commentary',                    { 'on': '<Plug>Commentary' }
@@ -57,17 +59,19 @@ Plug 'tpope/vim-commentary'
 " Plug 'xuyuanp/nerdtree-git-plugin',              { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Plug 'scrooloose/syntastic'
 " Plug 'benekastah/neomake' ",                      { 'on': 'Neomake' }
-Plug 'janko-m/vim-test',                         { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
+" Plug 'janko-m/vim-test',                         { 'on': ['TestNearest', 'TestFile', 'TestSuite', 'TestLast', 'TestVisit'] }
 " Plug 'majutsushi/tagbar',                        { 'on': ['TagbarOpen', 'TagbarToggle'] }
-Plug 'liuchengxu/vista.vim',                     { 'on': 'Vista' }
+" Plug 'liuchengxu/vista.vim',                     { 'on': 'Vista' }
 " Plug 'xolox/vim-easytags'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+" Plug 'vim-airline/vim-airline'
+" Plug 'vim-airline/vim-airline-themes'
+Plug 'nvim-lualine/lualine.nvim'
 " Plug 'itchyny/lightline.vim'
 " Plug 'shinchu/lightline-gruvbox.vim'
 " Plug 'ap/vim-buftabline'
 " Plug 'edkolev/tmuxline.vim'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'lewis6991/gitsigns.nvim'
 " Plug 'wellle/targets.vim' TODO reuse  " Additional text objects
 Plug 'sjl/gundo.vim',                            { 'on': 'GundoToggle' }  " undo tree
 Plug 'mhinz/vim-startify'  " pretty starting screen
@@ -82,10 +86,12 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 " Plug 'Shougo/deoplete.nvim', Cond(!has('nvim'))
 " Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 Plug 'neovim/nvim-lspconfig'
-   " Plug 'ray-x/lsp_signature.nvim'
+Plug 'ray-x/lsp_signature.nvim'
+Plug 'stevearc/dressing.nvim'
 Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
 Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
 Plug 'simrat39/rust-tools.nvim'
+Plug 'j-hui/fidget.nvim'
 " Plug 'kabouzeid/nvim-lspinstall'
 " Plug 'Shougo/echodoc.vim'
 " Plug 'roxma/vim-hug-neovim-rpc', Cond(!has('nvim'))
@@ -96,7 +102,7 @@ Plug 'simrat39/rust-tools.nvim'
 " Plug 'mptre/vim-printf',                         { 'on': 'Printf' }
 " Plug 'gelguy/Cmd2.vim'
 " Plug 'djmoch/vim-makejob', Cond(!has('nvim') && (v:version >= 800))
-" Plug 'brooth/far.vim' TODO reuse it,                           { 'on': ['Far', 'Farp'] }
+" Plug 'brooth/far.vim', { 'on': ['Far', 'Farp'] }
 " Plug 'AndrewRadev/linediff.vim' TODO reuse it,                 { 'on': 'Linediff' }
 " Plug 'AndrewRadev/dsf.vim'
 " Plug 'AndrewRadev/deleft.vim'
@@ -121,7 +127,7 @@ Plug 'alvan/vim-closetag'
 " Plug 'dodie/vim-disapprove-deep-indentation'
 Plug 'tweekmonster/startuptime.vim',             { 'on': 'StartupTime' }
 " Plug 'powerman/vim-plugin-AnsiEsc'
-Plug 'vim-scripts/VisIncr'
+" Plug 'vim-scripts/VisIncr'
 " Plug 'google/vim-searchindex'
 " Plug 'blueyed/vim-qf_resize' TODO reuse
 " Plug 'romainl/vim-qf' TODO reuse
@@ -156,7 +162,10 @@ Plug 'sickill/vim-pasta'
 " Plug 'octref/RootIgnore'
 " Plug 'ervandew/supertab'
 " Plug 'andymass/vim-matchup' TODO expensive but nice
-Plug 'meain/vim-package-info', { 'do': 'npm install' }
+" Plug 'meain/vim-package-info', { 'do': 'npm install' }
+Plug 'nvim-lua/plenary.nvim'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'Saecki/crates.nvim'
 Plug 'wsdjeg/vim-fetch'
 
 " language-specific plugins
@@ -182,7 +191,7 @@ Plug 'wsdjeg/vim-fetch'
 " Plug 'inkarkat/vim-SyntaxRange',      { 'for': 'org' }
 " Plug 'vim-scripts/SyntaxRange',       { 'for': 'org' }
 " Plug 'chrisbra/NrrwRgn',              { 'for': 'org' }
-Plug 'vimwiki/vimwiki',               { 'branch': 'dev', 'for': 'vimwiki' }
+" Plug 'vimwiki/vimwiki',               { 'branch': 'dev', 'for': 'vimwiki' }
 " Plug 'blindFS/vim-taskwarrior',       { 'on': 'TW' }
 " Plug 'tbabej/taskwiki',               { 'for': 'vimwiki' }  " has requirements `sudo pip install --upgrade git+git://github.com/tbabej/tasklib@develop`
 " Plug 'Alok/notational-fzf-vim',       { 'for': 'vimwiki', 'on': 'NV' }
@@ -206,7 +215,7 @@ Plug 'andreshazard/vim-logreview',    { 'for': 'logreview' }
 " Plug 'vim-scripts/coq-indent',        { 'for': 'coq' }
 " Plug 'let-def/vimbufsync',            { 'for': 'coq' }
 " Plug 'the-lambda-church/coquille',    { 'for': 'coq' }
-Plug 'whonore/Coqtail',               { 'for': 'coq' }
+" Plug 'whonore/Coqtail',               { 'for': 'coq' }
 " Plug 'artur-shaik/vim-javacomplete2', { 'for': 'java'}
 " Plug 'othree/xml.vim',                { 'for': 'xml' }
 " Plug 'rust-lang/rust.vim',            { 'for': 'rust' }
@@ -229,7 +238,7 @@ Plug 'cespare/vim-toml',              { 'for': 'toml' }
 " Plug 'dart-lang/dart-vim-plugin'
 " Plug 'sheerun/vim-polyglot'
 " Plug 'evanleck/vim-svelte',           {'branch': 'main'}
-Plug 'leafgarland/typescript-vim',    { 'for': 'typescript' }
+" Plug 'leafgarland/typescript-vim',    { 'for': 'typescript' }
 
 " Plug 'ryanoasis/vim-devicons'  " Need NerdFonts
 

@@ -14,6 +14,8 @@
 [alias]
 	co = !"git checkout"
 	st = !"git status"
+	pul = !"git pull"
+	rb = !"git rebase"
 
 	adog = log --all --decorate --oneline --graph
 
@@ -33,5 +35,8 @@
 	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
 [core]
 	editor = nvim
+	excludesfile = /Users/sbihel/.gitignore_global
 [init]
 	defaultBranch = main
+[pull]
+	rebase = true
