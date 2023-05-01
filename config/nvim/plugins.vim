@@ -1,52 +1,65 @@
-call plug#begin('~/.config/nvim/plugged')
+lua << EOF
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-Plug 'ellisonleao/gruvbox.nvim'
+require("lazy").setup({
+  'ellisonleao/gruvbox.nvim',
 
-Plug 'junegunn/goyo.vim',                        { 'on': 'Goyo' }
-Plug 'junegunn/limelight.vim',                   { 'on': 'Goyo' }
-Plug 'junegunn/gv.vim',                          { 'on': 'GV' }
-Plug 'jiangmiao/auto-pairs'
-Plug 'tpope/vim-fugitive', { 'on': 'Git' }
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-sleuth'  " detect indentation
-Plug 'tpope/vim-eunuch'  " helpers for UNIX
-Plug 'tpope/vim-repeat'  " . for supported plugin maps
-Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-apathy'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-commentary'
-Plug 'nvim-lualine/lualine.nvim'
-Plug 'lewis6991/gitsigns.nvim'
-Plug 'sjl/gundo.vim',                            { 'on': 'GundoToggle' }  " undo tree
-Plug 'mhinz/vim-startify'  " pretty starting screen
-Plug 'rbgrouleff/bclose.vim',                    { 'on': 'Bclose' }  " :bd but not closing window/pane
-Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited lines
-Plug 'neovim/nvim-lspconfig'
-Plug 'ray-x/lsp_signature.nvim'
-Plug 'stevearc/dressing.nvim'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'simrat39/rust-tools.nvim'
-Plug 'j-hui/fidget.nvim'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'AndrewRadev/tagalong.vim'
-Plug 'alvan/vim-closetag'
-Plug 'tweekmonster/startuptime.vim',             { 'on': 'StartupTime' }
-Plug 'benmills/vimux'
-Plug 'sk1418/Join'
-Plug 'sickill/vim-pasta'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'jose-elias-alvarez/null-ls.nvim'
-Plug 'Saecki/crates.nvim'
-Plug 'wsdjeg/vim-fetch'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+  { 'junegunn/goyo.vim', cmd = 'Goyo' },
+  { 'junegunn/limelight.vim', cmd = 'Goyo' },
+  { 'junegunn/gv.vim', cmd = 'GV' },
+  'jiangmiao/auto-pairs',
+  { 'tpope/vim-fugitive', cmd = 'Git' },
+  'tpope/vim-surround',
+  'tpope/vim-sleuth',  -- detect indentation
+  'tpope/vim-eunuch',  -- helpers for UNIX
+  'tpope/vim-repeat',  -- . for supported plugin maps
+  'tpope/vim-vinegar',
+  'tpope/vim-apathy',
+  'tpope/vim-rhubarb',
+  'tpope/vim-commentary',
+  'nvim-lualine/lualine.nvim',
+  'lewis6991/gitsigns.nvim',
+  { 'sjl/gundo.vim', cmd = 'GundoToggle' },  -- undo tree
+  'mhinz/vim-startify',  -- pretty starting screen
+  { 'rbgrouleff/bclose.vim', cmd = 'Bclose' },  -- :bd but not closing window/pane
+  'thirtythreeforty/lessspace.vim',  -- strip trailing whitespaces for edited lines
+  'neovim/nvim-lspconfig',
+  'ray-x/lsp_signature.nvim',
+  'stevearc/dressing.nvim',
+  'hrsh7th/cmp-vsnip',
+  'hrsh7th/vim-vsnip',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-nvim-lsp-signature-help',
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-path',
+  'hrsh7th/nvim-cmp',
+  'simrat39/rust-tools.nvim',
+  'j-hui/fidget.nvim',
+  'AndrewRadev/splitjoin.vim',
+  'AndrewRadev/tagalong.vim',
+  'alvan/vim-closetag',
+  { 'tweekmonster/startuptime.vim', cmd = 'StartupTime' },
+  'benmills/vimux',
+  'sk1418/Join',
+  'sickill/vim-pasta',
+  'nvim-lua/plenary.nvim',
+  'jose-elias-alvarez/null-ls.nvim',
+  'Saecki/crates.nvim',
+  'wsdjeg/vim-fetch',
+  'nvim-lua/plenary.nvim',
+  'nvim-telescope/telescope.nvim',
 
-Plug 'jvirtanen/vim-hcl'
-
-call plug#end()
+  'jvirtanen/vim-hcl',
+})
+EOF

@@ -1,13 +1,6 @@
 set nocompatible  " not compatible with vi
 
-" Automatic installation of vim-plug if not installed
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
-
-" load plugins from vim-plug
+" load plugins
 source ~/.config/nvim/plugins.vim
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
