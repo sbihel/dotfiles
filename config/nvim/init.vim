@@ -306,7 +306,60 @@ ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 
 lua << EOF
 local lsp = require "lspconfig"
-local coq = require "coq"
+local cmp = require "cmp"
+local has_words_before = function()
+  unpack = unpack or table.unpack
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+cmp.setup{
+  preselect = cmp.PreselectMode.None,
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+    end,
+  },
+  sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'vsnip' },
+    }, {
+      { name = 'path' },
+      { name = 'buffer' },
+      { name = 'crates' },
+    }),
+  mapping = {
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      -- behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    },
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
+  },
+}
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 require"fidget".setup{}
 
 local function get_python_path(workspace)
@@ -328,7 +381,8 @@ end
 
 
 require('rust-tools').setup({
-  server = coq.lsp_ensure_capabilities({
+  server = {
+    capabilities = capabilities,
     settings = {
       ["rust-analyzer"] = {
         checkOnSave = {
@@ -339,13 +393,20 @@ require('rust-tools').setup({
         }
       }
     }
-  })
+  }
 })
 
-lsp.terraformls.setup(coq.lsp_ensure_capabilities({}))
-lsp.tflint.setup(coq.lsp_ensure_capabilities({}))
-lsp.tsserver.setup(coq.lsp_ensure_capabilities({}))
-lsp.pyright.setup(coq.lsp_ensure_capabilities({
+lsp.terraformls.setup({
+  capabilities = capabilities
+})
+lsp.tflint.setup({
+  capabilities = capabilities
+})
+lsp.tsserver.setup({
+  capabilities = capabilities
+})
+lsp.pyright.setup({
+  capabilities = capabilities,
   on_attach = function()
     require'lsp_signature'.on_attach {
       hint_enable = false,
@@ -354,17 +415,38 @@ lsp.pyright.setup(coq.lsp_ensure_capabilities({
   on_init = function(client)
     client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
   end
-}))
-lsp.gopls.setup(coq.lsp_ensure_capabilities({}))
-lsp.sourcekit.setup(coq.lsp_ensure_capabilities({}))
-lsp.jdtls.setup(coq.lsp_ensure_capabilities({}))
-lsp.yamlls.setup(coq.lsp_ensure_capabilities({}))
-lsp.dockerls.setup(coq.lsp_ensure_capabilities({}))
-lsp.docker_compose_language_service.setup(coq.lsp_ensure_capabilities({}))
-lsp.dartls.setup(coq.lsp_ensure_capabilities({}))
-lsp.typst_lsp.setup(coq.lsp_ensure_capabilities({}))
-require('null-ls').setup(coq.lsp_ensure_capabilities({}))
-require('crates').setup(coq.lsp_ensure_capabilities({
+})
+lsp.gopls.setup({
+  capabilities = capabilities
+})
+lsp.sourcekit.setup({
+  capabilities = capabilities
+})
+lsp.jdtls.setup({
+  capabilities = capabilities
+})
+lsp.yamlls.setup({
+  capabilities = capabilities
+})
+lsp.dockerls.setup({
+  capabilities = capabilities
+})
+lsp.docker_compose_language_service.setup({
+  capabilities = capabilities
+})
+lsp.dartls.setup({
+  capabilities = capabilities
+})
+lsp.typst_lsp.setup({
+  capabilities = capabilities
+})
+lsp.sourcekit.setup({
+  capabilities = capabilities
+})
+require('null-ls').setup({
+  capabilities = capabilities
+})
+require('crates').setup({
   text = {
     loading = "  Loading...",
     version = "",
@@ -408,13 +490,8 @@ require('crates').setup(coq.lsp_ensure_capabilities({
   },
   null_ls = {
     enabled = true,
-  },
-  src = {
-    coq = {
-      enabled = true,
-    },
-  },
-}))
+  }
+})
 
 require("gruvbox").setup({
   contrast = "hard",
@@ -432,7 +509,7 @@ require('lualine').setup({
     lualine_a = {
       { 'mode', fmt = function(str) return str:sub(1,1) end } },
     lualine_b = {},
-    lualine_c = {'filename'},
+    lualine_c = {{'filename', path = 1,}},
     lualine_x = {'filetype',},
     lualine_y = {'encoding', 'fileformat'},
     lualine_z = {'location', 'diagnostics'}
@@ -455,7 +532,8 @@ require('telescope').setup{
     mappings = {
       i = {
         ["<C-k>"] = "move_selection_previous",
-        ["<C-j>"] = "move_selection_next"
+        ["<C-j>"] = "move_selection_next",
+        ["<Esc>"] = "close"
       }
     }
   }
@@ -463,7 +541,7 @@ require('telescope').setup{
 
 EOF
 
-autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\|dart\) lua vim.lsp.buf.format()
+autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\|dart\|swift\) lua vim.lsp.buf.format()
 nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <leader>n  :lua vim.lsp.buf.implementation()<CR>

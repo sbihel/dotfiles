@@ -2,8 +2,6 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'ellisonleao/gruvbox.nvim'
 
-" Plug 'junegunn/fzf',                             { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim',                        { 'on': 'Goyo' }
 Plug 'junegunn/limelight.vim',                   { 'on': 'Goyo' }
 Plug 'junegunn/gv.vim',                          { 'on': 'GV' }
@@ -26,8 +24,13 @@ Plug 'thirtythreeforty/lessspace.vim'  " strip trailing whitespaces for edited l
 Plug 'neovim/nvim-lspconfig'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'stevearc/dressing.nvim'
-Plug 'ms-jpq/coq_nvim', {'branch': 'coq'}
-Plug 'ms-jpq/coq.artifacts', {'branch': 'artifacts'}
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-nvim-lsp-signature-help'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'simrat39/rust-tools.nvim'
 Plug 'j-hui/fidget.nvim'
 Plug 'AndrewRadev/splitjoin.vim'

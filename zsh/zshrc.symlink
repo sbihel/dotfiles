@@ -256,9 +256,6 @@ export PATH=$PATH:$HOME/.local/bin
 
 export PATH="${PATH}:${HOME}/.krew/bin"
 
-# homebrew github token
-export HOMEBREW_GITHUB_API_TOKEN=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
-
 # Better output for the time command
 TIMEFMT='%J   %U  user %S system %P cpu %*E total'$'\n'\
 'avg shared (code):         %X KB'$'\n'\
