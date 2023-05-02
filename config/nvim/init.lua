@@ -1,7 +1,226 @@
-set nocompatible  " not compatible with vi
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
 
-" load plugins
-source ~/.config/nvim/plugins.vim
+require("lazy").setup({
+  {
+    'ellisonleao/gruvbox.nvim',
+    opts = function()
+      return {
+        contrast = "hard",
+      }
+    end
+  },
+
+  { 'folke/zen-mode.nvim', cmd = 'ZenMode' },
+  { 'folke/twilight.nvim', cmd = 'ZenMode' },
+  { 'junegunn/gv.vim', cmd = 'GV' },
+  {
+    'jiangmiao/auto-pairs',
+    event = "BufReadPre"
+  },
+  { 'tpope/vim-fugitive', cmd = 'Git' },
+  'tpope/vim-surround',
+  {
+    'tpope/vim-sleuth',  -- detect indentation
+    event = "BufReadPre"
+  },
+  {
+    'tpope/vim-eunuch',  -- helpers for UNIX
+    cmd = {"Remove", "Delete", "Move", "Mkdir", "SudoWrite"}
+  },
+  'tpope/vim-repeat',  -- . for supported plugin maps
+  'tpope/vim-vinegar',
+  'tpope/vim-apathy',
+  'tpope/vim-rhubarb',
+  'tpope/vim-commentary',
+  {
+    'nvim-lualine/lualine.nvim',
+    event = "VeryLazy",
+    opts = function()
+      return {
+        options = {
+          icons_enabled = false,
+          theme = 'gruvbox',
+          component_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
+        },
+        sections = {
+          lualine_a = {
+            { 'mode', fmt = function(str) return str:sub(1,1) end } },
+          lualine_b = {},
+          lualine_c = {{'filename', path = 1,}},
+          lualine_x = {'filetype',},
+          lualine_y = {'encoding', 'fileformat'},
+          lualine_z = {'location', 'diagnostics'}
+        }
+      }
+    end
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      return {
+        signs = {
+          add          = { text = '┃' },
+          change       = { text = '┃' },
+          delete       = { text = '◢' },
+          topdelete    = { text = '◥' },
+          changedelete = { text = '◢' },
+          untracked    = { text = '┆' },
+        },
+      }
+    end
+  },
+  { 'sjl/gundo.vim', cmd = 'GundoToggle' },  -- undo tree
+  'mhinz/vim-startify',  -- pretty starting screen
+  { 'rbgrouleff/bclose.vim', cmd = 'Bclose' },  -- :bd but not closing window/pane
+  {
+    'thirtythreeforty/lessspace.vim',  -- strip trailing whitespaces for edited lines
+    event = "InsertEnter"
+  },
+  {
+    "neovim/nvim-lspconfig",
+    event = { "BufReadPre", "BufNewFile" },
+  },
+  'ray-x/lsp_signature.nvim',
+  {
+    'stevearc/dressing.nvim',
+    event = "VeryLazy"
+  },
+
+  {
+    "hrsh7th/nvim-cmp",
+    event = "InsertEnter",
+    dependencies = {
+      "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-nvim-lsp-signature-help",
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
+      'hrsh7th/cmp-vsnip',
+      'hrsh7th/vim-vsnip',
+    },
+    opts = function()
+      local cmp = require("cmp")
+      local has_words_before = function()
+        unpack = unpack or table.unpack
+        local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+        return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+      end
+      local feedkey = function(key, mode)
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+      end
+      return {
+        preselect = cmp.PreselectMode.None,
+        snippet = {
+          expand = function(args)
+            vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+          end,
+        },
+        sources = cmp.config.sources({
+            { name = 'nvim_lsp' },
+            { name = 'nvim_lsp_signature_help' },
+            { name = 'vsnip' },
+          }, {
+            { name = 'path' },
+            { name = 'buffer' },
+            { name = 'crates' },
+          }),
+        mapping = {
+          ['<C-Space>'] = cmp.mapping.complete(),
+          ['<CR>'] = cmp.mapping.confirm {
+            -- behavior = cmp.ConfirmBehavior.Insert,
+            select = true,
+          },
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif vim.fn["vsnip#available"](1) == 1 then
+              feedkey("<Plug>(vsnip-expand-or-jump)", "")
+            elseif has_words_before() then
+              cmp.complete()
+            else
+              fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function()
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+              feedkey("<Plug>(vsnip-jump-prev)", "")
+            end
+          end, { "i", "s" }),
+        },
+      }
+    end,
+  },
+
+  'simrat39/rust-tools.nvim',
+  {
+    'j-hui/fidget.nvim',
+    event = "VeryLazy",
+    opts = function()
+      return {}
+    end
+  },
+  'AndrewRadev/splitjoin.vim',
+  'AndrewRadev/tagalong.vim',
+  {
+    'alvan/vim-closetag',
+    event = "InsertEnter"
+  },
+  {
+    'benmills/vimux',
+    cmd = "VimuxRunCommand"
+  },
+  'sk1418/Join',
+  'sickill/vim-pasta',
+  {
+    'nvim-lua/plenary.nvim',
+    lazy = true
+  },
+  'jose-elias-alvarez/null-ls.nvim',
+  {
+    'Saecki/crates.nvim',
+    ft = "toml"
+  },
+  'nvim-lua/plenary.nvim',
+  {
+    'nvim-telescope/telescope.nvim',
+    cmd = "Telescope",
+    opts = function()
+      return {
+        defaults = {
+          mappings = {
+            i = {
+              ["<C-k>"] = "move_selection_previous",
+              ["<C-j>"] = "move_selection_next",
+              ["<Esc>"] = "close"
+            }
+          }
+        }
+      }
+    end
+  },
+
+  {
+    'jvirtanen/vim-hcl',
+    ft = {"hcl", "tf"}
+  },
+})
+
+vim.cmd([[
+set nocompatible  " not compatible with vi
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " GENERAL
@@ -269,10 +488,6 @@ nnoremap <leader><leader> <cmd>Telescope find_files<cr>
 nnoremap <leader>ag <cmd>Telescope live_grep<cr>
 nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 
-" 고요 & Limelight
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight!
-
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
@@ -281,7 +496,6 @@ let g:lessspace_blacklist = ['mail']
 
 " vimux
 nmap <Leader>vp :VimuxPromptCommand<CR>
-" nmap <Leader>vl :VimuxRunLastCommand<CR>
 nmap <Leader>vl :VimuxRunCommand "!!"<CR>
 nmap <Leader>vi :VimuxInspectRunner<CR>
 nmap <Leader>vz :VimuxZoomRunner<CR>
@@ -296,64 +510,10 @@ ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
 ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
 ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+]])
 
-lua << EOF
 local lsp = require "lspconfig"
-local cmp = require "cmp"
-local has_words_before = function()
-  unpack = unpack or table.unpack
-  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-end
-
-local feedkey = function(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-cmp.setup{
-  preselect = cmp.PreselectMode.None,
-  snippet = {
-    expand = function(args)
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-    end,
-  },
-  sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      { name = 'nvim_lsp_signature_help' },
-      { name = 'vsnip' },
-    }, {
-      { name = 'path' },
-      { name = 'buffer' },
-      { name = 'crates' },
-    }),
-  mapping = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      -- behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    },
-    ["<Tab>"] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif vim.fn["vsnip#available"](1) == 1 then
-        feedkey("<Plug>(vsnip-expand-or-jump)", "")
-      elseif has_words_before() then
-        cmp.complete()
-      else
-        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
-      end
-    end, { "i", "s" }),
-    ["<S-Tab>"] = cmp.mapping(function()
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-        feedkey("<Plug>(vsnip-jump-prev)", "")
-      end
-    end, { "i", "s" }),
-  },
-}
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-require"fidget".setup{}
 
 local function get_python_path(workspace)
   local util = require('lspconfig/util')
@@ -486,54 +646,10 @@ require('crates').setup({
   }
 })
 
-require("gruvbox").setup({
-  contrast = "hard",
-})
 vim.cmd("colorscheme gruvbox")
 
-require('lualine').setup({
-  options = {
-    icons_enabled = false,
-    theme = 'gruvbox',
-    component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''},
-  },
-  sections = {
-    lualine_a = {
-      { 'mode', fmt = function(str) return str:sub(1,1) end } },
-    lualine_b = {},
-    lualine_c = {{'filename', path = 1,}},
-    lualine_x = {'filetype',},
-    lualine_y = {'encoding', 'fileformat'},
-    lualine_z = {'location', 'diagnostics'}
-  }
-})
 
-require('gitsigns').setup {
-  signs = {
-    add          = { text = '┃' },
-    change       = { text = '┃' },
-    delete       = { text = '◢' },
-    topdelete    = { text = '◥' },
-    changedelete = { text = '◢' },
-    untracked    = { text = '┆' },
-  },
-}
-
-require('telescope').setup{
-  defaults = {
-    mappings = {
-      i = {
-        ["<C-k>"] = "move_selection_previous",
-        ["<C-j>"] = "move_selection_next",
-        ["<Esc>"] = "close"
-      }
-    }
-  }
-}
-
-EOF
-
+vim.cmd([[
 autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\|dart\|swift\) lua vim.lsp.buf.format()
 nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
@@ -577,3 +693,4 @@ function! WinMove(key)
     exec "wincmd ".a:key
   endif
 endfunction
+]])
