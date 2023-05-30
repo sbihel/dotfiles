@@ -42,7 +42,13 @@ require("lazy").setup({
   'tpope/vim-vinegar',
   'tpope/vim-apathy',
   'tpope/vim-rhubarb',
-  'tpope/vim-commentary',
+  {
+    'numToStr/Comment.nvim',
+    event = { "BufReadPre", "BufNewFile" },
+    opts = function()
+      return {}
+    end
+  },
   {
     'nvim-lualine/lualine.nvim',
     event = "VeryLazy",
@@ -92,8 +98,23 @@ require("lazy").setup({
   {
     "neovim/nvim-lspconfig",
     event = { "BufReadPre", "BufNewFile" },
+    dependencies = {
+      "lukas-reineke/lsp-format.nvim",
+      {
+        'j-hui/fidget.nvim',
+        event = "VeryLazy",
+        opts = function()
+          return {}
+        end
+      },
+      {
+        'lvimuser/lsp-inlayhints.nvim',
+        opts = function()
+          return {}
+        end
+      }
+    }
   },
-  'ray-x/lsp_signature.nvim',
   {
     'stevearc/dressing.nvim',
     event = "VeryLazy"
@@ -165,15 +186,10 @@ require("lazy").setup({
     end,
   },
 
-  'simrat39/rust-tools.nvim',
   {
-    'j-hui/fidget.nvim',
-    event = "VeryLazy",
-    opts = function()
-      return {}
-    end
+    'AndrewRadev/splitjoin.vim',
+    event = { "BufReadPre", "BufNewFile" }
   },
-  'AndrewRadev/splitjoin.vim',
   'AndrewRadev/tagalong.vim',
   {
     'alvan/vim-closetag',
@@ -212,10 +228,41 @@ require("lazy").setup({
       }
     end
   },
-
   {
-    'jvirtanen/vim-hcl',
-    ft = {"hcl", "tf"}
+    'nvim-treesitter/nvim-treesitter',
+    opts = function()
+      local configs = require 'nvim-treesitter.configs'
+      configs.setup {
+        ensure_installed = {
+          'hcl', 'terraform', 'lua'
+        },
+        indent = {
+          enable = true
+        },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+      }
+    end
+  }
+},
+{
+  ui = {
+    icons = {
+      cmd = "",
+      config = "",
+      event = "",
+      ft = "",
+      init = "",
+      keys = "",
+      plugin = "",
+      runtime = "",
+      source = "",
+      start = "",
+      task = "",
+      lazy = "",
+    },
   },
 })
 
@@ -260,11 +307,7 @@ set scrolloff=3 " lines of text around cursor
 set norelativenumber  " show relative lines number
 set nonumber  " show lines number
 set showmatch  " show matching parenthesis
-if has('nvim')
-  set clipboard=unnamedplus  " allow copy/paste from nvim to other app
-else
-  set clipboard=unnamed  " allow copy/paste from vim to other app
-endif
+set clipboard=unnamedplus  " allow copy/paste from nvim to other app
 set title  " change the terminal's title
 set hidden  " current buffer can be put into background
 
@@ -279,7 +322,7 @@ set undolevels=5000  " How many undos
 nmap ;s :set invspell spelllang=en<cr>
 
 set textwidth=120
-set colorcolumn=120
+" set colorcolumn=120
 set wrap "turn on visual line wrapping
 set linebreak " set wrapping
 set showbreak=… " show ellipsis at breaking
@@ -300,15 +343,11 @@ set visualbell
 set t_vb=
 set tm=500
 
-if has('nvim')
-  set inccommand=split " or nosplit
-endif
+set inccommand=split " or nosplit
 
 set mouse=a
 
-if v:version > 703 || v:version == 703 && has('patch541')
-  set formatoptions+=j
-endif
+set formatoptions+=j
 
 set nrformats+=alpha
 
@@ -365,15 +404,7 @@ nnoremap <expr> k v:count ? 'k' : 'gk'
 vnoremap <expr> j v:count ? 'j' : 'gj'
 vnoremap <expr> k v:count ? 'k' : 'gk'
 
-" Save
-inoremap <C-s>     <C-O>:update<cr>
-nnoremap <C-s>     :update<cr>
-nnoremap <leader>s :update<cr>
 nnoremap <leader>w :update<cr>
-" Quit
-inoremap <C-Q>     <esc>:q<cr>
-nnoremap <C-Q>     :q<cr>
-vnoremap <C-Q>     <esc>
 nnoremap <Leader>q :q<cr>
 nnoremap <Leader>Q :qa!<cr>
 
@@ -398,13 +429,6 @@ autocmd BufReadPre README* setlocal tw=80 cc=80
 autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin spell fo+=n
 autocmd FileType calendar setlocal tw=0 cc=0
-
-let g:tex_flavor = "latex"
-function! LatexFormatExpr(start, end)
-    silent execute a:start.','.a:end.'s/[.!?%]\zs /\r/g'
-endfunction
-autocmd FileType tex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
-autocmd FileType latex setlocal tw=0 cc=0 spell formatexpr=LatexFormatExpr(v:lnum,v:lnum+v:count-1) " fo+=a
 
 autocmd FileType python setlocal cc=120 tw=120
 autocmd FileType git setlocal tw=0 cc=0 nofoldenable nowrap
@@ -510,9 +534,14 @@ ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
 ino <silent><expr> <CR>    pumvisible() ? (complete_info().selected == -1 ? "\<C-e><CR>" : "\<C-y>") : "\<CR>"
 ino <silent><expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
+
+" fugitive
+nnoremap <silent> <Leader>gs       :Git<CR>
+nnoremap <silent> <Leader>gc       :Git commit<CR>
+nnoremap <silent> <Leader>gp       :Git push<CR>
 ]])
 
-local lsp = require "lspconfig"
+local lsp = require('lspconfig')
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local function get_python_path(workspace)
@@ -532,27 +561,36 @@ local function get_python_path(workspace)
   return vim.fn.exepath('python3') or vim.fn.exepath('python') or 'python'
 end
 
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+    local bufnr = args.buf
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    require("lsp-inlayhints").on_attach(client, bufnr)
+    require("lsp-format").on_attach(client)
+  end,
+})
 
-require('rust-tools').setup({
-  server = {
-    capabilities = capabilities,
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          command = "clippy"
-        },
-        procMacro = {
-          enable = true
-        }
+lsp.rust_analyzer.setup{
+  capabilities = capabilities,
+  settings = {
+    ['rust-analyzer'] = {
+      check = {
+        command = "clippy"
       }
     }
   }
-})
-
+}
 lsp.terraformls.setup({
   capabilities = capabilities
 })
 lsp.tflint.setup({
+  capabilities = capabilities
+})
+lsp.nomad_lsp.setup({
   capabilities = capabilities
 })
 lsp.tsserver.setup({
@@ -560,11 +598,11 @@ lsp.tsserver.setup({
 })
 lsp.pyright.setup({
   capabilities = capabilities,
-  on_attach = function()
-    require'lsp_signature'.on_attach {
-      hint_enable = false,
-    }
-  end,
+  -- on_attach = function()
+  --   require'lsp_signature'.on_attach {
+  --     hint_enable = false,
+  --   }
+  -- end,
   on_init = function(client)
     client.config.settings.python.pythonPath = get_python_path(client.config.root_dir)
   end
@@ -584,9 +622,9 @@ lsp.yamlls.setup({
 lsp.dockerls.setup({
   capabilities = capabilities
 })
-lsp.docker_compose_language_service.setup({
-  capabilities = capabilities
-})
+-- lsp.docker_compose_language_service.setup({
+--   capabilities = capabilities
+-- })
 lsp.dartls.setup({
   capabilities = capabilities
 })
@@ -648,26 +686,23 @@ require('crates').setup({
 
 vim.cmd("colorscheme gruvbox")
 
+vim.diagnostic.config({
+  severity_sort = true
+})
+
+vim.keymap.set('n', '<leader>D', vim.lsp.buf.declaration)
+vim.keymap.set('n', '<leader>d', vim.lsp.buf.definition)
+vim.keymap.set('n', '<leader>n', vim.lsp.buf.implementation)
+vim.keymap.set('n', '<leader>r', vim.lsp.buf.references)
+vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover)
+vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help)
+vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action)
+vim.keymap.set('n', '<leader>[', vim.diagnostic.goto_prev)
+vim.keymap.set('n', '<leader>]', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
 vim.cmd([[
-autocmd BufWritePre *.\(rs\|tf\|js\|ts\|py\|dart\|swift\) lua vim.lsp.buf.format()
-nnoremap <silent> <leader>D  :lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> <leader>d  :lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <leader>n  :lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> <leader>r  :lua vim.lsp.buf.references()<CR>
-nnoremap <silent> <leader>[  :lua vim.diagnostic.goto_prev()<CR>
-nnoremap <silent> <leader>]  :lua vim.diagnostic.goto_next()<CR>
-nnoremap <silent> <leader>e  :lua vim.diagnostic.show_line_diagnostics()<CR>
-nnoremap <silent> <leader>k  :lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <leader>K  :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
-nnoremap <silent> <leader>a  :lua vim.lsp.buf.code_action()<CR>
-
-" fugitive
-nnoremap <silent> <Leader>gs       :Git<CR>
-nnoremap <silent> <Leader>gc       :Git commit<CR>
-nnoremap <silent> <Leader>gp       :Git push<CR>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " FUNCTIONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
