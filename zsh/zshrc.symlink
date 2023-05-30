@@ -168,6 +168,17 @@ export PATH=$PATH:$GOPATH/bin
 
 export PATH=$HOME/.cargo/bin:$PATH
 
+HISTSIZE=200000
+SAVEHIST=200000
+setopt SHARE_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_FIND_NO_DUPS
+setopt HIST_SAVE_NO_DUPS
+setopt histignorealldups
+
 if [[ `uname` == 'Darwin' ]]; then
   alias emacs="/usr/local/bin/emacs -nw"
 
@@ -218,11 +229,6 @@ else
   if [ -x "$(command -v opam)" ]; then
     . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
   fi
-
-  HISTFILE=~/.zsh_history
-  HISTSIZE=200000
-  SAVEHIST=200000
-  setopt SHARE_HISTORY
 
   export NVM_DIR="$HOME/.nvm"
   [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -292,6 +298,8 @@ alias c='cargo'
 alias v='vi'
 alias d='docker'
 alias dc='docker-compose'
+alias t='terraform'
+alias k='kubectl'
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/bin/terraform terraform
