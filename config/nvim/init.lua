@@ -21,14 +21,15 @@ require("lazy").setup({
     end
   },
 
-  { 'folke/zen-mode.nvim', cmd = 'ZenMode' },
-  { 'folke/twilight.nvim', cmd = 'ZenMode' },
-  { 'junegunn/gv.vim', cmd = 'GV' },
   {
-    'jiangmiao/auto-pairs',
-    event = "BufReadPre"
+    'folke/zen-mode.nvim',
+    cmd = 'ZenMode',
+    dependencies = {
+      'folke/twilight.nvim'
+    }
   },
-  { 'tpope/vim-fugitive', cmd = 'Git' },
+  { 'junegunn/gv.vim', cmd = 'GV' },
+  { 'tpope/vim-fugitive', cmd = {'Git', 'GBrowse'} },
   'tpope/vim-surround',
   {
     'tpope/vim-sleuth',  -- detect indentation
@@ -66,7 +67,7 @@ require("lazy").setup({
           lualine_b = {},
           lualine_c = {{'filename', path = 1,}},
           lualine_x = {'filetype',},
-          lualine_y = {'encoding', 'fileformat'},
+          lualine_y = {},
           lualine_z = {'location', 'diagnostics'}
         }
       }
@@ -130,9 +131,19 @@ require("lazy").setup({
       "hrsh7th/cmp-path",
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
+      {
+        'windwp/nvim-autopairs',
+        event = "InsertEnter",
+        opts = {}
+      },
     },
     opts = function()
       local cmp = require("cmp")
+      local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+      cmp.event:on(
+        'confirm_done',
+        cmp_autopairs.on_confirm_done()
+      )
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -185,10 +196,14 @@ require("lazy").setup({
       }
     end,
   },
-
   {
-    'AndrewRadev/splitjoin.vim',
-    event = { "BufReadPre", "BufNewFile" }
+    'Wansmer/treesj',
+    cmd = 'TSJToggle',
+    config = function()
+      require('treesj').setup({
+        use_default_keymaps = false
+      })
+    end,
   },
   'AndrewRadev/tagalong.vim',
   {
@@ -212,9 +227,34 @@ require("lazy").setup({
   },
   'nvim-lua/plenary.nvim',
   {
+    'NeogitOrg/neogit',
+    -- dependencies = 'nvim-lua/plenary.nvim',
+    cmd = "Neogit",
+    opts = function()
+      return {
+        -- disable_signs = true,
+        use_telescope = true,
+        integrations = {
+          diffview = true
+        }
+      }
+    end
+  },
+  {
+    'sindrets/diffview.nvim'
+  },
+  {
     'nvim-telescope/telescope.nvim',
     cmd = "Telescope",
+    dependencies = {
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        build = 'make'
+      }
+    },
     opts = function()
+      local tlscp = require('telescope')
+      tlscp.load_extension('fzf')
       return {
         defaults = {
           mappings = {
@@ -224,8 +264,23 @@ require("lazy").setup({
               ["<Esc>"] = "close"
             }
           }
+        },
+        extensions = {
+          fzf = {
+            fuzzy = true,                    -- false will only do exact matching
+            override_generic_sorter = true,  -- override the generic sorter
+            override_file_sorter = true,     -- override the file sorter
+          }
         }
+
       }
+    end
+  },
+  {
+    'kevinhwang91/nvim-bqf',
+    event = "VeryLazy",
+    opts = function()
+      return {}
     end
   },
   {
@@ -234,7 +289,7 @@ require("lazy").setup({
       local configs = require 'nvim-treesitter.configs'
       configs.setup {
         ensure_installed = {
-          'hcl', 'terraform', 'lua'
+          'hcl', 'terraform', 'lua', 'rust', 'kdl'
         },
         indent = {
           enable = true
@@ -391,6 +446,12 @@ nnoremap        [b :bprev<cr>
 nnoremap ]t :tabn<cr>
 nnoremap [t :tabp<cr>
 
+" quickfix
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cc :cclose<cr>
+nnoremap <leader>cn :cnext<cr>
+nnoremap <leader>cp :cprev<cr>
+
 " jk | Escaping!
 inoremap jk <Esc>
 "xnoremap jk <Esc>
@@ -417,6 +478,7 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 " write read-only files
 cmap w!! w !sudo tee % >/dev/null
 
+set spell
 set spelllang=en_gb
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -524,10 +586,6 @@ nmap <Leader>vl :VimuxRunCommand "!!"<CR>
 nmap <Leader>vi :VimuxInspectRunner<CR>
 nmap <Leader>vz :VimuxZoomRunner<CR>
 
-" autopairs
-au FileType markdown,vimwiki let b:autopairs_loaded=1
-au FileType org let g:AutoPairsMapSpace=0
-
 ino <silent><expr> <Esc>   pumvisible() ? "\<C-e><Esc>" : "\<Esc>"
 ino <silent><expr> <C-c>   pumvisible() ? "\<C-e><C-c>" : "\<C-c>"
 ino <silent><expr> <BS>    pumvisible() ? "\<C-e><BS>"  : "\<BS>"
@@ -539,6 +597,10 @@ ino <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<BS>"
 nnoremap <silent> <Leader>gs       :Git<CR>
 nnoremap <silent> <Leader>gc       :Git commit<CR>
 nnoremap <silent> <Leader>gp       :Git push<CR>
+nnoremap <silent> <Leader>gr       :.GBrowse!<CR>
+
+" treesj
+nnoremap <silent> <Leader>s       :TSJToggle<CR>
 ]])
 
 local lsp = require('lspconfig')
@@ -580,6 +642,14 @@ lsp.rust_analyzer.setup{
     ['rust-analyzer'] = {
       check = {
         command = "clippy"
+      },
+      diagnostics = {
+        disabled = {
+          "unresolved-proc-macro"
+        }
+      },
+      procMacro = {
+        enable = true
       }
     }
   }
@@ -696,7 +766,11 @@ vim.keymap.set('n', '<leader>n', vim.lsp.buf.implementation)
 vim.keymap.set('n', '<leader>r', vim.lsp.buf.references)
 vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover)
 vim.keymap.set('n', '<leader>K', vim.lsp.buf.signature_help)
-vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename)
+vim.keymap.set('n', '<leader>rn', function()
+  vim.lsp.buf.rename()
+  -- save all buffers after rename
+  vim.cmd('silent! wa')
+end)
 vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action)
 vim.keymap.set('n', '<leader>[', vim.diagnostic.goto_prev)
 vim.keymap.set('n', '<leader>]', vim.diagnostic.goto_next)
