@@ -28,6 +28,33 @@ require("lazy").setup({
       'folke/twilight.nvim'
     }
   },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    -- init = function()
+    --   vim.o.timeout = true
+    --   vim.o.timeoutlen = 300
+    -- end,
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    }
+  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   ---@type Flash.Config
+  --   opts = {},
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "s", mode = { "n", "o", "x" }, function() require("flash").jump() end, desc = "Flash" },
+  --     { "S", mode = { "n", "o", "x" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+  --     { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
+  --     { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+  --     { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
+  --   },
+  -- },
   { 'junegunn/gv.vim', cmd = 'GV' },
   { 'tpope/vim-fugitive', cmd = {'Git', 'GBrowse'} },
   'tpope/vim-surround',
@@ -66,9 +93,9 @@ require("lazy").setup({
             { 'mode', fmt = function(str) return str:sub(1,1) end } },
           lualine_b = {},
           lualine_c = {{'filename', path = 1,}},
-          lualine_x = {'filetype',},
-          lualine_y = {},
-          lualine_z = {'location', 'diagnostics'}
+          lualine_x = {'filetype'},
+          lualine_y = {'diagnostics'},
+          lualine_z = {'location'}
         }
       }
     end
@@ -103,6 +130,7 @@ require("lazy").setup({
       "lukas-reineke/lsp-format.nvim",
       {
         'j-hui/fidget.nvim',
+        tag = 'legacy',
         event = "VeryLazy",
         opts = function()
           return {}
@@ -118,9 +146,22 @@ require("lazy").setup({
   },
   {
     'stevearc/dressing.nvim',
-    event = "VeryLazy"
+    event = "VeryLazy",
+    opts = function()
+      return {
+        input = {
+          default_prompt = nil,
+          border = "none",
+          win_options = {
+            winblend = 0
+          },
+        },
+        select = {
+          telescope = require("telescope.themes").get_cursor(),
+        },
+      }
+    end
   },
-
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
@@ -131,10 +172,15 @@ require("lazy").setup({
       "hrsh7th/cmp-path",
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
+      'hrsh7th/cmp-cmdline',
       {
         'windwp/nvim-autopairs',
         event = "InsertEnter",
-        opts = {}
+        opts = function()
+          return {
+            check_ts = true
+          }
+        end
       },
     },
     opts = function()
@@ -144,6 +190,22 @@ require("lazy").setup({
         'confirm_done',
         cmp_autopairs.on_confirm_done()
       )
+
+      cmp.setup.cmdline({ '/', '?' }, {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = {
+          { name = 'buffer' }
+        }
+      })
+      cmp.setup.cmdline(':', {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = 'path' }
+        }, {
+            { name = 'cmdline' }
+          })
+      })
+
       local has_words_before = function()
         unpack = unpack or table.unpack
         local line, col = unpack(vim.api.nvim_win_get_cursor(0))
@@ -169,6 +231,8 @@ require("lazy").setup({
             { name = 'crates' },
           }),
         mapping = {
+          ['<C-k>'] = cmp.mapping.scroll_docs(-1),
+          ['<C-j>'] = cmp.mapping.scroll_docs(1),
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<CR>'] = cmp.mapping.confirm {
             -- behavior = cmp.ConfirmBehavior.Insert,
@@ -201,7 +265,8 @@ require("lazy").setup({
     cmd = 'TSJToggle',
     config = function()
       require('treesj').setup({
-        use_default_keymaps = false
+        use_default_keymaps = false,
+        max_join_length = 1200
       })
     end,
   },
@@ -228,11 +293,21 @@ require("lazy").setup({
   'nvim-lua/plenary.nvim',
   {
     'NeogitOrg/neogit',
-    -- dependencies = 'nvim-lua/plenary.nvim',
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      -- "nvim-telescope/telescope.nvim",
+      "sindrets/diffview.nvim",
+    },
     cmd = "Neogit",
+    -- event = "VeryLazy",
+    config = true,
     opts = function()
       return {
-        -- disable_signs = true,
+        -- kind = "split_above",
+        -- log_view = {
+        --   kind = "replace",
+        -- },
+        disable_signs = true,
         use_telescope = true,
         integrations = {
           diffview = true
@@ -245,6 +320,7 @@ require("lazy").setup({
   },
   {
     'nvim-telescope/telescope.nvim',
+    tag = "0.1.3",
     cmd = "Telescope",
     dependencies = {
       {
@@ -263,6 +339,12 @@ require("lazy").setup({
               ["<C-j>"] = "move_selection_next",
               ["<Esc>"] = "close"
             }
+          },
+          border = false,
+        },
+        pickers = {
+          find_files = {
+            hidden = true
           }
         },
         extensions = {
@@ -271,8 +353,7 @@ require("lazy").setup({
             override_generic_sorter = true,  -- override the generic sorter
             override_file_sorter = true,     -- override the file sorter
           }
-        }
-
+        },
       }
     end
   },
@@ -285,11 +366,25 @@ require("lazy").setup({
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    -- tag = 'v0.9.1',
+    dependencies = {
+      {
+        'nvim-treesitter/nvim-treesitter-textobjects',
+        -- {
+        --   'andymass/vim-matchup',
+        --   tag = 'v0.7.2',
+        --   event = "VeryLazy",
+        --   opts = function()
+        --     return {}
+        --   end
+        -- },
+      }
+    },
     opts = function()
       local configs = require 'nvim-treesitter.configs'
       configs.setup {
         ensure_installed = {
-          'hcl', 'terraform', 'lua', 'rust', 'kdl'
+          'hcl', 'terraform', 'lua', 'rust', 'kdl', 'html', 'css', 'sql', 'dockerfile', 'json', 'python', 'swift'
         },
         indent = {
           enable = true
@@ -298,9 +393,73 @@ require("lazy").setup({
           enable = true,
           additional_vim_regex_highlighting = false,
         },
+        textobjects = {
+          select = {
+            enable = true,
+            -- lookahead = true,
+            keymaps = {
+              ["af"] = "@function.outer",
+              ["if"] = "@function.inner",
+              ["ac"] = "@class.outer",
+              ["ic"] = "@class.inner",
+            },
+            -- selection_modes = {
+            --   ['@parameter.outer'] = 'v', -- charwise
+            --   ['@function.outer'] = 'V', -- linewise
+            --   ['@class.outer'] = '<c-v>', -- blockwise
+            -- },
+          },
+          move = {
+            enable = true,
+            set_jumps = true,
+            goto_next_start = {
+              ["]f"] = "@function.outer",
+              ["]c"] = { query = "@class.outer", desc = "Next class start" },
+              -- --
+              -- -- You can use regex matching (i.e. lua pattern) and/or pass a list in a "query" key to group multiple queires.
+              -- ["]o"] = "@loop.*",
+              -- -- ["]o"] = { query = { "@loop.inner", "@loop.outer" } }
+              -- --
+              -- -- You can pass a query group to use query from `queries/<lang>/<query_group>.scm file in your runtime path.
+              -- -- Below example nvim-treesitter's `locals.scm` and `folds.scm`. They also provide highlights.scm and indent.scm.
+              -- ["]s"] = { query = "@scope", query_group = "locals", desc = "Next scope" },
+              -- ["]z"] = { query = "@fold", query_group = "folds", desc = "Next fold" },
+            },
+            goto_previous_start = {
+              ["[f"] = "@function.outer",
+              ["[c"] = "@class.outer",
+            },
+          },
+        },
+        -- matchup = {
+        --   enable = true,
+        -- },
       }
     end
-  }
+  },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+  --   opts = {}
+  -- }
+  {
+    'levouh/tint.nvim',
+    opts = function()
+      return {
+        tint = -60,
+        saturation = 0.6,
+        -- tint_background_colors = true,
+        highlight_ignore_patterns = { "WinSeparator", "Status.*" },
+      }
+    end
+  },
+  {
+    'nvim-pack/nvim-spectre',
+    cmd = 'Spectre',
+    opts = function()
+      return {}
+    end
+  },
 },
 {
   ui = {
@@ -366,6 +525,8 @@ set clipboard=unnamedplus  " allow copy/paste from nvim to other app
 set title  " change the terminal's title
 set hidden  " current buffer can be put into background
 
+set cmdheight=0
+
 " write when forgot to launch nvim with sudo
 cmap w!! w !sudo tee % >/dev/null
 
@@ -424,10 +585,10 @@ set pastetoggle=<F6>
 nnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
 vnoremap <silent> 0 :call ToggleMovement('^', '0')<CR>
 
-map <silent> <C-h> :call WinMove('h')<cr>
-map <silent> <C-j> :call WinMove('j')<cr>
-map <silent> <C-k> :call WinMove('k')<cr>
-map <silent> <C-l> :call WinMove('l')<cr>
+nnoremap <silent> <C-h> :call WinMove('h')<cr>
+nnoremap <silent> <C-j> :call WinMove('j')<cr>
+nnoremap <silent> <C-k> :call WinMove('k')<cr>
+nnoremap <silent> <C-l> :call WinMove('l')<cr>
 " circular windows navigation
 nnoremap <tab>   <c-w>w
 nnoremap <S-tab> <c-w>W
@@ -492,7 +653,7 @@ autocmd FileType ocaml setlocal ts=2 sts=2 sw=2 tw=80 cc=80
 autocmd FileType org setlocal tw=80 cc=80 nocin spell fo+=n
 autocmd FileType calendar setlocal tw=0 cc=0
 
-autocmd FileType python setlocal cc=120 tw=120
+autocmd FileType python setlocal cc=88 tw=88
 autocmd FileType git setlocal tw=0 cc=0 nofoldenable nowrap
 autocmd FileType gitcommit setlocal tw=72 cc=72 spell
 autocmd FileType vim setlocal tw=78 cc=78
@@ -577,6 +738,9 @@ nnoremap <leader>gb <cmd>Telescope git_branches<cr>
 " closetag
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
+" tagalong
+let g:tagalong_additional_filetypes = ['rs']
+
 " lessspace
 let g:lessspace_blacklist = ['mail']
 
@@ -598,6 +762,8 @@ nnoremap <silent> <Leader>gs       :Git<CR>
 nnoremap <silent> <Leader>gc       :Git commit<CR>
 nnoremap <silent> <Leader>gp       :Git push<CR>
 nnoremap <silent> <Leader>gr       :.GBrowse!<CR>
+
+nnoremap <silent> <Leader>gn       :Neogit<CR>
 
 " treesj
 nnoremap <silent> <Leader>s       :TSJToggle<CR>
@@ -649,7 +815,13 @@ lsp.rust_analyzer.setup{
         }
       },
       procMacro = {
-        enable = true
+        enable = true,
+        ignored = {
+          leptos_macro = {
+            "server",
+            "component",
+          },
+        },
       }
     }
   }
@@ -704,6 +876,29 @@ lsp.typst_lsp.setup({
 lsp.sourcekit.setup({
   capabilities = capabilities
 })
+lsp.taplo.setup({
+  capabilities = capabilities
+})
+lsp.efm.setup({
+  init_options = {
+    documentFormatting = true
+  },
+  settings = {
+    rootMarkers = {".git/"},
+    languages = {
+      rust = {
+        {
+          formatCommand = "leptosfmt --quiet --stdin",
+          formatStdin = true,
+          requireMarker = true,
+          rootMarkers = {
+            "leptosfmt.toml"
+          }
+        }
+      }
+    }
+  }
+})
 require('null-ls').setup({
   capabilities = capabilities
 })
@@ -753,6 +948,30 @@ require('crates').setup({
     enabled = true,
   }
 })
+lsp.tailwindcss.setup {
+  capabilities = capabilities,
+  filetypes = {
+    "css",
+    "scss",
+    "sass",
+    "postcss",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "svelte",
+    "vue",
+    "rust",
+  },
+  init_options = {
+    userLanguages = {
+      rust = "html",
+    },
+  },
+  root_dir = lsp.util.root_pattern('tailwind.config.js', 'tailwind.config.ts', 'postcss.config.js',
+    'postcss.config.ts', 'windi.config.ts', '*/tailwind.config.js'),
+}
 
 vim.cmd("colorscheme gruvbox")
 

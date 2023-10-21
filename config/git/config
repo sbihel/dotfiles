@@ -1,6 +1,4 @@
 [user]
-	; signingkey =
-	; email = simon.bihel@
 	name = Simon Bihel
 	signingkey = 79E384762D7634C76CB87CD0B7013150BEAA28FD
 	email = simon.bihel@spruceid.com
@@ -30,9 +28,9 @@
 [merge]
 	tool = vimdiff
 [mergetool]
-	prompt = true
+	prompt = false
 [mergetool "vimdiff"]
-	cmd = nvim -d $BASE $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'
+	cmd = nvim -c DiffviewOpen
 [core]
 	editor = nvim
 	excludesfile = /Users/sbihel/.gitignore_global
