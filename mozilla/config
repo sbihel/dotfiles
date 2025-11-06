@@ -1,0 +1,3 @@
+toolkit.legacyUserProfileCustomizations.stylesheets = true
+browser.backspace_action = 0
+browser.urlbar.resultMenu.keyboardAccessible = false

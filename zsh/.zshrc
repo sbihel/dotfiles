@@ -1,5 +1,3 @@
-# zmodload zsh/zprof
-
 setopt PROMPT_SUBST
 function () {
   if [[ -n "$TMUX$ZELLIJ" ]]; then
@@ -8,19 +6,16 @@ function () {
     local LVL=$SHLVL
   fi
   local SUFFIX=$(printf '\$%.0s' {1..$LVL})
-  export ZLE_RPROMPT_INDENT=0
-  export PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%F{red}%B${SUFFIX}%b%f "
+  ZLE_RPROMPT_INDENT=0
+  PS1="%F{green}${SSH_TTY:+%n@%m}%f%B${SSH_TTY:+:}%b%F{yellow}%B%(1j.*.)%(?..!)%b%f%F{red}%B${SUFFIX}%b%f "
 }
-export RPROMPT="%F{blue}%~%f"
+RPROMPT="%F{blue}%~%f"
 
-setopt correct
-setopt correctall
+LANG=en_GB.UTF-8 LC_CTYPE="en_GB.UTF-8"
 
-export LANG=en_GB.UTF-8 LC_CTYPE="en_GB.UTF-8"
-
-export EDITOR='nvim'
+EDITOR='nvim'
 bindkey -v
-export KEYTIMEOUT=1
+KEYTIMEOUT=1
 autoload -Uz surround
 zle -N delete-surround surround
 zle -N add-surround surround
@@ -49,18 +44,8 @@ zle-line-init() {
 }
 zle -N zle-line-init
 
-export GOPATH=$HOME/.go
-export GOBIN=$HOME/.go/bin
-export PATH=$PATH:$GOPATH/bin
-
-export PATH=$HOME/.cargo/bin:$PATH
-
-export PATH=$PATH:$HOME/.local/bin
-export PATH="$HOME/.poetry/bin:$PATH"
-
-export PATH="${PATH}:${HOME}/.krew/bin"
-
-HISTSIZE=2000000
+HISTFILE="$HOME/.zsh_history"
+HISTSIZE=3000000
 SAVEHIST=2000000
 setopt SHARE_HISTORY
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -70,9 +55,12 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 
+PATH=$PATH:$HOME/.cargo/bin/
+
 alias nvi='nvim'
 alias vi='nvim'
 alias vim='nvim'
+alias v='vi'
 
 alias ..='cd ..'
 alias ...='cd ....'
@@ -81,10 +69,9 @@ alias ....='cd ......'
 alias httpie='http'
 alias h='http'
 alias g='git'
-alias l='eza'
 alias ls='eza'
+alias l='ls'
 alias c='cargo'
-alias v='vi'
 alias d='docker'
 alias dc='docker-compose'
 alias t='terraform'
@@ -95,13 +82,14 @@ alias top='zenith'
 
 [ -f ~/.zshrc-secrets ] && source ~/.zshrc-secrets
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-if [ -x "$(command -v rtx)" ]; then
-  eval "$(rtx activate zsh)"
+if [ -x "$(command -v mise)" ]; then
+  eval "$(mise activate zsh)"
+fi
+if [ -x "$(command -v zoxide)" ]; then
+  eval "$(zoxide init zsh)"
+fi
+if [ -x "$(command -v fzf)" ]; then
+  source <(fzf --zsh)
 fi
 
 autoload -Uz compinit; compinit
-# autoload -U predict-on; predict-on
-
-# zprof

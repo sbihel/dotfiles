@@ -1,6 +1,6 @@
 [user]
 	name = Simon Bihel
-	signingkey = 79E384762D7634C76CB87CD0B7013150BEAA28FD
+	signingkey = D012C5216EDD4118AD32E43164C5A41F462DDBDB
 	email = simon.bihel@spruceid.com
 [commit]
 	gpgsign = true
@@ -33,7 +33,6 @@
 	cmd = nvim -c DiffviewOpen
 [core]
 	editor = nvim
-	excludesfile = /Users/sbihel/.gitignore_global
 [init]
 	defaultBranch = main
 [pull]
