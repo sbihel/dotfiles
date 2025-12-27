@@ -1,3 +1,5 @@
-toolkit.legacyUserProfileCustomizations.stylesheets = true
+# maybe sidebery not needed now that sidebar is a native feature toolkit.legacyUserProfileCustomizations.stylesheets = true
 browser.backspace_action = 0
 browser.urlbar.resultMenu.keyboardAccessible = false
+browser.urlbar.scotchBonnet.enableOverride = false
+browser.tabs.insertAfterCurrent = true

@@ -112,7 +112,7 @@ require("lazy").setup({
             { 'mode', fmt = function(str) return str:sub(1, 1) end } },
           lualine_b = {},
           lualine_c = { { 'filename', path = 1, } },
-          lualine_x = { 'filetype' },
+          lualine_x = { 'searchcount', 'filetype' },
           lualine_y = { 'diagnostics' },
           lualine_z = { 'location' }
         }
@@ -276,6 +276,7 @@ require("lazy").setup({
             ['<C-k>'] = cmp.mapping.scroll_docs(-1),
             ['<C-j>'] = cmp.mapping.scroll_docs(1),
             ['<C-e>'] = cmp.mapping.close(),
+            ['<CR>'] = cmp.mapping.confirm {},
             ["<Tab>"] = cmp.mapping(function(fallback)
               if cmp.visible() then
                 cmp.select_next_item()
@@ -377,53 +378,48 @@ require("lazy").setup({
       },
       opts = {
         disable_signs = true,
-        use_telescope = true,
-        integrations = {
-          diffview = true
-        }
       }
     },
     'sindrets/diffview.nvim',
     {
-      'nvim-telescope/telescope.nvim',
-      version = "*",
-      dependencies = {
-        {
-          'nvim-telescope/telescope-fzf-native.nvim',
-          build = 'make'
-        }
+      "ibhagwan/fzf-lua",
+      keys = {
+        { "<leader><leader>", '<cmd>FzfLua files<cr>',     desc = "Find files" },
+        { "<leader>sg",       '<cmd>FzfLua live_grep<cr>', desc = "Live grep" },
       },
-      opts = function()
-        local tlscp = require('telescope')
-        tlscp.load_extension('fzf')
-        local builtin = require('telescope.builtin')
-        vim.keymap.set('n', '<leader><leader>', builtin.find_files, { desc = 'Telescope find files' })
-        vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = 'Telescope live grep' })
-        return {
-          defaults = {
-            mappings = {
-              i = {
-                ["<C-k>"] = "move_selection_previous",
-                ["<C-j>"] = "move_selection_next",
-                ["<Esc>"] = "close"
-              }
-            },
-            border = false,
-          },
-          pickers = {
-            find_files = {
-              hidden = true
+      opts = {
+        winopts = {
+          backdrop = false,
+          border = "none",
+          preview = {
+            border = "none",
+            wrap = true,
+            scrollbar = false,
+            winopts = {
+              number = false,
             }
+          }
+        },
+        fzf_opts = {
+          ["--layout"] = false,
+        },
+        files = {
+          cwd_prompt = false,
+        },
+        grep = {
+          hidden      = true,
+          no_header_i = true,
+        },
+        keymap = {
+          -- builtin = {
+          --   ["ctrl-l"] = "focus-preview",
+          --   ["ctrl-h"] = "focus-preview",
+          -- },
+          fzf = {
+            ["ctrl-q"] = "select-all+accept",
           },
-          extensions = {
-            fzf = {
-              fuzzy = true,                   -- false will only do exact matching
-              override_generic_sorter = true, -- override the generic sorter
-              override_file_sorter = true,    -- override the file sorter
-            }
-          },
-        }
-      end
+        },
+      }
     },
     {
       'kevinhwang91/nvim-bqf',
@@ -444,7 +440,7 @@ require("lazy").setup({
         ---@diagnostic disable-next-line: missing-fields
         configs.setup {
           ensure_installed = {
-            'hcl', 'terraform', 'lua', 'rust', 'kdl', 'html', 'css', 'sql', 'dockerfile', 'json', 'python', 'swift', 'toml', 'regex'
+            'hcl', 'terraform', 'lua', 'rust', 'kdl', 'html', 'css', 'sql', 'dockerfile', 'json', 'python', 'swift', 'toml', 'regex', 'yaml', 'dhall'
           },
           indent = {
             enable = true
@@ -481,10 +477,12 @@ require("lazy").setup({
     },
     {
       'TaDaa/vimade',
-      event = "VeryLazy",
       opts = {
         ncmode = "windows",
-        enablefocusfading = true
+        enablefocusfading = true,
+        tint = {
+          bg = { rgb = { 0, 0, 0 }, intensity = 0.1 }
+        }
       }
     },
     {
@@ -506,6 +504,13 @@ require("lazy").setup({
     {
       "bullets-vim/bullets.vim",
       event = "VeryLazy"
+    },
+    {
+      "seblyng/roslyn.nvim",
+      ft = "cs",
+      ---@module 'roslyn.config'
+      ---@type RoslynNvimConfig
+      opts = {}
     }
   },
   {
@@ -529,16 +534,14 @@ require("lazy").setup({
 
 -- Options
 
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.copyindent = true
 vim.opt.smartindent = true
 
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
-
-vim.keymap.set('n', '<localleader>q', vim.cmd.nohlsearch)
 
 vim.opt.scrolloff = 3
 
@@ -550,7 +553,6 @@ vim.opt.title = true
 vim.opt.cmdheight = 0
 
 vim.opt.undofile = true
-vim.opt.undodir = "~/.config/nvim/undodir,~/.tmp,~/tmp,/var/tmp,/tmp"
 
 vim.opt.linebreak = true
 vim.opt.showbreak = '↪'
@@ -570,6 +572,11 @@ vim.opt.spell = true
 vim.opt.spelllang = 'en_gb'
 
 -- Mappings
+
+vim.keymap.set('n', 'j', 'gj', { noremap = true, silent = true })
+vim.keymap.set('n', 'k', 'gk', { noremap = true, silent = true })
+
+vim.keymap.set('v', 'p', 'P', { noremap = true, silent = true })
 
 local function toggle_line_start()
   local _, col1 = unpack(vim.api.nvim_win_get_cursor(0))
@@ -602,6 +609,8 @@ for _, k in ipairs({ 'h', 'j', 'k', 'l' }) do
 end
 
 vim.keymap.set('n', '<leader>i', function() vim.opt.cursorline = not vim.o.cursorline end)
+
+vim.keymap.set('n', '<localleader>q', vim.cmd.nohlsearch)
 
 vim.keymap.set('n', '<leader>l', vim.cmd.bnext)
 vim.keymap.set('n', '<leader>h', vim.cmd.bprev)
@@ -641,6 +650,8 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     vim.opt_local.filetype = "json"
   end
 })
+-- fix vimade delay in dimming
+vim.cmd { cmd = "au", args = { "FileType fzf call vimade#DeferredCheckWindows()" }, bang = true }
 
 -- Lsp options
 
@@ -697,11 +708,15 @@ vim.lsp.enable('sourcekit')
 vim.lsp.enable('jdtls')
 vim.lsp.enable('yamlls')
 vim.lsp.enable('dockerls')
+vim.lsp.config('dartls', {
+  cmd = { "fvm", "dart", "language-server", "--protocol=lsp" }
+})
 vim.lsp.enable('dartls')
 vim.lsp.enable('sourcekit')
 vim.lsp.enable('taplo')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('ts_ls')
-vim.lsp.enable('harper_ls')
-vim.lsp.enable('typos_lsp')
+-- vim.lsp.enable('harper_ls')
+-- vim.lsp.enable('typos_lsp')
+vim.lsp.enable('tinymist')

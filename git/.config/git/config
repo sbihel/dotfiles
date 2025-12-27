@@ -1,6 +1,6 @@
 [user]
 	name = Simon Bihel
-	signingkey = D012C5216EDD4118AD32E43164C5A41F462DDBDB
+	signingkey = 9515966A4F08607D3985DAB9B2EF1C2823818066
 	email = simon.bihel@spruceid.com
 [commit]
 	gpgsign = true
@@ -13,6 +13,7 @@
 	co = !"git checkout"
 	st = !"git status"
 	pul = !"git pull"
+	pus = !"git push"
 	rb = !"git rebase"
 
 	adog = log --all --decorate --oneline --graph

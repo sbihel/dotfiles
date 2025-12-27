@@ -13,7 +13,7 @@ RPROMPT="%F{blue}%~%f"
 
 LANG=en_GB.UTF-8 LC_CTYPE="en_GB.UTF-8"
 
-EDITOR='nvim'
+export EDITOR='nvim'
 bindkey -v
 KEYTIMEOUT=1
 autoload -Uz surround
@@ -55,7 +55,12 @@ setopt HIST_IGNORE_SPACE
 setopt HIST_FIND_NO_DUPS
 setopt HIST_SAVE_NO_DUPS
 
-PATH=$PATH:$HOME/.cargo/bin/
+setopt GLOB_DOTS
+
+export PATH=$PATH:$HOME/.cargo/bin/
+
+export PATH=$PATH:$HOME/.local/bin/roslyn/content/LanguageServer/osx-arm64/
+export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
 
 alias nvi='nvim'
 alias vi='nvim'
@@ -79,9 +84,14 @@ alias k='kubectl'
 alias cat='bat'
 alias du='dust'
 alias top='zenith'
+alias brwe='brew'
+alias tree='l --tree'
 
 [ -f ~/.zshrc-secrets ] && source ~/.zshrc-secrets
 
+if [ -x "$(command -v /opt/homebrew/bin/brew)" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 if [ -x "$(command -v mise)" ]; then
   eval "$(mise activate zsh)"
 fi
