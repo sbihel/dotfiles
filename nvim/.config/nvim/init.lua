@@ -29,7 +29,6 @@ require("lazy").setup({
     },
     {
       "folke/lazydev.nvim",
-      version = "*",
       ft = "lua",
       opts = {
         library = {
@@ -428,52 +427,11 @@ require("lazy").setup({
     },
     {
       'nvim-treesitter/nvim-treesitter',
-      version = '*',
       dependencies = {
-        {
-          'nvim-treesitter/nvim-treesitter-textobjects',
-        }
+        { 'nvim-treesitter/nvim-treesitter-textobjects' }
       },
+      lazy = false,
       build = ":TSUpdate",
-      opts = function()
-        local configs = require 'nvim-treesitter.configs'
-        ---@diagnostic disable-next-line: missing-fields
-        configs.setup {
-          ensure_installed = {
-            'hcl', 'terraform', 'lua', 'rust', 'kdl', 'html', 'css', 'sql', 'dockerfile', 'json', 'python', 'swift', 'toml', 'regex', 'yaml', 'dhall'
-          },
-          indent = {
-            enable = true
-          },
-          highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-          },
-          textobjects = {
-            select = {
-              enable = true,
-              keymaps = {
-                ["af"] = "@function.outer",
-                ["if"] = "@function.inner",
-                ["ac"] = "@class.outer",
-                ["ic"] = "@class.inner",
-              },
-            },
-            move = {
-              enable = true,
-              set_jumps = true,
-              goto_next_start = {
-                ["]f"] = "@function.outer",
-                ["]c"] = { query = "@class.outer", desc = "Next class start" },
-              },
-              goto_previous_start = {
-                ["[f"] = "@function.outer",
-                ["[c"] = "@class.outer",
-              },
-            },
-          },
-        }
-      end
     },
     {
       'TaDaa/vimade',
@@ -635,6 +593,37 @@ vim.keymap.set('n', '<leader>[', function() vim.diagnostic.jump({ count = -1, fl
 vim.keymap.set('n', '<leader>]', function() vim.diagnostic.jump({ count = 1, float = true }) end)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
+-- Treesitter
+require('nvim-treesitter').install({
+  'hcl', 'terraform', 'lua', 'rust', 'kdl', 'html', 'css',
+  'sql', 'dockerfile', 'json', 'python', 'swift', 'toml',
+  'regex', 'yaml', 'dhall'
+})
+vim.keymap.set({ "x", "o" }, "af", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "if", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ac", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "x", "o" }, "ic", function()
+  require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]f", function()
+  require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[f", function()
+  require("nvim-treesitter-textobjects.move").goto_previous_start("@function.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "]c", function()
+  require("nvim-treesitter-textobjects.move").goto_next_start("@class.outer", "textobjects")
+end)
+vim.keymap.set({ "n", "x", "o" }, "[c", function()
+  require("nvim-treesitter-textobjects.move").goto_previous_start("@class.outer", "textobjects")
+end)
+
 -- Filetypes
 
 vim.api.nvim_create_autocmd("FileType", {
@@ -716,7 +705,29 @@ vim.lsp.enable('sourcekit')
 vim.lsp.enable('taplo')
 vim.lsp.enable('tailwindcss')
 vim.lsp.enable('lua_ls')
+vim.lsp.config('lua_ls', {
+  settings = {
+    Lua = {
+      workspace = {
+        library = { vim.env.VIMRUNTIME }
+      },
+    },
+  },
+})
 vim.lsp.enable('ts_ls')
 -- vim.lsp.enable('harper_ls')
 -- vim.lsp.enable('typos_lsp')
 vim.lsp.enable('tinymist')
+
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function()
+    local ok = pcall(vim.treesitter.start)
+    if not ok then return end
+    vim.opt_local.foldmethod = "expr"
+    vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+    vim.opt_local.foldlevel = 99
+    if vim.treesitter.query.get(vim.bo.filetype, "indents") then
+      vim.opt_local.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end
+  end
+})

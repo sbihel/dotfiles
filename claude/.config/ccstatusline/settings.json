@@ -1,0 +1,91 @@
+{
+  "version": 3,
+  "lines": [
+    [
+      {
+        "id": "7b79b812-b88a-44a9-8c0c-f739e08efdfc",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightBlack",
+        "customText": " "
+      },
+      {
+        "id": "d7fd73ef-a092-4932-b5ad-f33fe4bff319",
+        "type": "vim-mode",
+        "color": "black",
+        "backgroundColor": "bgBrightBlack",
+        "bold": true,
+        "metadata": {
+          "format": "letter"
+        }
+      },
+      {
+        "id": "772bd4b3-08e9-4509-a9b7-5adef585c819",
+        "type": "custom-text",
+        "backgroundColor": "bgBrightBlack",
+        "customText": " "
+      },
+      {
+        "id": "4ef80e31-ab44-40f9-ac4e-1290768e0110",
+        "type": "flex-separator"
+      },
+      {
+        "id": "97769c76-3f89-47bc-9f51-1d06541e31f4",
+        "type": "git-worktree",
+        "color": "brightBlack",
+        "rawValue": true
+      },
+      {
+        "id": "8534647a-e3b4-48b1-bea1-44e24839c76f",
+        "type": "separator"
+      },
+      {
+        "id": "c45ca5c2-6b51-4fcd-b8b9-06a9c7e443fe",
+        "type": "current-working-dir",
+        "color": "blue",
+        "rawValue": true,
+        "metadata": {
+          "abbreviateHome": "true"
+        }
+      }
+    ],
+    [
+      {
+        "id": "18aa5986-b13c-45a9-b15e-e2df56243c94",
+        "type": "context-bar",
+        "color": "brightBlack",
+        "rawValue": true,
+        "metadata": {
+          "display": "progress-short"
+        }
+      },
+      {
+        "id": "7049c7a7-9706-4358-bd3e-5319d615365a",
+        "type": "separator"
+      },
+      {
+        "id": "fb297828-0de8-4e76-9f19-522413dc4a9a",
+        "type": "session-cost",
+        "rawValue": true
+      }
+    ]
+  ],
+  "flexMode": "full-minus-40",
+  "compactThreshold": 60,
+  "colorLevel": 1,
+  "inheritSeparatorColors": true,
+  "globalBold": false,
+  "minimalistMode": true,
+  "powerline": {
+    "enabled": false,
+    "separators": [
+      ""
+    ],
+    "separatorInvertBackground": [
+      false
+    ],
+    "startCaps": [],
+    "endCaps": [],
+    "autoAlign": false,
+    "continueThemeAcrossLines": false
+  }
+}

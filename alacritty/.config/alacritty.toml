@@ -26,7 +26,7 @@ yellow = "0xd79921"
 duration = 0
 
 [font]
-size = 12.0
+size = 10.0
 
 [font.normal]
 family = "Fira Code"
@@ -39,3 +39,7 @@ history = 0
 
 [window]
 decorations = "none"
+
+[keyboard]
+# Shift+Return sends ESC+Enter (same as Option+Enter) to work in tmux
+bindings = [{ key = "Return", mods = "Shift", chars = "\u001b\r" }]

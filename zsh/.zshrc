@@ -11,7 +11,7 @@ function () {
 }
 RPROMPT="%F{blue}%~%f"
 
-LANG=en_GB.UTF-8 LC_CTYPE="en_GB.UTF-8"
+export LANG=en_GB.UTF-8 LC_CTYPE="en_GB.UTF-8"
 
 export EDITOR='nvim'
 bindkey -v
@@ -58,6 +58,7 @@ setopt HIST_SAVE_NO_DUPS
 setopt GLOB_DOTS
 
 export PATH=$PATH:$HOME/.cargo/bin/
+export PATH=$PATH:$HOME/.local/bin/
 
 export PATH=$PATH:$HOME/.local/bin/roslyn/content/LanguageServer/osx-arm64/
 export DOTNET_ROOT="/opt/homebrew/opt/dotnet/libexec"
@@ -86,6 +87,7 @@ alias du='dust'
 alias top='zenith'
 alias brwe='brew'
 alias tree='l --tree'
+alias cc='claude'
 
 [ -f ~/.zshrc-secrets ] && source ~/.zshrc-secrets
 

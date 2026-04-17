@@ -1,0 +1,173 @@
+{
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "permissions": {
+    "allow": [
+      "Read(~/.cargo/**)",
+      "Read(~/.claude/**)",
+      "Read(~/spruce/**)",
+      "Read(~/dotfiles/**)",
+      "Read(//tmp/**)",
+      "Read(//var/folders/**/T/**)",
+      "Bash(*brew info*)",
+      "Bash(*cargo*)",
+      "Bash(*claude settings list*)",
+      "Bash(*gh pr*)",
+      "Bash(*gh issue*)",
+      "Bash(*gh run*)",
+      "Bash(*gh gist*)",
+      "Bash(*gh release*)",
+      "Bash(*gh search*)",
+      "Bash(*gh api*)",
+      "Bash(*gh repo*)",
+      "Bash(*gh repo clone*)",
+      "Bash(*git rebase*)",
+      "Bash(*git checkout*)",
+      "Bash(*git mv*)",
+      "Bash(*git show*)",
+      "Bash(*git log*)",
+      "Bash(*git diff*)",
+      "Bash(*git*status*)",
+      "Bash(*git branch*)",
+      "Bash(*git rev-parse*)",
+      "Bash(*git fetch*)",
+      "Bash(*git blame*)",
+      "Bash(*git stash*)",
+      "Bash(*git add*)",
+      "Bash(*git ls-tree*)",
+      "Bash(*find*)",
+      "Bash(*grep*)",
+      "Bash(*head*)",
+      "Bash(*tail*)",
+      "Bash(*diff*)",
+      "Bash(*sort*)",
+      "Bash(*cat*)",
+      "Bash(*ls*)",
+      "Bash(*cd*)",
+      "Bash(*jq*)",
+      "Bash(*wc*)",
+      "Bash(*which*)",
+      "Bash(*tree*)",
+      "Bash(*mkdir*)",
+      "Bash(*stow*)",
+      "Bash(*typos*)",
+      "Bash(*npx typos*)",
+      "Bash(*openssl x509*)",
+      "Bash(*openssl verify*)",
+      "Bash(*openssl asn1parse*)",
+      "Bash(*openssl version*)",
+      "Bash(*yarn --version*)",
+      "Bash(*yarn knip*)",
+      "Skill(review-pr)",
+      "WebSearch(domain:github.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.rs)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:code.claude.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "mcp__claude_ai_Slack__slack_read_thread",
+      "mcp__claude_ai_Linear__list_teams",
+      "mcp__claude_ai_Linear__get_issue",
+      "mcp__claude_ai_Linear__list_projects",
+      "mcp__claude_ai_Linear__list_issues",
+      "mcp__claude_ai_Linear__list_milestones",
+      "mcp__claude_ai_Notion__notion-search",
+      "mcp__claude_ai_Notion__notion-fetch"
+    ],
+    "ask": [
+      "Read(**/*.p12)",
+      "Read(**/*.pem)",
+      "Read(**/*.cer)",
+      "Read(**/*.key)",
+      "Read(**/*.certSigningRequest)",
+      "Read(**/*.p8)",
+      "Read(**/.cargo/credentials.toml)",
+      "Read(**/.cargo/credentials)",
+      "Read(**/.env*)",
+      "Read(**/*.secret)",
+      "Read(**/*.secrets)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.gnupg/**)",
+      "Read(~/.config/gcloud/**)",
+      "Bash(*/.ssh/*)",
+      "Bash(*/.aws/*)",
+      "Bash(*/.gnupg/*)",
+      "Bash(*/.config/gcloud/*)",
+      "Bash(*openssl*-signkey*)",
+      "Bash(*git*push*)",
+      "Bash(*gh*api*-X*)",
+      "Bash(*gh*api*--method*)",
+      "Bash(*gh*api*-f*)",
+      "Bash(*gh*api*--raw-field*)",
+      "Bash(*gh*api*-F*)",
+      "Bash(*gh*api*--field*)",
+      "Bash(*gh*api*--input*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null) && [[ \"$CMD\" == *'python3 -m json.tool'* ]] && jq -n '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:\"Use `jq .` instead of `python3 -m json.tool` — jq is in the allowlist and more capable.\"}}' || true"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null) && FIRST=$(echo \"$CMD\" | awk '{print $1}') && [[ \"$FIRST\" == \"curl\" || \"$FIRST\" == \"wget\" ]] && jq -n '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:\"Use the WebFetch tool instead of curl/wget — it is already in the allowlist and does not require Bash permission.\"}}' || true"
+          },
+          {
+            "type": "command",
+            "command": "CMD=$(jq -r '.tool_input.command // empty' 2>/dev/null) && FIRST=$(echo \"$CMD\" | awk '{print $1}') && [[ \"$FIRST\" == \"sleep\" ]] && jq -n '{hookSpecificOutput:{hookEventName:\"PreToolUse\",permissionDecision:\"deny\",permissionDecisionReason:\"Do not use sleep. Use run_in_background if waiting for a long-running command, or diagnose the root cause instead of polling in a loop.\"}}' || true"
+          },
+          {
+            "type": "command",
+            "command": "bash ~/.claude/hooks/intercept-gh-api.sh"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "npx -y ccstatusline@latest",
+    "padding": 0
+  },
+  "enabledPlugins": {
+    "lua-lsp@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "skill-creator@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "gh-cli@trailofbits": true,
+    "rust-skills@rust-skills": true
+  },
+  "extraKnownMarketplaces": {
+    "trailofbits": {
+      "source": {
+        "source": "github",
+        "repo": "trailofbits/skills"
+      }
+    },
+    "rust-skills": {
+      "source": {
+        "source": "github",
+        "repo": "actionbook/rust-skills"
+      }
+    }
+  }
+}

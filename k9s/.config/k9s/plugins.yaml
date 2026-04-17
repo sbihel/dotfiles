@@ -1,0 +1,12 @@
+plugins:
+  force-sync:
+    shortCut: r
+    description: Force sync ExternalSecret
+    scopes:
+      - externalsecret
+    command: sh
+    background: false
+    confirm: true
+    args:
+      - -c
+      - "kubectl annotate es $NAME force-sync=$(date +%s) --overwrite --namespace $NAMESPACE --context $CONTEXT"

@@ -1,6 +1,6 @@
 [user]
 	name = Simon Bihel
-	signingkey = 9515966A4F08607D3985DAB9B2EF1C2823818066
+	signingkey = D012C5216EDD4118AD32E43164C5A41F462DDBDB
 	email = simon.bihel@spruceid.com
 [commit]
 	gpgsign = true
